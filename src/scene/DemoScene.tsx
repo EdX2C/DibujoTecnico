@@ -1,10 +1,11 @@
 import { Suspense, useEffect, useMemo, useRef, useState } from 'react'
 import { Canvas, useFrame, useThree } from '@react-three/fiber'
-import { ContactShadows, Environment, OrbitControls, PerspectiveCamera } from '@react-three/drei'
+import { ContactShadows, Environment, OrbitControls, OrthographicCamera } from '@react-three/drei'
 import * as THREE from 'three'
 import gsap from 'gsap'
 import {
   AbatirSection,
+  AnnularCutFace,
   BujeBody,
   CuttingPlaneVisual,
   INNER_R,
@@ -207,6 +208,45 @@ export function DemoScene({ embedded = false, onOpenFullscreen }: DemoSceneProps
             <Environment preset="city" />
           </Suspense>
         </Canvas>
+        <div className={`demo-tech-label mode-${mode}`} aria-hidden="true">
+          {mode === 'solid' && (
+            <>
+              PLANO A–A
+              <span>VISTA ESPACIAL · TRAZA MIXTA · FLECHAS</span>
+            </>
+          )}
+          {mode === 'reveal' && (
+            <>
+              SECCIÓN DE CANTO
+              <span>VISTA ORTOGONAL · PERFIL AÚN EN SU PLANO</span>
+            </>
+          )}
+          {mode === 'abatir' && (
+            <>
+              SECCIÓN ABATIDA A–A
+              <span>VISTA ORTOGONAL · VERDADERA MAGNITUD · Ø EXT. / Ø INT.</span>
+            </>
+          )}
+          {mode === 'concurrente' && (
+            <>
+              PLANOS CONCURRENTES
+              <span>INTERSECCIÓN COMÚN</span>
+            </>
+          )}
+        </div>
+        {mode === 'abatir' && (
+          <div className="demo-rotation-cue" aria-hidden="true">
+            <svg viewBox="0 0 170 126" role="img" aria-label="Giro de noventa grados">
+              <defs>
+                <marker id="rotation-arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+                  <path d="M 0 0 L 10 5 L 0 10 z" fill="#ff6b2e" />
+                </marker>
+              </defs>
+              <path d="M24 105 A82 82 0 0 1 130 24" markerEnd="url(#rotation-arrow)" />
+              <text x="93" y="33">90°</text>
+            </svg>
+          </div>
+        )}
         <div className="demo-hint">
           {mode === 'solid' &&
             (cutAxis === 'x'
@@ -214,7 +254,7 @@ export function DemoScene({ embedded = false, onOpenFullscreen }: DemoSceneProps
               : 'Corte longitudinal: el plano recorre el eje del taladro. Pulse Revelar.')}
           {mode === 'reveal' &&
             (cutAxis === 'x'
-              ? 'Paso 2 · Se retira la mitad delante del plano y aparece la corona.'
+              ? 'Paso 2 · La mitad retirada queda tenue; la sección todavía se observa de canto sobre A–A.'
               : 'Se retira la mitad superior: se ven las dos paredes y el hueco del taladro.')}
           {mode === 'abatir' && 'Paso 3 · La sección gira 90° alrededor de la traza y queda superpuesta, en verdadera magnitud.'}
           {mode === 'concurrente' && 'El plano B gira hasta alinearse con A: todo en una sola vista.'}
@@ -241,7 +281,7 @@ function SceneContent({
   mode: DemoMode
   autoOrbit: boolean
 }) {
-  const { gl } = useThree()
+  const { gl, camera } = useThree()
   useEffect(() => {
     gl.localClippingEnabled = true
   }, [gl])
@@ -257,8 +297,17 @@ function SceneContent({
     cutAxis === 'x'
       ? [removedOffset, 0, revealAmount * 0.35]
       : [0, removedOffset, revealAmount * 0.35]
+  const spatialCamera = useMemo(() => new THREE.Vector3(4.8, 2.6, 6.3), [])
+  const technicalCamera = useMemo(() => new THREE.Vector3(0, 0.85, 6.6), [])
 
   useFrame(() => {
+    if (!autoOrbit && mode !== 'concurrente') {
+      const technicalView = THREE.MathUtils.smoothstep(revealAmount, 0.05, 0.82)
+      camera.position.lerpVectors(spatialCamera, technicalCamera, technicalView)
+      camera.lookAt(0, 0, 0)
+      camera.updateProjectionMatrix()
+    }
+
     // Clipping planes live in WORLD space and do NOT follow an object's own
     // transform. The kept half sits at the origin, so its plane stays at cutPosition.
     // The removed half is translated by `removedOffset` along the cut axis, so its
@@ -281,15 +330,15 @@ function SceneContent({
 
   return (
     <>
-      <PerspectiveCamera makeDefault position={[3.2, 1.8, 4.2]} fov={42} />
-      <ambientLight intensity={0.35} />
+      <OrthographicCamera makeDefault position={[0, 0.85, 6.6]} zoom={122} near={0.1} far={100} />
+      <ambientLight intensity={0.52} />
       <directionalLight
         castShadow
-        position={[4, 6, 3]}
-        intensity={1.35}
+        position={[4, 6, 4]}
+        intensity={1.08}
         shadow-mapSize={[1024, 1024]}
       />
-      <spotLight position={[-3, 4, 2]} intensity={0.6} color="#53d5e0" />
+      <spotLight position={[-4, 3, 4]} intensity={0.36} color="#53d5e0" />
 
       <group>
         <BujeBody clipPlanes={revealAmount > 0.01 ? [frontClip] : []} color="#7a91a8" />
@@ -297,9 +346,10 @@ function SceneContent({
         {revealAmount > 0.01 && (
           <BujeBody
             clipPlanes={[backClip]}
-            color="#5a6d80"
-            opacity={1 - revealAmount * 0.25}
+            color="#657581"
+            opacity={Math.max(0.14, 1 - revealAmount * 0.86)}
             position={removedPos}
+            ghost
           />
         )}
 
@@ -307,10 +357,10 @@ function SceneContent({
         {showHatch &&
           abatirAmount < 0.98 &&
           (cutAxis === 'x' ? (
-            <mesh position={[cutPosition + 0.005, 0, 0]} rotation={[0, Math.PI / 2, 0]}>
-              <ringGeometry args={[INNER_R, OUTER_R, 64]} />
-              <meshBasicMaterial color="#1a3038" transparent opacity={0.9} side={THREE.DoubleSide} />
-            </mesh>
+            <AnnularCutFace
+              cutPos={cutPosition}
+              opacity={mode === 'abatir' ? Math.max(0.18, 1 - abatirAmount) : 1}
+            />
           ) : (
             <group position={[0, cutPosition + 0.004, 0]} rotation={[-Math.PI / 2, 0, 0]}>
               <mesh position={[0, (OUTER_R + INNER_R) / 2, 0]}>
@@ -328,12 +378,19 @@ function SceneContent({
           <AbatirSection amount={abatirAmount} cutPos={cutPosition} axis={cutAxis} />
         )}
 
-        {mode !== 'concurrente' && <CuttingPlaneVisual pos={cutPosition} axis={cutAxis} label="A" />}
+        {mode !== 'concurrente' && (
+          <CuttingPlaneVisual
+            pos={cutPosition}
+            axis={cutAxis}
+            label="A"
+            showSheet={mode !== 'abatir'}
+          />
+        )}
 
         {mode === 'concurrente' && (
           <>
-            <CuttingPlaneVisual pos={cutPosition} axis="x" angle={0} label="A" />
-            <CuttingPlaneVisual pos={cutPosition} axis="x" angle={plane2Angle} label="B" />
+            <CuttingPlaneVisual pos={cutPosition} axis="x" angle={0} label="A" showSheet />
+            <CuttingPlaneVisual pos={cutPosition} axis="x" angle={plane2Angle} label="B" showSheet />
             <mesh position={[cutPosition, 0, 0]}>
               <sphereGeometry args={[0.06, 16, 16]} />
               <meshBasicMaterial color="#ff6b2e" />
@@ -342,14 +399,15 @@ function SceneContent({
         )}
       </group>
 
-      <ContactShadows position={[0, -1.35, 0]} opacity={0.45} scale={12} blur={2.5} />
-      <gridHelper args={[10, 20, '#242c36', '#151a21']} position={[0, -1.34, 0]} />
+      <ContactShadows position={[0, -1.35, 0]} opacity={0.22} scale={12} blur={3.2} />
+      <gridHelper args={[10, 20, '#182129', '#11171d']} position={[0, -1.34, 0]} />
       <OrbitControls
+        enabled={autoOrbit || mode === 'concurrente'}
         enablePan={false}
         autoRotate={autoOrbit}
         autoRotateSpeed={0.6}
-        minDistance={2.5}
-        maxDistance={9}
+        enableRotate={autoOrbit || mode === 'concurrente'}
+        enableZoom={false}
         target={[0, 0, 0]}
       />
     </>

@@ -1,6 +1,7 @@
 import { useMemo, useRef } from 'react'
 import * as THREE from 'three'
 import { useFrame } from '@react-three/fiber'
+import { Edges } from '@react-three/drei'
 
 /* La pieza del demo: un buje — casquillo alargado (largo > diámetro) con agujero pasante.
    Coincide con la pieza del ejercicio gráfico. */
@@ -31,11 +32,13 @@ export function BujeBody({
   color = '#6d8499',
   position = [0, 0, 0] as [number, number, number],
   clipPlanes,
+  ghost = false,
 }: {
   opacity?: number
   color?: string
   position?: [number, number, number]
   clipPlanes?: THREE.Plane[]
+  ghost?: boolean
 }) {
   const geo = useMemo(tubeGeometry, [])
 
@@ -43,23 +46,70 @@ export function BujeBody({
     () =>
       new THREE.MeshStandardMaterial({
         color,
-        metalness: 0.55,
-        roughness: 0.35,
+        metalness: 0.16,
+        roughness: 0.72,
         transparent: opacity < 1,
         opacity,
         side: THREE.DoubleSide,
         clipShadows: true,
+        depthWrite: opacity > 0.92,
+        envMapIntensity: 0.42,
       }),
     [color, opacity],
   )
 
   material.opacity = opacity
   material.transparent = opacity < 1
+  material.depthWrite = opacity > 0.92
   material.color.set(color)
   material.clippingPlanes = clipPlanes ?? []
   material.needsUpdate = true
 
-  return <mesh geometry={geo} material={material} position={position} castShadow receiveShadow />
+  return (
+    <mesh geometry={geo} material={material} position={position} castShadow={!ghost} receiveShadow={!ghost}>
+      <Edges
+        threshold={18}
+        scale={1.001}
+        color={ghost ? '#607986' : '#dbe6f0'}
+        transparent
+        opacity={ghost ? 0.2 : 0.56}
+      />
+    </mesh>
+  )
+}
+
+export function AnnularCutFace({
+  cutPos,
+  opacity = 1,
+}: {
+  cutPos: number
+  opacity?: number
+}) {
+  return (
+    <group position={[cutPos + 0.012, 0, 0]} rotation={[0, Math.PI / 2, 0]}>
+      <mesh renderOrder={18}>
+        <ringGeometry args={[INNER_R, OUTER_R, 64]} />
+        <meshBasicMaterial
+          color="#14272d"
+          transparent
+          opacity={Math.max(0.16, opacity * 0.92)}
+          side={THREE.DoubleSide}
+          depthWrite={false}
+        />
+      </mesh>
+      <mesh position={[0, 0, 0.006]} renderOrder={19}>
+        <planeGeometry args={[OUTER_R * 2.16, OUTER_R * 2.16]} />
+        <meshBasicMaterial
+          transparent
+          opacity={Math.max(0.18, opacity)}
+          side={THREE.DoubleSide}
+          depthTest={false}
+          depthWrite={false}
+          map={makeAnnulusTexture()}
+        />
+      </mesh>
+    </group>
+  )
 }
 
 /* Sección A–A del buje que se abate 90° y permanece superpuesta en la vista.
@@ -116,9 +166,6 @@ export function AbatirSection({
               map={makeAnnulusTexture()}
             />
           </mesh>
-          <sprite position={[0.2, 0.85, 0]} scale={[0.9, 0.35, 1]}>
-            <spriteMaterial transparent depthTest={false} map={makeTextTexture('A-A')} />
-          </sprite>
         </>
       ) : (
         <>
@@ -146,10 +193,6 @@ export function AbatirSection({
               map={makeLongitudinalTexture()}
             />
           </mesh>
-          {/* la etiqueta se ancla en X para que la rotación sobre X no la esconda */}
-          <sprite position={[LENGTH / 2 + 0.35, 0, 0]} scale={[0.9, 0.35, 1]}>
-            <spriteMaterial transparent depthTest={false} map={makeTextTexture('A-A')} />
-          </sprite>
         </>
       )}
     </group>
@@ -161,20 +204,30 @@ export function CuttingPlaneVisual({
   axis = 'x',
   angle = 0,
   label = 'A',
+  showSheet = true,
 }: {
   pos: number
   axis?: CutAxis
   angle?: number
   label?: string
+  showSheet?: boolean
 }) {
   if (axis === 'y') {
     // plano horizontal a la altura y=pos, extendido a lo largo de X
     return (
       <group position={[0, pos, 0]}>
-        <mesh rotation={[Math.PI / 2, 0, 0]}>
-          <planeGeometry args={[LENGTH + 0.4, OUTER_R * 2 + 0.4]} />
-          <meshBasicMaterial color="#ff6b2e" transparent opacity={0.18} side={THREE.DoubleSide} />
-        </mesh>
+        {showSheet && (
+          <mesh rotation={[Math.PI / 2, 0, 0]} renderOrder={8}>
+            <planeGeometry args={[LENGTH + 0.4, OUTER_R * 2 + 0.4]} />
+            <meshBasicMaterial
+              color="#ff6b2e"
+              transparent
+              opacity={0.075}
+              side={THREE.DoubleSide}
+              depthWrite={false}
+            />
+          </mesh>
+        )}
         <CuttingTrace axis="x" />
         <mesh position={[LENGTH / 2 + 0.2, 0, 0]}>
           <boxGeometry args={[0.16, 0.05, 0.05]} />
@@ -193,6 +246,18 @@ export function CuttingPlaneVisual({
   }
   return (
     <group position={[pos, 0, 0]} rotation={[0, 0, angle]}>
+      {showSheet && (
+        <mesh rotation={[0, Math.PI / 2, 0]} renderOrder={8}>
+          <planeGeometry args={[OUTER_R * 2 + 1.15, OUTER_R * 2 + 1.15]} />
+          <meshBasicMaterial
+            color="#ff6b2e"
+            transparent
+            opacity={0.07}
+            side={THREE.DoubleSide}
+            depthWrite={false}
+          />
+        </mesh>
+      )}
       <CuttingTrace axis="y" />
       <mesh position={[0, 1.12, 0]}>
         <boxGeometry args={[0.06, 0.18, 0.06]} />
@@ -319,8 +384,8 @@ function makeAnnulusTexture() {
   }
   ctx.restore()
 
-  ctx.strokeStyle = '#ff6b2e'
-  ctx.lineWidth = 9
+  ctx.strokeStyle = '#e7eef5'
+  ctx.lineWidth = 8
   ctx.beginPath()
   ctx.arc(cx, cx, outer - 4, 0, Math.PI * 2)
   ctx.stroke()
