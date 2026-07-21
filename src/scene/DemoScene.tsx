@@ -88,40 +88,41 @@ export function DemoScene({ embedded = false, onOpenFullscreen }: DemoSceneProps
     animRef.current = timeline
 
     timeline
-      .call(() => setGuidedBeat(1), [], 0.55)
+      .call(() => setGuidedBeat(1), [], 1)
       .call(() => {
         setMode('reveal')
         setGuidedBeat(2)
-      }, [], 1.15)
+      }, [], 2)
       .to(state, {
         reveal: 1,
-        duration: 1.2,
+        duration: 1.7,
         ease: 'power3.inOut',
         onUpdate: () => setRevealAmount(state.reveal),
-      }, 1.15)
+      }, 2)
       .call(() => {
         setMode('abatir')
         setGuidedBeat(3)
-      }, [], 2.35)
+      }, [], 3.7)
       .to(state, {
         reveal: 0.85,
-        duration: 0.3,
+        duration: 0.45,
         ease: 'power2.inOut',
         onUpdate: () => setRevealAmount(state.reveal),
-      }, 2.35)
+      }, 3.7)
       .to(state, {
         abatir: 1,
-        duration: 1.6,
+        duration: 2.2,
         ease: 'power3.inOut',
         onUpdate: () => setAbatirAmount(state.abatir),
-      }, 2.35)
-      .call(() => setGuidedBeat(4), [], 3.95)
+      }, 3.7)
+      .call(() => setGuidedBeat(4), [], 5.9)
       .to(state, {
         measure: 1,
-        duration: 0.95,
+        duration: 1.7,
         ease: 'power2.out',
         onUpdate: () => setMeasureAmount(state.measure),
-      }, 3.95)
+      }, 5.9)
+      .call(() => undefined, [], 9)
   }, [])
 
   useEffect(() => {
@@ -251,7 +252,7 @@ export function DemoScene({ embedded = false, onOpenFullscreen }: DemoSceneProps
           3 · Girar 90°
         </button>
         <button type="button" className="tool-btn demo-replay" onClick={runGuidedDemo}>
-          Repetir 5 s ↻
+          Repetir 9 s ↻
         </button>
         <div className="spacer" />
         {embedded && onOpenFullscreen && (

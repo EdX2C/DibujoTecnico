@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useRef, useState } from 'react'
 import gsap from 'gsap'
-import { slides, exerciseWhy } from '../content/slides'
+import { slides, exerciseWhy, SPEAKER_NAMES } from '../content/slides'
 import { DiagramFigure, HeroArt, MiniIcon } from './Diagrams'
 import { LightweightSectionDemo } from './LightweightSectionDemo'
 
@@ -21,6 +21,8 @@ const MARQUEE_TERMS = [
   'PLANO DE CORTE',
   'GEOMETRÍA DESCRIPTIVA',
 ]
+
+const REVERSED_FIGURE_SLIDES = new Set(['historia', 'definicion', 'plano', 'aplicacion'])
 
 function MarqueeStrip() {
   const items = [...MARQUEE_TERMS, ...MARQUEE_TERMS]
@@ -307,8 +309,9 @@ export function Presentation({ onOpenFullscreenDemo }: PresentationProps) {
               )}
 
               {(s.kind === 'content' || !s.kind) && (
-                <div className={`split-layout ${s.figure ? 'has-figure' : ''}`}>
+                <div className={`split-layout ${s.figure ? 'has-figure' : ''} ${REVERSED_FIGURE_SLIDES.has(s.id) ? 'is-reversed' : ''}`}>
                   <div>
+                    {s.eyebrow && <p className="slide-eyebrow anim-item">{s.eyebrow}</p>}
                     <h2 className="anim-item">{s.title}</h2>
                     {s.body?.map((p) => (
                       <p key={p} className="lead anim-item">
@@ -342,6 +345,7 @@ export function Presentation({ onOpenFullscreenDemo }: PresentationProps) {
 
               {s.kind === 'compare' && (
                 <>
+                  {s.eyebrow && <p className="slide-eyebrow anim-item">{s.eyebrow}</p>}
                   <h2 className="anim-item">{s.title}</h2>
                   <div className="compare-grid compare-spectrum">
                     {(s.bullets ?? []).map((b, bi) => {
@@ -350,6 +354,7 @@ export function Presentation({ onOpenFullscreenDemo }: PresentationProps) {
                       return (
                         <div key={b} className={`compare-item anim-item ${isOurs ? 'is-hero' : ''}`}>
                           <span className="compare-index">0{bi + 1}</span>
+                          {isOurs && <span className="compare-hero-label">TEMA ASIGNADO</span>}
                           <MiniIcon label={label.trim()} />
                           <div>
                             <strong>{label}</strong>
@@ -381,6 +386,7 @@ export function Presentation({ onOpenFullscreenDemo }: PresentationProps) {
 
               {s.kind === 'exercise' && (
                 <>
+                  {s.eyebrow && <p className="slide-eyebrow anim-item">{s.eyebrow}</p>}
                   <h2 className="anim-item">{s.title}</h2>
                   <div className="exercise-layout">
                     <div>
@@ -411,6 +417,7 @@ export function Presentation({ onOpenFullscreenDemo }: PresentationProps) {
 
               {s.kind === 'close' && (
                 <div className="closing-wrap">
+                  {s.eyebrow && <p className="slide-eyebrow anim-item">{s.eyebrow}</p>}
                   <h1 className="anim-item">
                     {s.title}
                   </h1>
@@ -457,6 +464,10 @@ export function Presentation({ onOpenFullscreenDemo }: PresentationProps) {
           <span>
             Tema
             <b>Corte girado o abatido</b>
+          </span>
+          <span>
+            Expone
+            <b>{SPEAKER_NAMES[slide.speaker]}</b>
           </span>
           <span>
             Lámina
