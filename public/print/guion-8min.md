@@ -2,29 +2,29 @@
 
 Participación equilibrada: cada integrante habla aproximadamente 4 minutos. La presentación queda condensada en **13 láminas**, sin separadores de acto ni recapitulaciones redundantes.
 
-## Integrante 1 (0:00–4:00) · Contexto, problema y definición
+## Integrante 1 (0:00–3:55) · Problema, concepto y plano A–A
 
 | Tiempo | Lámina | Qué decir |
 |---|---|---|
 | 0:00 | Portada | Nombres y gancho: “cortar y girar 90° permite ver lo que la pieza oculta”. |
-| 0:20 | De Monge al BIM | Monge → industria → ISO/R 128:1959 → ISO 128-3:2022 → CAD/BIM. La convención sobrevive al software. |
-| 0:55 | No se ve el interior | Problema: líneas ocultas ambiguas. Objetivo: interior visible y medible. |
-| 1:30 | Cortar y girar 90° | Señalar la secuencia: corta → de canto → gira → verdadera magnitud. |
-| 2:00 | **Demo 3D** | Botones 1 → 2 → 3. Tope **1:15**. “Más opciones” solo si sobra tiempo. Si falla, volver a la lámina 04. |
-| 3:15 | Corte ≠ sección | La sección gira alrededor de la traza. Buje: corte = corona + fondo; sección = solo corona. |
-| 3:55 | Cambio | “Ya vimos qué es; ahora, cómo se representa correctamente”. |
+| 0:20 | No se ve el interior | Problema: líneas ocultas ambiguas. Objetivo: interior visible y medible. |
+| 0:55 | Un lenguaje común | Monge → industria → ISO/R 128:1959 → ISO 128-3:2022 → CAD/BIM. La convención resuelve un problema común. |
+| 1:25 | Cortar y girar 90° | Señalar la secuencia: corta → de canto → gira → verdadera magnitud. |
+| 1:55 | Corte ≠ sección | La sección gira alrededor de la traza. Buje: corte = corona + fondo; sección = solo corona. |
+| 2:40 | Cuándo usarlo | Piezas largas y perfil constante. Fina superpuesta / gruesa desplazada. |
+| 3:10 | Plano A–A + observación | Traza, extremos, letras y flechas. Observador en la cola; se retira la mitad delantera. |
+| 3:55 | Cambio | “Ya sabemos por dónde mirar; Arantza mostrará qué superficies se rayan”. |
 
-## Integrante 2 (4:00–8:00) · Norma, comparación y ejercicio
+## Integrante 2 (3:55–7:50) · Rayado, demostración y aplicación
 
 | Tiempo | Lámina | Qué decir |
 |---|---|---|
-| 4:00 | Cuándo usarlo | Piezas largas y perfil constante. Fina superpuesta / gruesa desplazada. |
-| 4:35 | Plano A–A + observación | Traza, extremos, letras y flechas. Observador en la cola; se retira la mitad delantera. |
-| 5:30 | Rayado | Líneas finas, normalmente a 45°; solo material; huecos limpios. |
-| 6:10 | Cortes y secciones | Abatida: gira la sección. Concurrente: gira un plano oblicuo. No son sinónimos. |
-| 6:45 | Tres escalas | Mecánica, construcción y arquitectura: cambia la pieza, no la regla. |
-| 7:05 | Ejercicio | Mostrar el dibujo físico y leer únicamente la justificación. |
-| 7:40 | Cierre | “Lo oculto se volvió visible y medible”. Preguntas. |
+| 3:55 | Rayado | Líneas finas, normalmente a 45°; solo material; huecos limpios. |
+| 4:35 | **Demo 3D** | Botones 1 → 2 → 3. Señalar traza A–A, material rayado y hueco limpio. Tope **1:15**. |
+| 5:50 | Cortes y secciones | Abatida: gira la sección. Concurrente: gira un plano oblicuo. No son sinónimos. |
+| 6:25 | Tres escalas | Mecánica, construcción y arquitectura: cambia la pieza, no la regla. |
+| 6:45 | Ejercicio | Mostrar el dibujo físico y leer únicamente la justificación. |
+| 7:30 | Cierre | “Lo oculto se volvió visible y medible”. Preguntas. |
 
 ## Frase de justificación
 

@@ -94,7 +94,7 @@ function CutTitle() {
 /** Visual chapter (0=portada, 1..4) after condensing the deck to 13 slides. */
 function actForIndex(i: number) {
   if (i === 0) return 0
-  if (i === 1) return 1
+  if (i <= 2) return 1
   if (i <= 5) return 2
   if (i <= 9) return 3
   return 4

@@ -37,8 +37,8 @@ En la demo: **Reveal corte**, **Abatir 90°**, **Planos concurrentes**, slider d
 
 ## Estructura (8 minutos, 4 actos)
 
-- **Integrante 1:** historia Monge → ISO 128 → BIM, problema, giro 90°, demo 3D ≤1:15 y definición.
-- **Integrante 2:** cuándo usarlo, plano A–A + observación, rayado, diferencias, aplicaciones, ejercicio y cierre.
+- **Integrante 1 (0:00–3:55):** problema, contexto Monge → ISO 128 → BIM, giro 90°, definición, cuándo usarlo y plano A–A.
+- **Integrante 2 (3:55–7:50):** rayado, demo 3D ≤1:15, diferencias, aplicaciones, ejercicio y cierre.
 
 ## Checklist del ejercicio gráfico (buje: cilindro con agujero pasante)
 

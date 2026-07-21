@@ -38,25 +38,7 @@ export const slides: SlideContent[] = [
     note: 'Saluden con energía. Señalen el título: "miren la palabra girado: se corta por la mitad y la sección gira 90° hacia ustedes — eso es el tema de hoy". Anuncien el viaje: de dónde viene, qué es, cómo se usa.',
   },
 
-  /* ============ CONTEXTO ============ */
-  {
-    id: 'historia',
-    speaker: 1,
-    kind: 'content',
-    figure: 'historia',
-    eyebrow: 'Viaje en el tiempo',
-    title: 'De Monge al BIM',
-    bullets: [
-      '1795 · Monge formaliza cómo representar objetos 3D en un plano 2D.',
-      '1850 · La industria exige dibujos precisos para fabricar en serie.',
-      '1959 → 2022 · ISO/R 128 antecede a ISO 128-3:2022 para vistas, cortes y secciones.',
-      'Hoy · CAD y BIM conservan la convención en piezas, vigas y edificios.',
-    ],
-    key: 'Leer un corte conecta el plano con la fabricación y la construcción.',
-    note: '25–30 s. Timeline: Monge → industria → ISO/R 128:1959 como antecedente → ISO 128-3:2022 vigente → CAD/BIM. Una sola frase de obra: "una presa o una viga IPE se definen por su corte". No alargar: la aplicación por disciplina aparece cerca del ejercicio final.',
-  },
-
-  /* ============ PROBLEMA Y SOLUCIÓN ============ */
+  /* ============ PROBLEMA Y CONTEXTO ============ */
   {
     id: 'problema',
     speaker: 1,
@@ -70,8 +52,26 @@ export const slides: SlideContent[] = [
       'Utilidad: menos vistas, cero ambigüedad — el taller fabrica sin preguntar.',
     ],
     key: 'El corte convierte lo oculto en visible y medible.',
-    note: 'Este es el punto "objetivo y utilidad" de la rúbrica: decirlo con esas palabras. Empezar por el dolor: "¿cómo dibujas lo que no se ve?". Las líneas ocultas funcionan con 1 agujero, pero con varios el dibujo se vuelve ilegible. Objetivo del corte: convertir lo oculto en visible y medible. Utilidad: ahorra vistas y elimina ambigüedad.',
+    note: '35 s. Este es el punto "objetivo y utilidad" de la rúbrica: decirlo con esas palabras. Empezar por el dolor: "¿cómo dibujas lo que no se ve?". Las líneas ocultas funcionan con 1 agujero, pero con varios el dibujo se vuelve ilegible. Cierre-puente: "resolver ese problema exigió un lenguaje común".',
   },
+  {
+    id: 'historia',
+    speaker: 1,
+    kind: 'content',
+    figure: 'historia',
+    eyebrow: 'Por qué existe la convención',
+    title: 'Un lenguaje común',
+    bullets: [
+      '1795 · Monge formaliza cómo representar objetos 3D en un plano 2D.',
+      '1850 · La industria exige dibujos precisos para fabricar en serie.',
+      '1959 → 2022 · ISO/R 128 antecede a ISO 128-3:2022 para vistas, cortes y secciones.',
+      'Hoy · CAD y BIM conservan la convención en piezas, vigas y edificios.',
+    ],
+    key: 'Leer un corte conecta el plano con la fabricación y la construcción.',
+    note: '30 s. Timeline: Monge → industria → ISO/R 128:1959 como antecedente → ISO 128-3:2022 vigente → CAD/BIM. Una sola frase de obra: "una presa o una viga IPE se definen por su corte". Cierre-puente: "la regla que nos importa hoy es cortar y girar".',
+  },
+
+  /* ============ CONCEPTO Y DEFINICIÓN ============ */
   {
     id: 'idea',
     speaker: 1,
@@ -83,16 +83,7 @@ export const slides: SlideContent[] = [
       'Cuatro pasos en la figura: corta → de canto → gira 90° → de frente.',
     ],
     key: 'Se gira 90° para ver la sección en verdadera magnitud.',
-    note: 'Hablar mirando la animación, no las viñetas. Analogía: tubo o barra — de canto es una línea; al girar 90° aparece el perfil (en el buje, la corona). El rayado a 45° marca el material macizo. Enlace directo al demo: "ahora lo vemos en 3D".',
-  },
-  {
-    id: 'demo',
-    speaker: 1,
-    kind: 'demo',
-    eyebrow: 'Demo 3D',
-    title: 'Veámoslo en vivo',
-    body: ['Mismo buje del ejercicio: revelar el corte y abatir la sección 90°.'],
-    note: 'Tope duro 1:15. Secuencia viva: Revelar → Abatir 90°. Concurrente SOLO si sobra tiempo (si no, se nombra en Diferencias). Si el 3D falla, volver a la lámina 04: allí queda la secuencia completa y fija. Al terminar: "pongámosle nombres".',
+    note: '30 s. Hablar mirando la animación, no las viñetas. Analogía: tubo o barra — de canto es una línea; al girar 90° aparece el perfil (en el buje, la corona). El rayado a 45° marca el material macizo. Cierre-puente: "ya entendemos el gesto; ahora pongámosle el nombre correcto".',
   },
   {
     id: 'definicion',
@@ -106,13 +97,13 @@ export const slides: SlideContent[] = [
       'En el buje escalonado, el corte conserva el contorno de la brida que queda detrás; la sección muestra solo la corona tocada por el plano.',
     ],
     key: 'Sección = cara cortada. Corte = cara + fondo. Aquí gira la sección, no la pieza.',
-    note: 'Definición formal: el perfil gira 90° ALREDEDOR DE LA TRAZA hasta que su plano queda paralelo al plano de proyección. Después usar el buje escalonado: en CORTE aparece la corona rayada y también la brida posterior; en SECCIÓN queda solo la corona. No decir que la sección gira "en su propio plano".',
+    note: '45 s. Definición formal: el perfil gira 90° ALREDEDOR DE LA TRAZA hasta que su plano queda paralelo al plano de proyección. Después usar el buje escalonado: en CORTE aparece la corona rayada y también la brida posterior; en SECCIÓN queda solo la corona. No decir que la sección gira "en su propio plano". Puente: "¿cuándo vale la pena usarla?".',
   },
 
   /* ============ APLICACIÓN DE LA NORMA ============ */
   {
     id: 'cuando',
-    speaker: 2,
+    speaker: 1,
     kind: 'content',
     figure: 'cuando',
     eyebrow: 'Cuándo usarlo',
@@ -122,11 +113,11 @@ export const slides: SlideContent[] = [
       'Cuando un corte total no aporta nada más.',
     ],
     key: 'Sin desplazar → contorno fino. Desplazada → contorno grueso.',
-    note: 'La chip Clave lleva la norma fina/gruesa — no la lean dos veces. Hablar ejemplos: mango de herramienta, radio de volante, ala de perfil. No re-explicar el "por qué 90°" (ya está en Idea/Demo).',
+    note: '30 s. La chip Clave lleva la norma fina/gruesa — no la lean dos veces. Hablar ejemplos: mango de herramienta, radio de volante, ala de perfil. No re-explicar el "por qué 90°" (ya está en Idea; el demo lo integrará luego). Puente: "elegida la pieza, hay que indicar por dónde se corta".',
   },
   {
     id: 'plano',
-    speaker: 2,
+    speaker: 1,
     kind: 'content',
     figure: 'plano',
     eyebrow: 'Plano de corte',
@@ -137,7 +128,7 @@ export const slides: SlideContent[] = [
       'El observador está en la cola de las flechas; se retira la mitad que queda delante del plano.',
     ],
     key: 'La traza se marca en otra vista; las flechas indican desde dónde mirar.',
-    note: 'Esta lámina reúne plano de corte y dirección de observación. Primero: traza de trazo y punto, extremos gruesos y letras A–A. Segundo: las flechas son perpendiculares y apuntan igual. El observador está en la cola; se elimina mentalmente la mitad entre observador y plano. Aclarar que la convención exacta sigue la norma adoptada.',
+    note: '50 s. Esta lámina reúne plano de corte y dirección de observación. Primero: traza de trazo y punto, extremos gruesos y letras A–A. Segundo: las flechas son perpendiculares y apuntan igual. El observador está en la cola; se elimina mentalmente la mitad entre observador y plano. Handoff: "ya sabemos por dónde mirar; Arantza mostrará qué superficies se rayan".',
   },
   {
     id: 'rayado',
@@ -152,7 +143,16 @@ export const slides: SlideContent[] = [
       'Nervios, radios y ejes no se rayan si el corte es longitudinal.',
     ],
     key: 'Se raya solo el material macizo; los huecos, nunca.',
-    note: 'El rayado (o achurado) marca dónde el plano tocó material macizo; los huecos NO se rayan. En conjuntos, cada pieza cambia el ángulo o el espaciado para distinguirse. Un nervio cortado transversalmente (nuestro caso) sí se raya.',
+    note: '40 s. Retomar: "ya marcamos por dónde cortar; ahora vemos qué tocó el plano". El rayado marca material macizo; los huecos NO se rayan. En conjuntos, cada pieza cambia el ángulo o el espaciado. Un nervio cortado transversalmente sí se raya. Puente: "con todas las reglas claras, veámoslas trabajar juntas".',
+  },
+  {
+    id: 'demo',
+    speaker: 2,
+    kind: 'demo',
+    eyebrow: 'Demo 3D · síntesis',
+    title: 'Veámoslo en vivo',
+    body: ['Mismo buje del ejercicio: revelar el corte y abatir la sección 90°.'],
+    note: 'Tope duro 1:15. Secuencia viva: Revelar → Abatir 90°. Señalar la traza A–A de raya y punto, el material rayado y el hueco limpio. Concurrente SOLO si sobra tiempo. Si el 3D falla, volver a la lámina 04: allí queda la secuencia completa y fija. Cierre-puente: "ahora comparemos este recurso con los demás".',
   },
   {
     id: 'diferencias',

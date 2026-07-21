@@ -175,6 +175,7 @@ export function CuttingPlaneVisual({
           <planeGeometry args={[LENGTH + 0.4, OUTER_R * 2 + 0.4]} />
           <meshBasicMaterial color="#ff6b2e" transparent opacity={0.18} side={THREE.DoubleSide} />
         </mesh>
+        <CuttingTrace axis="x" />
         <mesh position={[LENGTH / 2 + 0.2, 0, 0]}>
           <boxGeometry args={[0.16, 0.05, 0.05]} />
           <meshBasicMaterial color="#ff6b2e" />
@@ -192,10 +193,7 @@ export function CuttingPlaneVisual({
   }
   return (
     <group position={[pos, 0, 0]} rotation={[0, 0, angle]}>
-      <mesh>
-        <planeGeometry args={[0.02, 2.0]} />
-        <meshBasicMaterial color="#ff6b2e" transparent opacity={0.85} side={THREE.DoubleSide} />
-      </mesh>
+      <CuttingTrace axis="y" />
       <mesh position={[0, 1.12, 0]}>
         <boxGeometry args={[0.06, 0.18, 0.06]} />
         <meshBasicMaterial color="#ff6b2e" />
@@ -208,6 +206,31 @@ export function CuttingPlaneVisual({
       <ArrowMarker position={[0.35, -0.98, 0]} dir={-1} />
       <HtmlLabel position={[0.15, 1.32, 0]} text={label} />
       <HtmlLabel position={[0.15, -1.32, 0]} text={label} />
+    </group>
+  )
+}
+
+/* La traza A–A es recta, pero su tipo de línea es mixto: raya larga y punto.
+   Los extremos engrosados y las flechas se dibujan por separado. */
+function CuttingTrace({ axis }: { axis: 'x' | 'y' }) {
+  const dashPositions = axis === 'y' ? [-0.86, -0.29, 0.29, 0.86] : [-1.12, -0.38, 0.38, 1.12]
+  const dotPositions = axis === 'y' ? [-0.575, 0, 0.575] : [-0.75, 0, 0.75]
+  const dashLength = axis === 'y' ? 0.32 : 0.42
+
+  return (
+    <group>
+      {dashPositions.map((p) => (
+        <mesh key={`dash-${p}`} position={axis === 'y' ? [0, p, 0.015] : [p, 0.015, 0]} renderOrder={30}>
+          <boxGeometry args={axis === 'y' ? [0.035, dashLength, 0.035] : [dashLength, 0.035, 0.035]} />
+          <meshBasicMaterial color="#ff6b2e" depthTest={false} />
+        </mesh>
+      ))}
+      {dotPositions.map((p) => (
+        <mesh key={`dot-${p}`} position={axis === 'y' ? [0, p, 0.015] : [p, 0.015, 0]} renderOrder={30}>
+          <boxGeometry args={[0.055, 0.055, 0.04]} />
+          <meshBasicMaterial color="#ff6b2e" depthTest={false} />
+        </mesh>
+      ))}
     </group>
   )
 }
