@@ -13,6 +13,7 @@ import {
   type CutAxis,
 } from './HandleModel'
 import type { DemoMode } from './demoStore'
+import { TechnicalDimensions } from './SceneDimensions'
 
 interface DemoSceneProps {
   embedded?: boolean
@@ -195,9 +196,16 @@ export function DemoScene({ embedded = false, onOpenFullscreen }: DemoSceneProps
       <div className="canvas-frame">
         <Canvas
           dpr={[1, 1.4]}
-          gl={{ antialias: true, localClippingEnabled: true, powerPreference: 'low-power' }}
+          shadows
+          gl={{
+            antialias: true,
+            localClippingEnabled: true,
+            powerPreference: 'high-performance',
+            toneMapping: THREE.ACESFilmicToneMapping,
+          }}
         >
           <color attach="background" args={['#0d1016']} />
+          <fog attach="fog" args={['#0d1016', 8, 15]} />
           <Suspense fallback={null}>
             <SceneContent
               cutAxis={cutAxis}
@@ -214,7 +222,7 @@ export function DemoScene({ embedded = false, onOpenFullscreen }: DemoSceneProps
           {mode === 'solid' && (
             <>
               PLANO A–A
-              <span>VISTA ESPACIAL · TRAZA MIXTA · FLECHAS</span>
+              <span>VISTA ESPACIAL · L 130 mm · Ø55 mm</span>
             </>
           )}
           {mode === 'reveal' && (
@@ -226,7 +234,7 @@ export function DemoScene({ embedded = false, onOpenFullscreen }: DemoSceneProps
           {mode === 'abatir' && (
             <>
               SECCIÓN ABATIDA A–A
-              <span>VISTA ORTOGONAL · VERDADERA MAGNITUD · Ø EXT. / Ø INT.</span>
+              <span>VERDADERA MAGNITUD · Ø55 · Ø30 · e 12.5 mm</span>
             </>
           )}
           {mode === 'concurrente' && (
@@ -249,6 +257,9 @@ export function DemoScene({ embedded = false, onOpenFullscreen }: DemoSceneProps
             </svg>
           </div>
         )}
+        <div className="demo-units-badge" aria-hidden="true">
+          COTAS VERDES · UNIDADES mm
+        </div>
         <div className="demo-hint">
           {mode === 'solid' &&
             (cutAxis === 'x'
@@ -258,7 +269,7 @@ export function DemoScene({ embedded = false, onOpenFullscreen }: DemoSceneProps
             (cutAxis === 'x'
               ? 'Paso 2 · La mitad retirada queda tenue; la sección todavía se observa de canto sobre A–A.'
               : 'Se retira la mitad superior: se ven las dos paredes y el hueco del taladro.')}
-          {mode === 'abatir' && 'Paso 3 · La sección gira 90° alrededor de la traza y queda superpuesta, en verdadera magnitud.'}
+          {mode === 'abatir' && 'Paso 3 · La sección gira 90° y permite leer Ø55, Ø30 y una pared de 12.5 mm en verdadera magnitud.'}
           {mode === 'concurrente' && 'El plano B gira hasta alinearse con A: todo en una sola vista.'}
         </div>
       </div>
@@ -286,6 +297,11 @@ function SceneContent({
   const { gl, camera } = useThree()
   useEffect(() => {
     gl.localClippingEnabled = true
+    gl.toneMapping = THREE.ACESFilmicToneMapping
+    gl.toneMappingExposure = 1.08
+    gl.outputColorSpace = THREE.SRGBColorSpace
+    gl.shadowMap.enabled = true
+    gl.shadowMap.type = THREE.PCFSoftShadowMap
   }, [gl])
 
   const frontClip = useMemo(() => new THREE.Plane(new THREE.Vector3(-1, 0, 0), 0), [])
@@ -333,13 +349,26 @@ function SceneContent({
   return (
     <>
       <OrthographicCamera makeDefault position={[0, 0.85, 6.6]} zoom={122} near={0.1} far={100} />
-      <ambientLight intensity={0.52} />
-      <hemisphereLight color="#d5e3ee" groundColor="#111820" intensity={0.7} />
+      <ambientLight intensity={0.42} />
+      <hemisphereLight color="#d9e8f4" groundColor="#101820" intensity={0.82} />
       <directionalLight
-        position={[4, 6, 4]}
-        intensity={1.08}
+        position={[4.5, 6, 5]}
+        intensity={2.05}
+        color="#f2f7fb"
+        castShadow
+        shadow-mapSize-width={1024}
+        shadow-mapSize-height={1024}
+        shadow-camera-near={1}
+        shadow-camera-far={18}
+        shadow-camera-left={-4}
+        shadow-camera-right={4}
+        shadow-camera-top={4}
+        shadow-camera-bottom={-4}
       />
-      <spotLight position={[-4, 3, 4]} intensity={0.36} color="#53d5e0" />
+      <directionalLight position={[0, 1.2, 7]} intensity={1.15} color="#a9cadd" />
+      <spotLight position={[-4, 3.4, 4.5]} intensity={1.35} angle={0.52} penumbra={0.9} color="#53d5e0" />
+      <spotLight position={[3, -0.2, 5]} intensity={0.72} angle={0.5} penumbra={1} color="#ff9a68" />
+      <pointLight position={[-2.8, 0.5, -2.5]} intensity={0.55} color="#8fb9d2" />
 
       <group>
         <BujeBody clipPlanes={revealAmount > 0.01 ? [frontClip] : []} color="#7a91a8" />
@@ -348,7 +377,7 @@ function SceneContent({
           <BujeBody
             clipPlanes={[backClip]}
             color="#657581"
-            opacity={Math.max(0.14, 1 - revealAmount * 0.86)}
+            opacity={Math.max(0.2, 1 - revealAmount * 0.82)}
             position={removedPos}
             ghost
           />
@@ -398,13 +427,15 @@ function SceneContent({
             </mesh>
           </>
         )}
+
+        <TechnicalDimensions mode={mode} cutPosition={cutPosition} abatirAmount={abatirAmount} />
       </group>
 
-      <mesh position={[0, -1.33, 0]} rotation={[-Math.PI / 2, 0, 0]} scale={[1.8, 0.62, 1]}>
-        <circleGeometry args={[1, 32]} />
-        <meshBasicMaterial color="#000000" transparent opacity={0.18} depthWrite={false} />
+      <mesh position={[0, -1.35, 0]} rotation={[-Math.PI / 2, 0, 0]} receiveShadow>
+        <planeGeometry args={[12, 8]} />
+        <meshStandardMaterial color="#0b1117" metalness={0.08} roughness={0.92} />
       </mesh>
-      <gridHelper args={[10, 20, '#182129', '#11171d']} position={[0, -1.34, 0]} />
+      <gridHelper args={[10, 20, '#25333d', '#141d24']} position={[0, -1.34, 0]} />
       <OrbitControls
         enabled={autoOrbit || mode === 'concurrente'}
         enablePan={false}

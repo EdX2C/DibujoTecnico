@@ -942,6 +942,41 @@ a {
   color: var(--cyan);
 }
 
+.scene-dimension-label {
+  display: inline-flex;
+  align-items: center;
+  min-height: 1.55rem;
+  padding: 0.16rem 0.42rem;
+  border: 1px solid rgba(143, 225, 95, 0.48);
+  background: rgba(7, 12, 14, 0.9);
+  box-shadow: 0 0 0 2px rgba(7, 12, 14, 0.55), 0 4px 14px rgba(0, 0, 0, 0.28);
+  color: #9aec68;
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  line-height: 1;
+  white-space: nowrap;
+  pointer-events: none;
+  user-select: none;
+}
+
+.demo-units-badge {
+  position: absolute;
+  right: 1rem;
+  bottom: 1rem;
+  z-index: 3;
+  padding: 0.38rem 0.56rem;
+  border-right: 2px solid #8fe15f;
+  background: rgba(7, 12, 14, 0.82);
+  color: #8fe15f;
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  pointer-events: none;
+}
+
 .demo-rotation-cue {
   position: absolute;
   top: 20%;
@@ -1677,6 +1712,18 @@ a {
     top: 22%;
     left: 46%;
     width: 118px;
+  }
+
+  .scene-dimension-label {
+    min-height: 1.3rem;
+    padding: 0.12rem 0.3rem;
+    font-size: 0.66rem;
+  }
+
+  .demo-units-badge {
+    right: 0.65rem;
+    bottom: 0.65rem;
+    font-size: 0.58rem;
   }
 
   .compare-item {

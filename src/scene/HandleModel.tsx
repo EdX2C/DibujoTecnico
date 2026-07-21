@@ -8,23 +8,109 @@ import { Edges } from '@react-three/drei'
 export const OUTER_R = 0.55
 export const INNER_R = 0.3
 export const LENGTH = 2.6
+const CHAMFER = 0.035
 
 export type CutAxis = 'x' | 'y'
 
 function tubeGeometry() {
-  const shape = new THREE.Shape()
-  shape.absarc(0, 0, OUTER_R, 0, Math.PI * 2, false)
-  const hole = new THREE.Path()
-  hole.absarc(0, 0, INNER_R, 0, Math.PI * 2, true)
-  shape.holes.push(hole)
-  const geo = new THREE.ExtrudeGeometry(shape, {
-    depth: LENGTH,
-    bevelEnabled: false,
-    curveSegments: 48,
-  })
-  geo.translate(0, 0, -LENGTH / 2)
-  geo.rotateY(Math.PI / 2)
-  return geo
+  const radialSegments = 64
+  const positions: number[] = []
+  const normals: number[] = []
+  const uvs: number[] = []
+  const indices: number[] = []
+  const geometry = new THREE.BufferGeometry()
+
+  const addStrip = (
+    a: { x: number; r: number },
+    b: { x: number; r: number },
+    inward: boolean,
+    materialIndex: number,
+  ) => {
+    const vertexStart = positions.length / 3
+    const indexStart = indices.length
+    const slope = (b.r - a.r) / (b.x - a.x)
+
+    for (let i = 0; i <= radialSegments; i += 1) {
+      const u = i / radialSegments
+      const angle = u * Math.PI * 2
+      const cos = Math.cos(angle)
+      const sin = Math.sin(angle)
+      const normal = new THREE.Vector3(-slope, cos, sin).normalize()
+      if (inward) normal.multiplyScalar(-1)
+
+      for (const [v, ring] of [a, b].entries()) {
+        positions.push(ring.x, ring.r * cos, ring.r * sin)
+        normals.push(normal.x, normal.y, normal.z)
+        uvs.push(u, v)
+      }
+    }
+
+    for (let i = 0; i < radialSegments; i += 1) {
+      const a0 = vertexStart + i * 2
+      const b0 = a0 + 1
+      const a1 = a0 + 2
+      const b1 = a0 + 3
+      indices.push(a0, b0, a1, a1, b0, b1)
+    }
+
+    geometry.addGroup(indexStart, radialSegments * 6, materialIndex)
+  }
+
+  const addEndFace = (x: number, normalX: number) => {
+    const vertexStart = positions.length / 3
+    const indexStart = indices.length
+    const outerFaceR = OUTER_R - CHAMFER
+    const innerFaceR = INNER_R + CHAMFER
+
+    for (let i = 0; i <= radialSegments; i += 1) {
+      const u = i / radialSegments
+      const angle = u * Math.PI * 2
+      const cos = Math.cos(angle)
+      const sin = Math.sin(angle)
+      positions.push(x, outerFaceR * cos, outerFaceR * sin)
+      positions.push(x, innerFaceR * cos, innerFaceR * sin)
+      normals.push(normalX, 0, 0, normalX, 0, 0)
+      uvs.push(u, 1, u, 0)
+    }
+
+    for (let i = 0; i < radialSegments; i += 1) {
+      const outer0 = vertexStart + i * 2
+      const inner0 = outer0 + 1
+      const outer1 = outer0 + 2
+      const inner1 = outer0 + 3
+      indices.push(outer0, inner0, outer1, outer1, inner0, inner1)
+    }
+
+    geometry.addGroup(indexStart, radialSegments * 6, 2)
+  }
+
+  const leftX = -LENGTH / 2
+  const rightX = LENGTH / 2
+  const outerRings = [
+    { x: leftX, r: OUTER_R - CHAMFER },
+    { x: leftX + CHAMFER, r: OUTER_R },
+    { x: rightX - CHAMFER, r: OUTER_R },
+    { x: rightX, r: OUTER_R - CHAMFER },
+  ]
+  const innerRings = [
+    { x: leftX, r: INNER_R + CHAMFER },
+    { x: leftX + CHAMFER, r: INNER_R },
+    { x: rightX - CHAMFER, r: INNER_R },
+    { x: rightX, r: INNER_R + CHAMFER },
+  ]
+
+  for (let i = 0; i < outerRings.length - 1; i += 1) addStrip(outerRings[i], outerRings[i + 1], false, 0)
+  for (let i = 0; i < innerRings.length - 1; i += 1) addStrip(innerRings[i], innerRings[i + 1], true, 1)
+  addEndFace(leftX, -1)
+  addEndFace(rightX, 1)
+
+  geometry.setAttribute('position', new THREE.Float32BufferAttribute(positions, 3))
+  geometry.setAttribute('normal', new THREE.Float32BufferAttribute(normals, 3))
+  geometry.setAttribute('uv', new THREE.Float32BufferAttribute(uvs, 2))
+  geometry.setIndex(indices)
+  geometry.computeBoundingBox()
+  geometry.computeBoundingSphere()
+  return geometry
 }
 
 export function BujeBody({
@@ -44,18 +130,49 @@ export function BujeBody({
 
   const material = useMemo(
     () =>
-      new THREE.MeshStandardMaterial({
+      new THREE.MeshPhysicalMaterial({
         color,
-        metalness: 0.16,
-        roughness: 0.72,
+        metalness: ghost ? 0.12 : 0.24,
+        roughness: ghost ? 0.62 : 0.36,
+        clearcoat: ghost ? 0 : 0.12,
+        clearcoatRoughness: 0.3,
         transparent: opacity < 1,
         opacity,
         side: THREE.DoubleSide,
         clipShadows: true,
         depthWrite: opacity > 0.92,
-        envMapIntensity: 0.42,
+        envMapIntensity: 0.7,
       }),
-    [color, opacity],
+    [color, ghost, opacity],
+  )
+
+  const boreMaterial = useMemo(
+    () =>
+      new THREE.MeshPhysicalMaterial({
+        color: ghost ? '#334650' : '#17242c',
+        metalness: ghost ? 0.1 : 0.42,
+        roughness: 0.5,
+        transparent: opacity < 1,
+        opacity: ghost ? opacity * 0.72 : opacity,
+        side: THREE.DoubleSide,
+        depthWrite: opacity > 0.92,
+      }),
+    [ghost, opacity],
+  )
+
+  const endMaterial = useMemo(
+    () =>
+      new THREE.MeshPhysicalMaterial({
+        color: ghost ? '#536572' : '#93aabd',
+        metalness: ghost ? 0.1 : 0.22,
+        roughness: ghost ? 0.6 : 0.37,
+        clearcoat: ghost ? 0 : 0.1,
+        transparent: opacity < 1,
+        opacity,
+        side: THREE.DoubleSide,
+        depthWrite: opacity > 0.92,
+      }),
+    [ghost, opacity],
   )
 
   material.opacity = opacity
@@ -64,17 +181,29 @@ export function BujeBody({
   material.color.set(color)
   material.clippingPlanes = clipPlanes ?? []
   material.needsUpdate = true
+  boreMaterial.opacity = ghost ? opacity * 0.72 : opacity
+  boreMaterial.transparent = opacity < 1
+  boreMaterial.depthWrite = opacity > 0.92
+  boreMaterial.clippingPlanes = clipPlanes ?? []
+  boreMaterial.needsUpdate = true
+  endMaterial.opacity = opacity
+  endMaterial.transparent = opacity < 1
+  endMaterial.depthWrite = opacity > 0.92
+  endMaterial.clippingPlanes = clipPlanes ?? []
+  endMaterial.needsUpdate = true
 
   return (
-    <mesh geometry={geo} material={material} position={position} castShadow={!ghost} receiveShadow={!ghost}>
-      <Edges
-        threshold={18}
-        scale={1.001}
-        color={ghost ? '#607986' : '#dbe6f0'}
-        transparent
-        opacity={ghost ? 0.2 : 0.56}
-      />
-    </mesh>
+    <group position={position}>
+      <mesh geometry={geo} material={[material, boreMaterial, endMaterial]} castShadow={!ghost} receiveShadow={!ghost}>
+        <Edges
+          threshold={22}
+          scale={1.001}
+          color={ghost ? '#607986' : '#e4edf4'}
+          transparent
+          opacity={ghost ? 0.32 : 0.68}
+        />
+      </mesh>
+    </group>
   )
 }
 
