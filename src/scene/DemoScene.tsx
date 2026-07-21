@@ -1,4 +1,4 @@
-import { Suspense, useEffect, useMemo, useRef, useState } from 'react'
+import { Suspense, useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { Canvas, useFrame, useThree } from '@react-three/fiber'
 import { OrbitControls, OrthographicCamera } from '@react-three/drei'
 import * as THREE from 'three'
@@ -20,20 +20,122 @@ interface DemoSceneProps {
   onOpenFullscreen?: () => void
 }
 
+type GuidedBeat = 0 | 1 | 2 | 3 | 4
+
+const GUIDED_COPY: Record<GuidedBeat, { eyebrow: string; title: string; body: string }> = {
+  0: {
+    eyebrow: 'Problema',
+    title: 'El interior está oculto',
+    body: 'Por fuera no podemos leer el espesor.',
+  },
+  1: {
+    eyebrow: '1 · Cortar',
+    title: 'Plano A–A',
+    body: 'El plano imaginario atraviesa la pieza.',
+  },
+  2: {
+    eyebrow: '2 · Retirar',
+    title: 'Quitamos la mitad delantera',
+    body: 'La sección aparece de canto: todavía parece una línea.',
+  },
+  3: {
+    eyebrow: '3 · Girar 90°',
+    title: 'No gira la pieza',
+    body: 'Gira solo la sección 90°.',
+  },
+  4: {
+    eyebrow: 'Resultado',
+    title: 'Una línea se convierte en forma real',
+    body: 'Ahora podemos medir Ø55, Ø30 y una pared de 12.5 mm.',
+  },
+}
+
 export function DemoScene({ embedded = false, onOpenFullscreen }: DemoSceneProps) {
   const [mode, setMode] = useState<DemoMode>('solid')
   const [cutAxis, setCutAxis] = useState<CutAxis>('x')
   const [cutPosition, setCutPosition] = useState(0)
   const [revealAmount, setRevealAmount] = useState(0)
   const [abatirAmount, setAbatirAmount] = useState(0)
+  const [measureAmount, setMeasureAmount] = useState(0)
   const [concurrenteAmount, setConcurrenteAmount] = useState(0)
   const [autoOrbit, setAutoOrbit] = useState(false)
+  const [introRunning, setIntroRunning] = useState(true)
+  const [guidedBeat, setGuidedBeat] = useState<GuidedBeat | null>(0)
   const animRef = useRef<gsap.core.Tween | gsap.core.Timeline | null>(null)
 
   const posLimit = cutAxis === 'x' ? 0.9 : 0.45
 
+  const runGuidedDemo = useCallback(() => {
+    animRef.current?.kill()
+    setAutoOrbit(false)
+    setCutAxis('x')
+    setCutPosition(0)
+    setMode('solid')
+    setRevealAmount(0)
+    setAbatirAmount(0)
+    setMeasureAmount(0)
+    setConcurrenteAmount(0)
+    setIntroRunning(true)
+    setGuidedBeat(0)
+
+    const state = { reveal: 0, abatir: 0, measure: 0 }
+    const timeline = gsap.timeline({
+      onComplete: () => {
+        setIntroRunning(false)
+        setGuidedBeat(null)
+      },
+    })
+    animRef.current = timeline
+
+    timeline
+      .call(() => setGuidedBeat(1), [], 0.55)
+      .call(() => {
+        setMode('reveal')
+        setGuidedBeat(2)
+      }, [], 1.15)
+      .to(state, {
+        reveal: 1,
+        duration: 1.2,
+        ease: 'power3.inOut',
+        onUpdate: () => setRevealAmount(state.reveal),
+      }, 1.15)
+      .call(() => {
+        setMode('abatir')
+        setGuidedBeat(3)
+      }, [], 2.35)
+      .to(state, {
+        reveal: 0.85,
+        duration: 0.3,
+        ease: 'power2.inOut',
+        onUpdate: () => setRevealAmount(state.reveal),
+      }, 2.35)
+      .to(state, {
+        abatir: 1,
+        duration: 1.6,
+        ease: 'power3.inOut',
+        onUpdate: () => setAbatirAmount(state.abatir),
+      }, 2.35)
+      .call(() => setGuidedBeat(4), [], 3.95)
+      .to(state, {
+        measure: 1,
+        duration: 0.95,
+        ease: 'power2.out',
+        onUpdate: () => setMeasureAmount(state.measure),
+      }, 3.95)
+  }, [])
+
+  useEffect(() => {
+    runGuidedDemo()
+    return () => {
+      animRef.current?.kill()
+    }
+  }, [runGuidedDemo])
+
   const runMode = (next: DemoMode) => {
     animRef.current?.kill()
+    setIntroRunning(false)
+    setGuidedBeat(null)
+    setMeasureAmount(0)
     setMode(next)
 
     if (next === 'solid') {
@@ -74,6 +176,7 @@ export function DemoScene({ embedded = false, onOpenFullscreen }: DemoSceneProps
       animRef.current = tl
       const revealState = { r: revealAmount }
       const abatirState = { a: 0 }
+      const measureState = { m: 0 }
       setConcurrenteAmount(0)
       tl.to(revealState, {
         r: 0.85,
@@ -89,7 +192,12 @@ export function DemoScene({ embedded = false, onOpenFullscreen }: DemoSceneProps
           onUpdate: () => setAbatirAmount(abatirState.a),
         },
         '-=0.2',
-      )
+      ).to(measureState, {
+        m: 1,
+        duration: 0.7,
+        ease: 'power2.out',
+        onUpdate: () => setMeasureAmount(measureState.m),
+      }, '-=0.15')
       return
     }
 
@@ -113,12 +221,13 @@ export function DemoScene({ embedded = false, onOpenFullscreen }: DemoSceneProps
     setCutPosition(0)
     setRevealAmount(0)
     setAbatirAmount(0)
+    setMeasureAmount(0)
     setConcurrenteAmount(0)
     setMode('solid')
   }
 
   return (
-    <div className={embedded ? 'demo-wrap' : 'fullscreen-demo'}>
+    <div className={`${embedded ? 'demo-wrap' : 'fullscreen-demo'} ${introRunning ? 'is-guided' : ''}`}>
       <div className="demo-toolbar">
         <button
           type="button"
@@ -140,6 +249,9 @@ export function DemoScene({ embedded = false, onOpenFullscreen }: DemoSceneProps
           onClick={() => runMode('abatir')}
         >
           3 · Girar 90°
+        </button>
+        <button type="button" className="tool-btn demo-replay" onClick={runGuidedDemo}>
+          Repetir 5 s ↻
         </button>
         <div className="spacer" />
         {embedded && onOpenFullscreen && (
@@ -212,12 +324,26 @@ export function DemoScene({ embedded = false, onOpenFullscreen }: DemoSceneProps
               cutPosition={cutPosition}
               revealAmount={revealAmount}
               abatirAmount={abatirAmount}
+              measureAmount={measureAmount}
               concurrenteAmount={concurrenteAmount}
               mode={mode}
               autoOrbit={autoOrbit}
+              introRunning={introRunning}
             />
           </Suspense>
         </Canvas>
+        {guidedBeat !== null && (
+          <div key={guidedBeat} className={`demo-guided-overlay beat-${guidedBeat}`} role="status" aria-live="polite">
+            <span>{GUIDED_COPY[guidedBeat].eyebrow}</span>
+            <strong>{GUIDED_COPY[guidedBeat].title}</strong>
+            <p>{GUIDED_COPY[guidedBeat].body}</p>
+            <div className="demo-guided-progress" aria-hidden="true">
+              {([0, 1, 2, 3, 4] as GuidedBeat[]).map((beat) => (
+                <i key={beat} className={beat <= guidedBeat ? 'is-on' : ''} />
+              ))}
+            </div>
+          </div>
+        )}
         <div className={`demo-tech-label mode-${mode}`} aria-hidden="true">
           {mode === 'solid' && (
             <>
@@ -228,7 +354,7 @@ export function DemoScene({ embedded = false, onOpenFullscreen }: DemoSceneProps
           {mode === 'reveal' && (
             <>
               SECCIÓN DE CANTO
-              <span>VISTA ORTOGONAL · PERFIL AÚN EN SU PLANO</span>
+              <span>VISTA ESPACIAL · PERFIL AÚN EN SU PLANO</span>
             </>
           )}
           {mode === 'abatir' && (
@@ -244,7 +370,7 @@ export function DemoScene({ embedded = false, onOpenFullscreen }: DemoSceneProps
             </>
           )}
         </div>
-        {mode === 'abatir' && (
+        {mode === 'abatir' && !introRunning && (
           <div className="demo-rotation-cue" aria-hidden="true">
             <svg viewBox="0 0 170 126" role="img" aria-label="Giro de noventa grados">
               <defs>
@@ -257,8 +383,10 @@ export function DemoScene({ embedded = false, onOpenFullscreen }: DemoSceneProps
             </svg>
           </div>
         )}
-        <div className="demo-units-badge" aria-hidden="true">
-          COTAS VERDES · UNIDADES mm
+        <div className="demo-color-key" aria-hidden="true">
+          <span className="is-cut">CORTE</span>
+          <span className="is-section">SECCIÓN</span>
+          <span className="is-dimension">COTAS · mm</span>
         </div>
         <div className="demo-hint">
           {mode === 'solid' &&
@@ -282,17 +410,21 @@ function SceneContent({
   cutPosition,
   revealAmount,
   abatirAmount,
+  measureAmount,
   concurrenteAmount,
   mode,
   autoOrbit,
+  introRunning,
 }: {
   cutAxis: CutAxis
   cutPosition: number
   revealAmount: number
   abatirAmount: number
+  measureAmount: number
   concurrenteAmount: number
   mode: DemoMode
   autoOrbit: boolean
+  introRunning: boolean
 }) {
   const { gl, camera } = useThree()
   useEffect(() => {
@@ -313,14 +445,14 @@ function SceneContent({
   // Removed half slides along the cut axis
   const removedPos: [number, number, number] =
     cutAxis === 'x'
-      ? [removedOffset, 0, revealAmount * 0.35]
-      : [0, removedOffset, revealAmount * 0.35]
+      ? [removedOffset, 0, revealAmount * 0.5]
+      : [0, removedOffset, revealAmount * 0.5]
   const spatialCamera = useMemo(() => new THREE.Vector3(4.8, 2.6, 6.3), [])
   const technicalCamera = useMemo(() => new THREE.Vector3(0, 0.85, 6.6), [])
 
   useFrame(() => {
     if (!autoOrbit && mode !== 'concurrente') {
-      const technicalView = THREE.MathUtils.smoothstep(revealAmount, 0.05, 0.82)
+      const technicalView = THREE.MathUtils.smoothstep(abatirAmount, 0.08, 0.88)
       camera.position.lerpVectors(spatialCamera, technicalCamera, technicalView)
       camera.lookAt(0, 0, 0)
       camera.updateProjectionMatrix()
@@ -345,6 +477,7 @@ function SceneContent({
   })
 
   const plane2Angle = THREE.MathUtils.lerp(-Math.PI / 3, -0.12, concurrenteAmount)
+  const sectionFocus = THREE.MathUtils.smoothstep(abatirAmount, 0.08, 0.86)
 
   return (
     <>
@@ -371,7 +504,11 @@ function SceneContent({
       <pointLight position={[-2.8, 0.5, -2.5]} intensity={0.55} color="#8fb9d2" />
 
       <group>
-        <BujeBody clipPlanes={revealAmount > 0.01 ? [frontClip] : []} color="#7a91a8" />
+        <BujeBody
+          clipPlanes={revealAmount > 0.01 ? [frontClip] : []}
+          color="#7a91a8"
+          opacity={THREE.MathUtils.lerp(1, 0.52, sectionFocus)}
+        />
 
         {revealAmount > 0.01 && (
           <BujeBody
@@ -428,7 +565,13 @@ function SceneContent({
           </>
         )}
 
-        <TechnicalDimensions mode={mode} cutPosition={cutPosition} abatirAmount={abatirAmount} />
+        <TechnicalDimensions
+          mode={mode}
+          cutPosition={cutPosition}
+          abatirAmount={abatirAmount}
+          measureAmount={measureAmount}
+          hideSolid={introRunning}
+        />
       </group>
 
       <mesh position={[0, -1.35, 0]} rotation={[-Math.PI / 2, 0, 0]} receiveShadow>

@@ -96,38 +96,54 @@ function SolidDimensions() {
   )
 }
 
-function AbatirDimensions({ cutPosition, opacity }: { cutPosition: number; opacity: number }) {
+function AbatirDimensions({
+  cutPosition,
+  opacity,
+  measureAmount,
+}: {
+  cutPosition: number
+  opacity: number
+  measureAmount: number
+}) {
   const outerDimX = -0.78
   const frontZ = 0.8
-  const segments = useMemo<Segment[]>(
-    () => [
-      [[cutPosition - OUTER_R, -OUTER_R, frontZ], [cutPosition + outerDimX, -OUTER_R, frontZ]],
-      [[cutPosition - OUTER_R, OUTER_R, frontZ], [cutPosition + outerDimX, OUTER_R, frontZ]],
-      [[cutPosition + outerDimX, -OUTER_R, frontZ], [cutPosition + outerDimX, OUTER_R, frontZ]],
-      [[cutPosition - INNER_R, 0, frontZ], [cutPosition + INNER_R, 0, frontZ]],
-      [[cutPosition + INNER_R, 0, frontZ], [cutPosition + 0.72, 0.28, frontZ]],
-      [[cutPosition + 0.72, 0.28, frontZ], [cutPosition + 1.02, 0.28, frontZ]],
-      [[cutPosition + 0.39, -0.39, frontZ], [cutPosition + 0.72, -0.7, frontZ]],
-      [[cutPosition + 0.72, -0.7, frontZ], [cutPosition + 1.08, -0.7, frontZ]],
-    ],
+  const segments = useMemo<{ outer: Segment[]; inner: Segment[]; wall: Segment[] }>(
+    () => ({
+      outer: [
+        [[cutPosition - OUTER_R, -OUTER_R, frontZ], [cutPosition + outerDimX, -OUTER_R, frontZ]],
+        [[cutPosition - OUTER_R, OUTER_R, frontZ], [cutPosition + outerDimX, OUTER_R, frontZ]],
+        [[cutPosition + outerDimX, -OUTER_R, frontZ], [cutPosition + outerDimX, OUTER_R, frontZ]],
+      ],
+      inner: [
+        [[cutPosition - INNER_R, 0, frontZ], [cutPosition + INNER_R, 0, frontZ]],
+        [[cutPosition + INNER_R, 0, frontZ], [cutPosition + 0.72, 0.28, frontZ]],
+        [[cutPosition + 0.72, 0.28, frontZ], [cutPosition + 1.02, 0.28, frontZ]],
+      ],
+      wall: [
+        [[cutPosition + 0.39, -0.39, frontZ], [cutPosition + 0.72, -0.7, frontZ]],
+        [[cutPosition + 0.72, -0.7, frontZ], [cutPosition + 1.08, -0.7, frontZ]],
+      ],
+    }),
     [cutPosition, outerDimX],
   )
 
+  const outerOpacity = opacity * THREE.MathUtils.smoothstep(measureAmount, 0, 0.3)
+  const innerOpacity = opacity * THREE.MathUtils.smoothstep(measureAmount, 0.24, 0.64)
+  const wallOpacity = opacity * THREE.MathUtils.smoothstep(measureAmount, 0.58, 0.96)
+
   return (
     <group>
-      <SegmentLines segments={segments} opacity={opacity} />
-      <ArrowHead position={[cutPosition + outerDimX, -OUTER_R, frontZ]} direction="up" opacity={opacity} />
-      <ArrowHead position={[cutPosition + outerDimX, OUTER_R, frontZ]} direction="down" opacity={opacity} />
-      <ArrowHead position={[cutPosition - INNER_R, 0, frontZ]} direction="right" opacity={opacity} />
-      <ArrowHead position={[cutPosition + INNER_R, 0, frontZ]} direction="left" opacity={opacity} />
-      <ArrowHead position={[cutPosition + 0.39, -0.39, frontZ]} direction="left" opacity={opacity} />
-      {opacity > 0.72 && (
-        <>
-          <DimensionLabel position={[cutPosition - 1.02, 0, frontZ]}>Ø55</DimensionLabel>
-          <DimensionLabel position={[cutPosition + 1.18, 0.28, frontZ]}>Ø30</DimensionLabel>
-          <DimensionLabel position={[cutPosition + 1.26, -0.7, frontZ]}>12.5</DimensionLabel>
-        </>
-      )}
+      <SegmentLines segments={segments.outer} opacity={outerOpacity} />
+      <SegmentLines segments={segments.inner} opacity={innerOpacity} />
+      <SegmentLines segments={segments.wall} opacity={wallOpacity} />
+      <ArrowHead position={[cutPosition + outerDimX, -OUTER_R, frontZ]} direction="up" opacity={outerOpacity} />
+      <ArrowHead position={[cutPosition + outerDimX, OUTER_R, frontZ]} direction="down" opacity={outerOpacity} />
+      <ArrowHead position={[cutPosition - INNER_R, 0, frontZ]} direction="right" opacity={innerOpacity} />
+      <ArrowHead position={[cutPosition + INNER_R, 0, frontZ]} direction="left" opacity={innerOpacity} />
+      <ArrowHead position={[cutPosition + 0.39, -0.39, frontZ]} direction="left" opacity={wallOpacity} />
+      {outerOpacity > 0.7 && <DimensionLabel position={[cutPosition - 1.02, 0, frontZ]}>Ø55</DimensionLabel>}
+      {innerOpacity > 0.7 && <DimensionLabel position={[cutPosition + 1.18, 0.28, frontZ]}>Ø30</DimensionLabel>}
+      {wallOpacity > 0.7 && <DimensionLabel position={[cutPosition + 1.26, -0.7, frontZ]}>12.5</DimensionLabel>}
     </group>
   )
 }
@@ -136,14 +152,24 @@ export function TechnicalDimensions({
   mode,
   cutPosition,
   abatirAmount,
+  measureAmount,
+  hideSolid,
 }: {
   mode: DemoMode
   cutPosition: number
   abatirAmount: number
+  measureAmount: number
+  hideSolid: boolean
 }) {
-  if (mode === 'solid') return <SolidDimensions />
+  if (mode === 'solid' && !hideSolid) return <SolidDimensions />
   if (mode === 'abatir' && abatirAmount > 0.4) {
-    return <AbatirDimensions cutPosition={cutPosition} opacity={THREE.MathUtils.smoothstep(abatirAmount, 0.4, 0.82)} />
+    return (
+      <AbatirDimensions
+        cutPosition={cutPosition}
+        opacity={THREE.MathUtils.smoothstep(abatirAmount, 0.4, 0.82)}
+        measureAmount={measureAmount}
+      />
+    )
   }
   return null
 }

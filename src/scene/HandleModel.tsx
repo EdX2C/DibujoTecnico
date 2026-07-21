@@ -254,6 +254,7 @@ export function AbatirSection({
   axis?: CutAxis
 }) {
   const group = useRef<THREE.Group>(null)
+  const trailAmounts = [Math.max(0, amount - 0.12), Math.max(0, amount - 0.26)]
 
   useFrame(() => {
     const g = group.current
@@ -270,7 +271,29 @@ export function AbatirSection({
   })
 
   return (
-    <group ref={group}>
+    <>
+      {axis === 'x' && amount > 0.08 && amount < 0.98 &&
+        trailAmounts.map((trailAmount, index) => (
+          <mesh
+            key={index}
+            position={[cutPos, 0, 0]}
+            rotation={[0, (Math.PI / 2) * (1 - trailAmount), 0]}
+            renderOrder={18 + index}
+          >
+            <ringGeometry args={[INNER_R, OUTER_R, 48]} />
+            <meshBasicMaterial
+              color="#53d5e0"
+              transparent
+              opacity={index === 0 ? 0.12 : 0.055}
+              side={THREE.DoubleSide}
+              depthTest={false}
+              depthWrite={false}
+              blending={THREE.AdditiveBlending}
+              toneMapped={false}
+            />
+          </mesh>
+        ))}
+      <group ref={group}>
       {axis === 'x' ? (
         <>
           <mesh rotation={[0, Math.PI / 2, 0]} renderOrder={20}>
@@ -293,6 +316,32 @@ export function AbatirSection({
               depthTest={false}
               depthWrite={false}
               map={makeAnnulusTexture()}
+            />
+          </mesh>
+          <mesh rotation={[0, Math.PI / 2, 0]} position={[0.008, 0, 0]} renderOrder={22}>
+            <ringGeometry args={[OUTER_R * 0.982, OUTER_R * 1.025, 64]} />
+            <meshBasicMaterial
+              color="#53d5e0"
+              transparent
+              opacity={0.12 + amount * 0.52}
+              side={THREE.DoubleSide}
+              depthTest={false}
+              depthWrite={false}
+              blending={THREE.AdditiveBlending}
+              toneMapped={false}
+            />
+          </mesh>
+          <mesh rotation={[0, Math.PI / 2, 0]} position={[0.009, 0, 0]} renderOrder={23}>
+            <ringGeometry args={[INNER_R * 0.955, INNER_R * 1.04, 64]} />
+            <meshBasicMaterial
+              color="#53d5e0"
+              transparent
+              opacity={0.1 + amount * 0.44}
+              side={THREE.DoubleSide}
+              depthTest={false}
+              depthWrite={false}
+              blending={THREE.AdditiveBlending}
+              toneMapped={false}
             />
           </mesh>
         </>
@@ -324,7 +373,8 @@ export function AbatirSection({
           </mesh>
         </>
       )}
-    </group>
+      </group>
+    </>
   )
 }
 

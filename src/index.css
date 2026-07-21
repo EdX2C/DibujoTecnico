@@ -816,6 +816,27 @@ a {
   align-items: center;
 }
 
+.demo-toolbar,
+.demo-tech-label,
+.demo-color-key,
+.demo-hint,
+.demo-rotation-cue {
+  transition: opacity 0.35s ease, transform 0.35s ease;
+}
+
+.is-guided .demo-toolbar,
+.is-guided .demo-tech-label,
+.is-guided .demo-color-key,
+.is-guided .demo-hint,
+.is-guided .demo-rotation-cue {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.is-guided .demo-toolbar {
+  transform: translateY(-10px);
+}
+
 .demo-toolbar .spacer {
   flex: 1;
 }
@@ -908,6 +929,101 @@ a {
   display: block;
 }
 
+.demo-guided-overlay {
+  position: absolute;
+  top: 1rem;
+  left: 50%;
+  z-index: 7;
+  display: grid;
+  justify-items: center;
+  gap: 0.2rem;
+  width: min(680px, 72%);
+  padding: 0.65rem 1rem 0.7rem;
+  border-top: 2px solid var(--orange);
+  background: linear-gradient(90deg, rgba(8, 10, 14, 0.2), rgba(8, 10, 14, 0.94) 20%, rgba(8, 10, 14, 0.94) 80%, rgba(8, 10, 14, 0.2));
+  box-shadow: 0 14px 34px rgba(0, 0, 0, 0.22);
+  text-align: center;
+  pointer-events: none;
+  transform: translateX(-50%);
+  animation: guided-beat-in 0.3s ease both;
+}
+
+.demo-guided-overlay > span {
+  color: var(--orange);
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+
+.demo-guided-overlay strong {
+  color: var(--paper);
+  font-size: clamp(1.15rem, 2.15vw, 2rem);
+  line-height: 1.04;
+  letter-spacing: -0.025em;
+  text-transform: uppercase;
+}
+
+.demo-guided-overlay p {
+  color: var(--body);
+  font-size: 0.8rem;
+  line-height: 1.3;
+}
+
+.demo-guided-overlay.beat-2,
+.demo-guided-overlay.beat-3 {
+  border-top-color: var(--cyan);
+}
+
+.demo-guided-overlay.beat-2 > span,
+.demo-guided-overlay.beat-3 > span {
+  color: var(--cyan);
+}
+
+.demo-guided-overlay.beat-3 strong {
+  color: var(--cyan);
+  text-shadow: 0 0 22px rgba(83, 213, 224, 0.32);
+}
+
+.demo-guided-overlay.beat-4 {
+  border-top-color: #8fe15f;
+}
+
+.demo-guided-overlay.beat-4 > span,
+.demo-guided-overlay.beat-4 strong {
+  color: #9aec68;
+}
+
+.demo-guided-progress {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 4px;
+  width: min(300px, 64%);
+  margin-top: 0.25rem;
+}
+
+.demo-guided-progress i {
+  height: 2px;
+  background: rgba(242, 245, 247, 0.16);
+}
+
+.demo-guided-progress i.is-on {
+  background: currentColor;
+  box-shadow: 0 0 8px currentColor;
+}
+
+@keyframes guided-beat-in {
+  from {
+    opacity: 0;
+    transform: translate(-50%, -7px);
+  }
+  to {
+    opacity: 1;
+    transform: translate(-50%, 0);
+  }
+}
+
 .demo-tech-label {
   position: absolute;
   top: 1rem;
@@ -961,20 +1077,47 @@ a {
   user-select: none;
 }
 
-.demo-units-badge {
+.demo-color-key {
   position: absolute;
   right: 1rem;
   bottom: 1rem;
   z-index: 3;
-  padding: 0.38rem 0.56rem;
-  border-right: 2px solid #8fe15f;
+  display: flex;
+  gap: 0.75rem;
+  padding: 0.42rem 0.58rem;
+  border: 1px solid rgba(242, 245, 247, 0.12);
   background: rgba(7, 12, 14, 0.82);
-  color: #8fe15f;
   font-family: var(--font-mono);
-  font-size: 0.68rem;
+  font-size: 0.62rem;
   letter-spacing: 0.08em;
   text-transform: uppercase;
   pointer-events: none;
+}
+
+.demo-color-key span {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+}
+
+.demo-color-key span::before {
+  content: '';
+  width: 6px;
+  height: 6px;
+  background: currentColor;
+  box-shadow: 0 0 8px currentColor;
+}
+
+.demo-color-key .is-cut {
+  color: var(--orange);
+}
+
+.demo-color-key .is-section {
+  color: var(--cyan);
+}
+
+.demo-color-key .is-dimension {
+  color: #9aec68;
 }
 
 .demo-rotation-cue {
@@ -1720,10 +1863,25 @@ a {
     font-size: 0.66rem;
   }
 
-  .demo-units-badge {
+  .demo-color-key {
     right: 0.65rem;
     bottom: 0.65rem;
-    font-size: 0.58rem;
+    gap: 0.5rem;
+    font-size: 0.55rem;
+  }
+
+  .demo-guided-overlay {
+    top: 0.6rem;
+    width: min(620px, 70%);
+    padding: 0.48rem 0.75rem 0.5rem;
+  }
+
+  .demo-guided-overlay strong {
+    font-size: clamp(1rem, 2vw, 1.42rem);
+  }
+
+  .demo-guided-overlay p {
+    font-size: 0.69rem;
   }
 
   .compare-item {
