@@ -2,6 +2,10 @@
 
 Presentación inmersiva (estilo GenSpark) y visualizador 3D para la exposición de dibujo técnico.
 
+## Presentación publicada
+
+[Abrir la presentación en Vercel](https://dibujo-tecnico.vercel.app)
+
 ## Arranque
 
 ```bash
