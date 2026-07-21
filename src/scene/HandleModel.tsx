@@ -20,7 +20,7 @@ function tubeGeometry() {
   const geo = new THREE.ExtrudeGeometry(shape, {
     depth: LENGTH,
     bevelEnabled: false,
-    curveSegments: 64,
+    curveSegments: 48,
   })
   geo.translate(0, 0, -LENGTH / 2)
   geo.rotateY(Math.PI / 2)
@@ -88,7 +88,7 @@ export function AnnularCutFace({
   return (
     <group position={[cutPos + 0.012, 0, 0]} rotation={[0, Math.PI / 2, 0]}>
       <mesh renderOrder={18}>
-        <ringGeometry args={[INNER_R, OUTER_R, 64]} />
+        <ringGeometry args={[INNER_R, OUTER_R, 48]} />
         <meshBasicMaterial
           color="#14272d"
           transparent
@@ -145,7 +145,7 @@ export function AbatirSection({
       {axis === 'x' ? (
         <>
           <mesh rotation={[0, Math.PI / 2, 0]} renderOrder={20}>
-            <ringGeometry args={[INNER_R, OUTER_R, 64]} />
+            <ringGeometry args={[INNER_R, OUTER_R, 48]} />
             <meshBasicMaterial
               color="#1e3a40"
               transparent
@@ -359,7 +359,7 @@ let annulusTexture: THREE.CanvasTexture | null = null
 /** Corona con rayado a 45°; el agujero queda transparente. */
 function makeAnnulusTexture() {
   if (annulusTexture) return annulusTexture
-  const size = 512
+  const size = 256
   const canvas = document.createElement('canvas')
   canvas.width = size
   canvas.height = size
@@ -375,8 +375,8 @@ function makeAnnulusTexture() {
   ctx.save()
   ctx.clip(ring, 'evenodd')
   ctx.strokeStyle = '#53d5e0'
-  ctx.lineWidth = 5
-  for (let d = -size; d < size; d += 30) {
+  ctx.lineWidth = 3
+  for (let d = -size; d < size; d += 16) {
     ctx.beginPath()
     ctx.moveTo(d, size)
     ctx.lineTo(d + size, 0)
@@ -385,7 +385,7 @@ function makeAnnulusTexture() {
   ctx.restore()
 
   ctx.strokeStyle = '#e7eef5'
-  ctx.lineWidth = 8
+  ctx.lineWidth = 4
   ctx.beginPath()
   ctx.arc(cx, cx, outer - 4, 0, Math.PI * 2)
   ctx.stroke()
@@ -404,8 +404,8 @@ let longitudinalTexture: THREE.CanvasTexture | null = null
     marcado con su eje. Se lee como el cilindro cortado a lo largo y girado. */
 function makeLongitudinalTexture() {
   if (longitudinalTexture) return longitudinalTexture
-  const w = 512
-  const h = 240
+  const w = 384
+  const h = 180
   const canvas = document.createElement('canvas')
   canvas.width = w
   canvas.height = h
@@ -431,8 +431,8 @@ function makeLongitudinalTexture() {
     clip.rect(0, b.y0, w, b.y1 - b.y0)
     ctx.clip(clip)
     ctx.strokeStyle = '#53d5e0'
-    ctx.lineWidth = 4
-    for (let d = -h; d < w; d += 26) {
+    ctx.lineWidth = 3
+    for (let d = -h; d < w; d += 18) {
       ctx.beginPath()
       ctx.moveTo(d, b.y1)
       ctx.lineTo(d + h, b.y0)
@@ -443,7 +443,7 @@ function makeLongitudinalTexture() {
 
   // 3) bordes del taladro (líneas interiores de cada pared)
   ctx.strokeStyle = '#ff6b2e'
-  ctx.lineWidth = 6
+  ctx.lineWidth = 4
   ctx.beginPath()
   ctx.moveTo(0, wall)
   ctx.lineTo(w, wall)
@@ -453,13 +453,13 @@ function makeLongitudinalTexture() {
 
   // 4) contorno exterior completo (silueta del cilindro en sección)
   ctx.strokeStyle = '#ff8a54'
-  ctx.lineWidth = 9
+  ctx.lineWidth = 5
   ctx.strokeRect(5, 5, w - 10, h - 10)
 
   // 5) eje del taladro (línea de centro trazo y punto)
   ctx.strokeStyle = '#7aa0b0'
-  ctx.lineWidth = 3
-  ctx.setLineDash([20, 8, 4, 8])
+  ctx.lineWidth = 2
+  ctx.setLineDash([14, 6, 3, 6])
   ctx.beginPath()
   ctx.moveTo(0, h / 2)
   ctx.lineTo(w, h / 2)

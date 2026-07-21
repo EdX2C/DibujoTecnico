@@ -1,11 +1,8 @@
-import { lazy, Suspense, useCallback, useEffect, useRef, useState } from 'react'
+import { useCallback, useEffect, useRef, useState } from 'react'
 import gsap from 'gsap'
 import { slides, exerciseWhy } from '../content/slides'
 import { DiagramFigure, HeroArt, MiniIcon } from './Diagrams'
-
-const DemoScene = lazy(() =>
-  import('../scene/DemoScene').then((m) => ({ default: m.DemoScene })),
-)
+import { LightweightSectionDemo } from './LightweightSectionDemo'
 
 interface PresentationProps {
   onOpenFullscreenDemo: () => void
@@ -373,19 +370,11 @@ export function Presentation({ onOpenFullscreenDemo }: PresentationProps) {
 
               {s.kind === 'demo' && (
                 <>
-                  <h2 className="anim-item" style={{ marginBottom: '0.6rem' }}>
+                  <h2 className="anim-item demo-slide-title" style={{ marginBottom: '0.6rem' }}>
                     {s.title}
                   </h2>
                   <div className="anim-item">
-                    <Suspense
-                      fallback={
-                        <div className="canvas-frame" style={{ display: 'grid', placeItems: 'center' }}>
-                          Cargando demo 3D…
-                        </div>
-                      }
-                    >
-                      <DemoScene embedded onOpenFullscreen={onOpenFullscreenDemo} />
-                    </Suspense>
+                    <LightweightSectionDemo onOpen3D={onOpenFullscreenDemo} />
                   </div>
                 </>
               )}
@@ -460,7 +449,7 @@ export function Presentation({ onOpenFullscreenDemo }: PresentationProps) {
             →
           </button>
           <span className="nav-hints">
-            <kbd>N</kbd> notas · <kbd>D</kbd> demo
+            <kbd>N</kbd> notas · <kbd>D</kbd> 3D opcional
           </span>
         </div>
 

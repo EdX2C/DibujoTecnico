@@ -149,10 +149,10 @@ export const slides: SlideContent[] = [
     id: 'demo',
     speaker: 2,
     kind: 'demo',
-    eyebrow: 'Demo 3D · síntesis',
-    title: 'Veámoslo en vivo',
+    eyebrow: 'Síntesis visual',
+    title: 'Línea → forma real',
     body: ['Mismo buje del ejercicio: revelar el corte y abatir la sección 90°.'],
-    note: 'Tope duro 1:15. Secuencia viva: Revelar → Abatir 90°. Señalar la traza A–A de raya y punto, el material rayado y el hueco limpio. Concurrente SOLO si sobra tiempo. Si el 3D falla, volver a la lámina 04: allí queda la secuencia completa y fija. Cierre-puente: "ahora comparemos este recurso con los demás".',
+    note: 'Tope duro 1:00. Paso 1: la abertura no revela el espesor interior. Paso 2: se retira la mitad frente al plano y la sección queda de canto. Paso 3: solo la sección gira 90° y aparece la corona rayada en verdadera magnitud. Abrir el 3D únicamente si preguntan o sobra tiempo. Cierre-puente: "ahora comparemos este recurso con los demás".',
   },
   {
     id: 'diferencias',

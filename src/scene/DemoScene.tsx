@@ -1,6 +1,6 @@
 import { Suspense, useEffect, useMemo, useRef, useState } from 'react'
 import { Canvas, useFrame, useThree } from '@react-three/fiber'
-import { ContactShadows, Environment, OrbitControls, OrthographicCamera } from '@react-three/drei'
+import { OrbitControls, OrthographicCamera } from '@react-three/drei'
 import * as THREE from 'three'
 import gsap from 'gsap'
 import {
@@ -193,7 +193,10 @@ export function DemoScene({ embedded = false, onOpenFullscreen }: DemoSceneProps
       </div>
 
       <div className="canvas-frame">
-        <Canvas gl={{ antialias: true, localClippingEnabled: true }}>
+        <Canvas
+          dpr={[1, 1.4]}
+          gl={{ antialias: true, localClippingEnabled: true, powerPreference: 'low-power' }}
+        >
           <color attach="background" args={['#0d1016']} />
           <Suspense fallback={null}>
             <SceneContent
@@ -205,7 +208,6 @@ export function DemoScene({ embedded = false, onOpenFullscreen }: DemoSceneProps
               mode={mode}
               autoOrbit={autoOrbit}
             />
-            <Environment preset="city" />
           </Suspense>
         </Canvas>
         <div className={`demo-tech-label mode-${mode}`} aria-hidden="true">
@@ -250,7 +252,7 @@ export function DemoScene({ embedded = false, onOpenFullscreen }: DemoSceneProps
         <div className="demo-hint">
           {mode === 'solid' &&
             (cutAxis === 'x'
-              ? 'Paso 1 · La vista exterior oculta el agujero pasante.'
+              ? 'Paso 1 · La abertura es visible, pero no revela el espesor interior.'
               : 'Corte longitudinal: el plano recorre el eje del taladro. Pulse Revelar.')}
           {mode === 'reveal' &&
             (cutAxis === 'x'
@@ -332,11 +334,10 @@ function SceneContent({
     <>
       <OrthographicCamera makeDefault position={[0, 0.85, 6.6]} zoom={122} near={0.1} far={100} />
       <ambientLight intensity={0.52} />
+      <hemisphereLight color="#d5e3ee" groundColor="#111820" intensity={0.7} />
       <directionalLight
-        castShadow
         position={[4, 6, 4]}
         intensity={1.08}
-        shadow-mapSize={[1024, 1024]}
       />
       <spotLight position={[-4, 3, 4]} intensity={0.36} color="#53d5e0" />
 
@@ -399,7 +400,10 @@ function SceneContent({
         )}
       </group>
 
-      <ContactShadows position={[0, -1.35, 0]} opacity={0.22} scale={12} blur={3.2} />
+      <mesh position={[0, -1.33, 0]} rotation={[-Math.PI / 2, 0, 0]} scale={[1.8, 0.62, 1]}>
+        <circleGeometry args={[1, 32]} />
+        <meshBasicMaterial color="#000000" transparent opacity={0.18} depthWrite={false} />
+      </mesh>
       <gridHelper args={[10, 20, '#182129', '#11171d']} position={[0, -1.34, 0]} />
       <OrbitControls
         enabled={autoOrbit || mode === 'concurrente'}
