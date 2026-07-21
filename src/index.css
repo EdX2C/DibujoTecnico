@@ -1071,22 +1071,26 @@ a {
 .lite-spatial,
 .lite-orthographic,
 .lite-callouts,
-.lite-annulus {
+.lite-annulus,
+.lite-dimensions {
   transition: opacity 0.45s ease, transform 0.85s cubic-bezier(0.22, 1, 0.36, 1);
 }
 
 .lite-spatial,
 .lite-orthographic,
-.lite-callouts {
+.lite-callouts,
+.lite-dimensions {
   opacity: 0;
 }
 
 .lite-demo.is-step-1 .lite-spatial,
 .lite-demo.is-step-1 .lite-callouts-1,
+.lite-demo.is-step-1 .lite-dimensions-1,
 .lite-demo.is-step-2 .lite-orthographic,
 .lite-demo.is-step-2 .lite-callouts-2,
 .lite-demo.is-step-3 .lite-orthographic,
-.lite-demo.is-step-3 .lite-callouts-3 {
+.lite-demo.is-step-3 .lite-callouts-3,
+.lite-demo.is-step-3 .lite-dimensions-3 {
   opacity: 1;
 }
 
@@ -1129,6 +1133,82 @@ a {
 .lite-demo.is-step-3 .lite-annulus {
   opacity: 1;
   transform: scaleX(1);
+}
+
+.lite-dimensions {
+  color: #8fe15f;
+  pointer-events: none;
+}
+
+.lite-dimension-line,
+.lite-dimension-leader,
+.lite-extension-line {
+  fill: none;
+  stroke: currentColor;
+  vector-effect: non-scaling-stroke;
+}
+
+.lite-dimension-line,
+.lite-dimension-leader {
+  stroke-width: 1.8;
+}
+
+.lite-extension-line {
+  stroke-width: 1.15;
+  opacity: 0.72;
+}
+
+.lite-dimension-text,
+.lite-dimension-note,
+.lite-cad-reference text {
+  font-family: var(--font-mono);
+  letter-spacing: 0.06em;
+  paint-order: stroke fill;
+  stroke: #0d1016;
+  stroke-width: 5px;
+  stroke-linejoin: round;
+}
+
+.lite-dimension-text {
+  fill: currentColor;
+  font-size: 17px;
+  font-weight: 700;
+}
+
+.lite-dimension-note {
+  fill: #b7c6cf;
+  font-size: 11px;
+}
+
+.lite-center-mark {
+  fill: none;
+  stroke: #7c98a9;
+  stroke-width: 1.2;
+  stroke-dasharray: 15 5 3 5;
+  opacity: 0.72;
+}
+
+.lite-cad-reference {
+  color: #8fe15f;
+  opacity: 0.7;
+}
+
+.lite-cad-reference > text {
+  fill: currentColor;
+  font-size: 11px;
+}
+
+.lite-ucs path,
+.lite-ucs circle {
+  fill: currentColor;
+  stroke: currentColor;
+  stroke-width: 1.5;
+}
+
+.lite-ucs text {
+  fill: currentColor;
+  font-size: 12px;
+  font-weight: 700;
 }
 
 .lite-callouts path {
@@ -1652,7 +1732,8 @@ a {
   .lite-spatial,
   .lite-orthographic,
   .lite-callouts,
-  .lite-annulus {
+  .lite-annulus,
+  .lite-dimensions {
     transition: none;
   }
 }

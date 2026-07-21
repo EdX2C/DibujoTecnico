@@ -5,7 +5,7 @@ type DemoStep = 1 | 2 | 3
 const STEP_COPY: Record<DemoStep, { title: string; body: string; term: string }> = {
   1: {
     title: 'La abertura no revela todo el interior.',
-    body: 'Vemos el agujero, pero no el espesor del material justo donde pasa A–A.',
+    body: 'La pieza mide 130 mm, pero la vista exterior no muestra el espesor donde pasa A–A.',
     term: 'Plano de corte A–A',
   },
   2: {
@@ -15,7 +15,7 @@ const STEP_COPY: Record<DemoStep, { title: string; body: string; term: string }>
   },
   3: {
     title: 'Giramos solamente la sección 90°.',
-    body: 'La corona rayada aparece de frente y muestra la forma real del material cortado.',
+    body: 'La corona aparece de frente: Ø55 exterior, Ø30 interior y pared de 12.5 mm.',
     term: 'Sección abatida · verdadera magnitud',
   },
 }
@@ -28,6 +28,7 @@ export function LightweightSectionDemo({ onOpen3D }: { onOpen3D: () => void }) {
   const hatchId = `lite-hatch-${uid}`
   const cyanArrowId = `lite-cyan-arrow-${uid}`
   const orangeArrowId = `lite-orange-arrow-${uid}`
+  const dimensionArrowId = `lite-dimension-arrow-${uid}`
   const copy = STEP_COPY[step]
 
   return (
@@ -79,6 +80,17 @@ export function LightweightSectionDemo({ onOpen3D }: { onOpen3D: () => void }) {
             <marker id={orangeArrowId} viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto">
               <path d="M0,0 L10,5 L0,10 Z" fill="#ff6b2e" />
             </marker>
+            <marker
+              id={dimensionArrowId}
+              viewBox="0 0 10 10"
+              refX="8"
+              refY="5"
+              markerWidth="6"
+              markerHeight="6"
+              orient="auto-start-reverse"
+            >
+              <path d="M0,0 L10,5 L0,10 Z" fill="#8fe15f" />
+            </marker>
           </defs>
 
           <g className="lite-grid" aria-hidden="true">
@@ -102,12 +114,12 @@ export function LightweightSectionDemo({ onOpen3D }: { onOpen3D: () => void }) {
             <g className="lite-kept-half">
               <rect x="260" y="145" width="240" height="140" fill={`url(#${metalId})`} stroke="#dbe6f0" strokeWidth="2" />
               <path className="lite-body-highlight" d="M275 157 H486" />
-              <path className="lite-hidden-line" d="M260 190 H500 M260 240 H500" />
+              <path className="lite-hidden-line" d="M260 177 H500 M260 253 H500" />
             </g>
             <g className="lite-removed-half">
               <rect x="660" y="145" width="190" height="140" fill={`url(#${ghostId})`} stroke="#7c919e" strokeWidth="2" />
-              <rect x="660" y="190" width="190" height="50" fill="#101820" fillOpacity="0.62" />
-              <path className="lite-hidden-line" d="M660 190 H850 M660 240 H850" />
+              <rect x="660" y="177" width="190" height="76" fill="#101820" fillOpacity="0.62" />
+              <path className="lite-hidden-line" d="M660 177 H850 M660 253 H850" />
               <path d="M660 145 V285" stroke="#a8bac4" strokeWidth="2" />
             </g>
           </g>
@@ -125,13 +137,50 @@ export function LightweightSectionDemo({ onOpen3D }: { onOpen3D: () => void }) {
           <g className="lite-annulus" aria-hidden="true">
             <circle cx="500" cy="215" r="72" fill="#173038" stroke="#e7eef5" strokeWidth="3" />
             <circle cx="500" cy="215" r="70" fill={`url(#${hatchId})`} />
-            <circle cx="500" cy="215" r="32" fill="#0d1016" stroke="#e7eef5" strokeWidth="3" />
+            <circle cx="500" cy="215" r="39" fill="#0d1016" stroke="#e7eef5" strokeWidth="3" />
+          </g>
+
+          <g className="lite-dimensions lite-dimensions-1" aria-hidden="true">
+            <path className="lite-extension-line" d="M245 140 V104 M665 140 V104" />
+            <path
+              className="lite-dimension-line"
+              d="M245 104 H665"
+              markerStart={`url(#${dimensionArrowId})`}
+              markerEnd={`url(#${dimensionArrowId})`}
+            />
+            <text className="lite-dimension-text" x="455" y="94" textAnchor="middle">130</text>
+          </g>
+
+          <g className="lite-dimensions lite-dimensions-3" aria-hidden="true">
+            <path className="lite-center-mark" d="M404 215 H596 M500 119 V311" />
+            <path className="lite-extension-line" d="M428 143 H405 M428 287 H405" />
+            <path
+              className="lite-dimension-line"
+              d="M405 143 V287"
+              markerStart={`url(#${dimensionArrowId})`}
+              markerEnd={`url(#${dimensionArrowId})`}
+            />
+            <text className="lite-dimension-text" x="392" y="220" textAnchor="end">Ø55</text>
+            <path
+              className="lite-dimension-line"
+              d="M461 215 H539"
+              markerStart={`url(#${dimensionArrowId})`}
+              markerEnd={`url(#${dimensionArrowId})`}
+            />
+            <path className="lite-dimension-leader" d="M539 215 L580 246 H622" />
+            <text className="lite-dimension-text" x="630" y="251">Ø30</text>
+            <path
+              className="lite-dimension-leader lite-wall-leader"
+              d="M548 258 L590 292 H638"
+              markerStart={`url(#${dimensionArrowId})`}
+            />
+            <text className="lite-dimension-text" x="636" y="286" textAnchor="end">12.5</text>
+            <text className="lite-dimension-note" x="636" y="310" textAnchor="end">ESPESOR</text>
           </g>
 
           <g className="lite-callouts lite-callouts-1" aria-hidden="true">
-            <text className="lite-callout-main" x="292" y="86">POR AQUÍ CORTAMOS</text>
-            <text className="lite-callout-sub" x="292" y="108">plano A–A</text>
-            <path d="M438 101 L495 118" />
+            <text className="lite-callout-main" x="300" y="130">CORTE POR AQUÍ</text>
+            <path d="M442 134 L495 147" />
             <text className="lite-callout-main" x="705" y="135">ABERTURA VISIBLE</text>
             <path d="M702 145 L680 188" />
             <text className="lite-callout-main" x="618" y="354">MIRAMOS HACIA ACÁ</text>
@@ -154,12 +203,19 @@ export function LightweightSectionDemo({ onOpen3D }: { onOpen3D: () => void }) {
           <g className="lite-callouts lite-callouts-3" aria-hidden="true">
             <path className="lite-rotation-arc" d="M510 137 A92 92 0 0 1 602 214" markerEnd={`url(#${orangeArrowId})`} />
             <text className="lite-rotation-text" x="566" y="152">90°</text>
-            <text className="lite-callout-main" x="596" y="112">MATERIAL CORTADO</text>
-            <path d="M594 120 L550 168" />
-            <text className="lite-callout-main" x="586" y="276">HUECO</text>
-            <path d="M578 266 L530 235" />
             <text className="lite-callout-main lite-true-size" x="478" y="104" textAnchor="end">FORMA REAL</text>
             <text className="lite-callout-sub" x="478" y="124" textAnchor="end">verdadera magnitud</text>
+          </g>
+
+          <g className="lite-cad-reference" aria-hidden="true">
+            <text x="700" y="405">COTAS EN mm · ESQUEMA DIDÁCTICO</text>
+            <g className="lite-ucs" transform="translate(920 374)">
+              <path d="M0 0 H38 M0 0 V-38" />
+              <path d="M38 0 L31 -4 V4 Z M0 -38 L-4 -31 H4 Z" />
+              <text x="45" y="5">X</text>
+              <text x="-4" y="-46">Y</text>
+              <circle cx="0" cy="0" r="3" />
+            </g>
           </g>
         </svg>
 

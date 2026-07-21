@@ -152,7 +152,7 @@ export const slides: SlideContent[] = [
     eyebrow: 'Síntesis visual',
     title: 'Línea → forma real',
     body: ['Mismo buje del ejercicio: revelar el corte y abatir la sección 90°.'],
-    note: 'Tope duro 1:00. Paso 1: la abertura no revela el espesor interior. Paso 2: se retira la mitad frente al plano y la sección queda de canto. Paso 3: solo la sección gira 90° y aparece la corona rayada en verdadera magnitud. Abrir el 3D únicamente si preguntan o sobra tiempo. Cierre-puente: "ahora comparemos este recurso con los demás".',
+    note: 'Tope duro 1:00. Lea primero el código visual: naranja = plano de corte, cian = observación y sección, verde = cotas en mm. Paso 1: la abertura no revela el espesor interior. Paso 2: se retira la mitad frente al plano y la sección queda de canto. Paso 3: solo la sección gira 90° y aparece la corona rayada en verdadera magnitud: Ø55 exterior, Ø30 interior y pared (55 − 30) / 2 = 12.5 mm. Abrir el 3D únicamente si preguntan o sobra tiempo. Cierre-puente: "ahora comparemos este recurso con los demás".',
   },
   {
     id: 'diferencias',
