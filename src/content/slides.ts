@@ -85,7 +85,6 @@ export const slides: SlideContent[] = [
     title: 'Cortar y girar 90°',
     bullets: [
       'Cuatro pasos en la figura: corta → de canto → gira 90° → de frente.',
-      'Regla que ya usan: cara perpendicular al plano → línea; cara paralela al plano → verdadera magnitud.',
     ],
     key: 'El giro no crea la forma: cambia perpendicular (línea) por paralela (verdadera magnitud).',
     note: '30 s. Hablar mirando la animación, no las viñetas. Anclar en lo que la clase ya hace: al sacar las vistas de un isométrico ya deciden qué caras salen como una raya y cuáles con su forma real — la perpendicular al plano se proyecta como línea, la paralela en verdadera magnitud. De canto, la cara cortada es perpendicular: por eso es una raya. Girar 90° la apoya sobre el plano de la vista. NO decir que en isométrico "no se puede acotar" (falso: las medidas sobre los ejes sí son verdaderas; lo que se deforma es la forma). Cierre-puente: "ya entendemos el gesto; ahora pongámosle el nombre correcto".',
@@ -99,7 +98,7 @@ export const slides: SlideContent[] = [
     title: 'Corte no es lo mismo que sección',
     bullets: [
       'Sección abatida: la cara cortada, que está de canto, gira 90° alrededor de la traza del plano de corte.',
-      'Tras el giro queda apoyada sobre el plano de la vista: por eso se dibuja superpuesta, y la norma pide contorno fino para distinguirlas.',
+      'Tras el giro queda apoyada sobre el plano de la vista: por eso se dibuja superpuesta.',
       'En el buje escalonado: el corte conserva el contorno de la brida que queda detrás; la sección muestra solo la corona.',
     ],
     key: 'Sección = cara cortada. Corte = cara + fondo. Aquí gira la sección, no la pieza.',
@@ -133,7 +132,7 @@ export const slides: SlideContent[] = [
       'Letras A–A y flechas perpendiculares, ambas en el mismo sentido.',
       'El observador está en la cola de las flechas; se retira la mitad que queda delante del plano.',
     ],
-    key: 'La traza A–A va en la PV; lo que aparece al abatir es lo que daría la PL.',
+    key: 'La traza A–A vive en la PV: una sola vista indica todo el corte.',
     note: '50 s. Esta lámina reúne plano de corte y dirección de observación. Primero: traza de trazo y punto, extremos gruesos y letras A–A, marcada sobre la PV. Segundo: las flechas son perpendiculares y apuntan igual — es la misma dirección de mirada con la que ya deciden si algo va en PH, PV o PL. El observador está en la cola; se elimina mentalmente la mitad entre observador y plano. Handoff: "ya sabemos por dónde mirar; Arantza mostrará qué superficies se rayan".',
   },
   {

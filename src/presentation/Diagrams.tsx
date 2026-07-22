@@ -977,9 +977,6 @@ function EjercicioFig({ active }: FigProps) {
         <Label cls="e-lab" x={190} y={150} color={C.section} size={13}>
           ABATIDA SOBRE LA PV · LO QUE DARÍA LA PL
         </Label>
-        <Label cls="e-lab" x={190} y={170} size={13}>
-          RÓTULO: CORTE A–A
-        </Label>
       </g>
     </svg>
   )
@@ -1138,7 +1135,7 @@ const registry: Record<string, { comp: (p: FigProps) => ReactElement; caption: R
   },
   puente: {
     comp: PuenteFig,
-    caption: 'Del isométrico salen PV, PH y PL; la sección abatida entrega la PL dentro de la PV',
+    caption: 'Isométrico del cilindro y sus tres vistas en primer diedro',
   },
   objetivo: {
     comp: ProblemaFig,
@@ -1146,7 +1143,7 @@ const registry: Record<string, { comp: (p: FigProps) => ReactElement; caption: R
   },
   idea: {
     comp: IdeaFig,
-    caption: 'Corta → de canto es línea → gira 90° → de frente en magnitud real',
+    caption: 'El eje del giro es la propia traza A–A',
   },
   definicion: {
     comp: DefinicionFig,
