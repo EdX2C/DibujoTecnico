@@ -83,8 +83,9 @@ export const slides: SlideContent[] = [
     eyebrow: 'Definición',
     title: 'Corte no es lo mismo que sección',
     bullets: [
-      'Sección abatida: perfil transversal girado 90° alrededor de la traza hasta quedar paralelo al plano de proyección y superpuesto en la vista.',
-      'En el buje escalonado, el corte conserva el contorno de la brida que queda detrás; la sección muestra solo la corona tocada por el plano.',
+      'Sección abatida: el perfil transversal gira 90° alrededor de la traza del plano de corte.',
+      'Tras el giro queda paralelo al plano de proyección, superpuesto sobre la propia vista.',
+      'En el buje escalonado: el corte conserva el contorno de la brida que queda detrás; la sección muestra solo la corona.',
     ],
     key: 'Sección = cara cortada. Corte = cara + fondo. Aquí gira la sección, no la pieza.',
     note: '45 s. Definición formal: el perfil gira 90° ALREDEDOR DE LA TRAZA hasta que su plano queda paralelo al plano de proyección. Después usar el buje escalonado: en CORTE aparece la corona rayada y también la brida posterior; en SECCIÓN queda solo la corona. No decir que la sección gira "en su propio plano". Puente: "¿cuándo vale la pena usarla?".',
@@ -102,8 +103,8 @@ export const slides: SlideContent[] = [
       'Manijas, radios, brazos, nervios, perfiles.',
       'Cuando un corte total no aporta nada más.',
     ],
-    key: 'Sin desplazar → contorno fino. Desplazada → contorno grueso.',
-    note: '30 s. La chip Clave lleva la norma fina/gruesa — no la lean dos veces. Hablar ejemplos: mango de herramienta, radio de volante, ala de perfil. No re-explicar el "por qué 90°" (ya está en Idea; el demo lo integrará luego). Puente: "elegida la pieza, hay que indicar por dónde se corta".',
+    key: 'Superpuesta en la vista → contorno fino. Desplazada (lámina Diferencias) → grueso.',
+    note: '30 s. La chip Clave lleva la norma fina/gruesa — no la lean dos veces. La "desplazada" se define en la lámina Diferencias; aquí basta decir "si se saca de la vista, cambia la regla". Hablar ejemplos: mango de herramienta, radio de volante, ala de perfil. No re-explicar el "por qué 90°" (ya está en Idea; el demo lo integrará luego). Puente: "elegida la pieza, hay que indicar por dónde se corta".',
   },
   {
     id: 'plano',
@@ -142,7 +143,7 @@ export const slides: SlideContent[] = [
     eyebrow: 'Síntesis visual',
     title: 'Línea → forma real',
     body: ['Mismo buje del ejercicio: revelar el corte y abatir la sección 90°.'],
-    note: 'Tope duro 1:00. Lea primero el código visual: naranja = plano de corte, cian = observación y sección, verde = cotas en mm. Paso 1: la abertura no revela el espesor interior. Paso 2: se retira la mitad frente al plano y la sección queda de canto. Paso 3: solo la sección gira 90° y aparece la corona rayada en verdadera magnitud: Ø55 exterior, Ø30 interior y pared (55 − 30) / 2 = 12.5 mm. Abrir el 3D únicamente si preguntan o sobra tiempo. Cierre-puente: "ahora comparemos este recurso con los demás".',
+    note: 'Tope duro 1:00. La leyenda de colores está en pantalla (abajo a la derecha): naranja = plano de corte, cian = observación y sección, verde = cotas en mm — señalarla, no recitarla. Paso 1: la abertura no revela el espesor interior. Paso 2: se retira la mitad frente al plano y la sección queda de canto. Paso 3: solo la sección gira 90° y aparece la corona rayada en verdadera magnitud: Ø40 exterior, Ø18 interior y pared (40 − 18) / 2 = 11 mm — las mismas cotas del dibujo físico. Abrir el 3D únicamente si preguntan o sobra tiempo. Cierre-puente: "ahora comparemos este recurso con los demás".',
   },
   {
     id: 'diferencias',
@@ -155,10 +156,10 @@ export const slides: SlideContent[] = [
       'Semicorte: mitad exterior + mitad en corte.',
       'Sección desplazada: perfil fuera de la vista.',
       'Sección abatida: perfil girado sobre la vista.',
-      'Corte girado concurrente: alinea planos oblicuos.',
+      'Corte por planos concurrentes: alinea planos oblicuos.',
     ],
     key: 'Abatida: gira la sección. Concurrente: gira un plano oblicuo.',
-    note: '35 s. No leer las tarjetas: responder tres preguntas con los iconos — qué muestra, dónde queda y cuándo se usa. La abatida gira SOLO la sección y la superpone sobre la vista. El corte girado concurrente es distinto: alinea un plano oblicuo para piezas con brazos en ángulo.',
+    note: '35 s. No leer las tarjetas: responder tres preguntas con los iconos — qué muestra, dónde queda y cuándo se usa. La abatida gira SOLO la sección y la superpone sobre la vista. El corte por planos concurrentes es distinto: alinea un plano oblicuo para piezas con brazos en ángulo.',
   },
 
   /* ============ APLICACIÓN Y ENTREGA ============ */

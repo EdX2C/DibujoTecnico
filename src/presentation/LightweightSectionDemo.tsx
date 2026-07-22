@@ -5,7 +5,7 @@ type DemoStep = 1 | 2 | 3
 const STEP_COPY: Record<DemoStep, { title: string; body: string; term: string }> = {
   1: {
     title: 'La abertura no revela todo el interior.',
-    body: 'La pieza mide 130 mm, pero la vista exterior no muestra el espesor donde pasa A–A.',
+    body: 'La pieza mide 100 mm, pero la vista exterior no muestra el espesor donde pasa A–A.',
     term: 'Plano de corte A–A',
   },
   2: {
@@ -15,7 +15,7 @@ const STEP_COPY: Record<DemoStep, { title: string; body: string; term: string }>
   },
   3: {
     title: 'Giramos solamente la sección 90°.',
-    body: 'La corona aparece de frente: Ø55 exterior, Ø30 interior y pared de 12.5 mm.',
+    body: 'La corona aparece de frente: Ø40 exterior, Ø18 interior y pared de 11 mm — el buje del ejercicio.',
     term: 'Sección abatida · verdadera magnitud',
   },
 }
@@ -103,7 +103,7 @@ export function LightweightSectionDemo({ onOpen3D }: { onOpen3D: () => void }) {
             <rect x="245" y="140" width="420" height="150" fill={`url(#${metalId})`} />
             <ellipse cx="245" cy="215" rx="33" ry="75" fill="#657b8e" stroke="#dce8f2" strokeWidth="2" />
             <ellipse cx="665" cy="215" rx="33" ry="75" fill="#7790a5" stroke="#e7eef5" strokeWidth="3" />
-            <ellipse cx="665" cy="215" rx="16" ry="39" fill="#121b24" stroke="#dce8f2" strokeWidth="2" />
+            <ellipse cx="665" cy="215" rx="14" ry="34" fill="#121b24" stroke="#dce8f2" strokeWidth="2" />
             <path className="lite-body-highlight" d="M258 153 H650" />
             <path className="lite-centerline" d="M205 215 H715" />
             <path className="lite-cut-sheet" d="M500 92 L554 75 V337 L500 354 Z" />
@@ -114,12 +114,12 @@ export function LightweightSectionDemo({ onOpen3D }: { onOpen3D: () => void }) {
             <g className="lite-kept-half">
               <rect x="260" y="145" width="240" height="140" fill={`url(#${metalId})`} stroke="#dbe6f0" strokeWidth="2" />
               <path className="lite-body-highlight" d="M275 157 H486" />
-              <path className="lite-hidden-line" d="M260 177 H500 M260 253 H500" />
+              <path className="lite-hidden-line" d="M260 184 H500 M260 247 H500" />
             </g>
             <g className="lite-removed-half">
               <rect x="660" y="145" width="190" height="140" fill={`url(#${ghostId})`} stroke="#7c919e" strokeWidth="2" />
-              <rect x="660" y="177" width="190" height="76" fill="#101820" fillOpacity="0.62" />
-              <path className="lite-hidden-line" d="M660 177 H850 M660 253 H850" />
+              <rect x="660" y="184" width="190" height="63" fill="#101820" fillOpacity="0.62" />
+              <path className="lite-hidden-line" d="M660 184 H850 M660 247 H850" />
               <path d="M660 145 V285" stroke="#a8bac4" strokeWidth="2" />
             </g>
           </g>
@@ -137,7 +137,7 @@ export function LightweightSectionDemo({ onOpen3D }: { onOpen3D: () => void }) {
           <g className="lite-annulus" aria-hidden="true">
             <circle cx="500" cy="215" r="72" fill="#173038" stroke="#e7eef5" strokeWidth="3" />
             <circle cx="500" cy="215" r="70" fill={`url(#${hatchId})`} />
-            <circle cx="500" cy="215" r="39" fill="#0d1016" stroke="#e7eef5" strokeWidth="3" />
+            <circle cx="500" cy="215" r="32" fill="#0d1016" stroke="#e7eef5" strokeWidth="3" />
           </g>
 
           <g className="lite-dimensions lite-dimensions-1" aria-hidden="true">
@@ -148,7 +148,7 @@ export function LightweightSectionDemo({ onOpen3D }: { onOpen3D: () => void }) {
               markerStart={`url(#${dimensionArrowId})`}
               markerEnd={`url(#${dimensionArrowId})`}
             />
-            <text className="lite-dimension-text" x="455" y="94" textAnchor="middle">130</text>
+            <text className="lite-dimension-text" x="455" y="94" textAnchor="middle">100</text>
           </g>
 
           <g className="lite-dimensions lite-dimensions-3" aria-hidden="true">
@@ -160,21 +160,21 @@ export function LightweightSectionDemo({ onOpen3D }: { onOpen3D: () => void }) {
               markerStart={`url(#${dimensionArrowId})`}
               markerEnd={`url(#${dimensionArrowId})`}
             />
-            <text className="lite-dimension-text" x="392" y="220" textAnchor="end">Ø55</text>
+            <text className="lite-dimension-text" x="392" y="220" textAnchor="end">Ø40</text>
             <path
               className="lite-dimension-line"
-              d="M461 215 H539"
+              d="M468 215 H532"
               markerStart={`url(#${dimensionArrowId})`}
               markerEnd={`url(#${dimensionArrowId})`}
             />
-            <path className="lite-dimension-leader" d="M539 215 L580 246 H622" />
-            <text className="lite-dimension-text" x="630" y="251">Ø30</text>
+            <path className="lite-dimension-leader" d="M532 215 L580 246 H622" />
+            <text className="lite-dimension-text" x="630" y="251">Ø18</text>
             <path
               className="lite-dimension-leader lite-wall-leader"
               d="M548 258 L590 292 H638"
               markerStart={`url(#${dimensionArrowId})`}
             />
-            <text className="lite-dimension-text" x="636" y="286" textAnchor="end">12.5</text>
+            <text className="lite-dimension-text" x="636" y="286" textAnchor="end">11</text>
             <text className="lite-dimension-note" x="636" y="310" textAnchor="end">ESPESOR</text>
           </g>
 
@@ -208,7 +208,7 @@ export function LightweightSectionDemo({ onOpen3D }: { onOpen3D: () => void }) {
           </g>
 
           <g className="lite-cad-reference" aria-hidden="true">
-            <text x="700" y="405">COTAS EN mm · ESQUEMA DIDÁCTICO</text>
+            <text x="700" y="405">COTAS EN mm · BUJE DEL EJERCICIO</text>
             <g className="lite-ucs" transform="translate(920 374)">
               <path d="M0 0 H38 M0 0 V-38" />
               <path d="M38 0 L31 -4 V4 Z M0 -38 L-4 -31 H4 Z" />
@@ -218,6 +218,12 @@ export function LightweightSectionDemo({ onOpen3D }: { onOpen3D: () => void }) {
             </g>
           </g>
         </svg>
+
+        <div className="demo-color-key" aria-hidden="true">
+          <span className="is-cut">PLANO DE CORTE</span>
+          <span className="is-section">SECCIÓN</span>
+          <span className="is-dimension">COTAS · mm</span>
+        </div>
 
         <div className="lite-step-copy" aria-live="polite">
           <span>Paso {step} · {copy.term}</span>

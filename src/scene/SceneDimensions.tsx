@@ -90,8 +90,8 @@ function SolidDimensions() {
       <ArrowHead position={[LENGTH / 2, -0.82, FRONT_Z]} direction="left" />
       <ArrowHead position={[1.6, -OUTER_R, FRONT_Z]} direction="up" />
       <ArrowHead position={[1.6, OUTER_R, FRONT_Z]} direction="down" />
-      <DimensionLabel position={[0, -0.82, FRONT_Z]}>130</DimensionLabel>
-      <DimensionLabel position={[1.86, 0, FRONT_Z]}>Ø55</DimensionLabel>
+      <DimensionLabel position={[0, -0.82, FRONT_Z]}>100</DimensionLabel>
+      <DimensionLabel position={[1.86, 0, FRONT_Z]}>Ø40</DimensionLabel>
     </group>
   )
 }
@@ -120,7 +120,8 @@ function AbatirDimensions({
         [[cutPosition + 0.72, 0.28, frontZ], [cutPosition + 1.02, 0.28, frontZ]],
       ],
       wall: [
-        [[cutPosition + 0.39, -0.39, frontZ], [cutPosition + 0.72, -0.7, frontZ]],
+        // el líder nace en el punto medio de la corona (radio medio ≈ 0.377, a 45°)
+        [[cutPosition + 0.27, -0.27, frontZ], [cutPosition + 0.72, -0.7, frontZ]],
         [[cutPosition + 0.72, -0.7, frontZ], [cutPosition + 1.08, -0.7, frontZ]],
       ],
     }),
@@ -140,10 +141,10 @@ function AbatirDimensions({
       <ArrowHead position={[cutPosition + outerDimX, OUTER_R, frontZ]} direction="down" opacity={outerOpacity} />
       <ArrowHead position={[cutPosition - INNER_R, 0, frontZ]} direction="right" opacity={innerOpacity} />
       <ArrowHead position={[cutPosition + INNER_R, 0, frontZ]} direction="left" opacity={innerOpacity} />
-      <ArrowHead position={[cutPosition + 0.39, -0.39, frontZ]} direction="left" opacity={wallOpacity} />
-      {outerOpacity > 0.7 && <DimensionLabel position={[cutPosition - 1.02, 0, frontZ]}>Ø55</DimensionLabel>}
-      {innerOpacity > 0.7 && <DimensionLabel position={[cutPosition + 1.18, 0.28, frontZ]}>Ø30</DimensionLabel>}
-      {wallOpacity > 0.7 && <DimensionLabel position={[cutPosition + 1.26, -0.7, frontZ]}>12.5</DimensionLabel>}
+      <ArrowHead position={[cutPosition + 0.27, -0.27, frontZ]} direction="left" opacity={wallOpacity} />
+      {outerOpacity > 0.7 && <DimensionLabel position={[cutPosition - 1.02, 0, frontZ]}>Ø40</DimensionLabel>}
+      {innerOpacity > 0.7 && <DimensionLabel position={[cutPosition + 1.18, 0.28, frontZ]}>Ø18</DimensionLabel>}
+      {wallOpacity > 0.7 && <DimensionLabel position={[cutPosition + 1.26, -0.7, frontZ]}>11</DimensionLabel>}
     </group>
   )
 }

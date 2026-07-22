@@ -46,7 +46,7 @@ const GUIDED_COPY: Record<GuidedBeat, { eyebrow: string; title: string; body: st
   4: {
     eyebrow: 'Resultado',
     title: 'Una línea se convierte en forma real',
-    body: 'Ahora podemos medir Ø55, Ø30 y una pared de 12.5 mm.',
+    body: 'Ahora podemos medir Ø40, Ø18 y una pared de 11 mm.',
   },
 }
 
@@ -349,7 +349,7 @@ export function DemoScene({ embedded = false, onOpenFullscreen }: DemoSceneProps
           {mode === 'solid' && (
             <>
               PLANO A–A
-              <span>VISTA ESPACIAL · L 130 mm · Ø55 mm</span>
+              <span>VISTA ESPACIAL · L 100 mm · Ø40 mm</span>
             </>
           )}
           {mode === 'reveal' && (
@@ -361,7 +361,7 @@ export function DemoScene({ embedded = false, onOpenFullscreen }: DemoSceneProps
           {mode === 'abatir' && (
             <>
               SECCIÓN ABATIDA A–A
-              <span>VERDADERA MAGNITUD · Ø55 · Ø30 · e 12.5 mm</span>
+              <span>VERDADERA MAGNITUD · Ø40 · Ø18 · e 11 mm</span>
             </>
           )}
           {mode === 'concurrente' && (
@@ -398,7 +398,7 @@ export function DemoScene({ embedded = false, onOpenFullscreen }: DemoSceneProps
             (cutAxis === 'x'
               ? 'Paso 2 · La mitad retirada queda tenue; la sección todavía se observa de canto sobre A–A.'
               : 'Se retira la mitad superior: se ven las dos paredes y el hueco del taladro.')}
-          {mode === 'abatir' && 'Paso 3 · La sección gira 90° y permite leer Ø55, Ø30 y una pared de 12.5 mm en verdadera magnitud.'}
+          {mode === 'abatir' && 'Paso 3 · La sección gira 90° y permite leer Ø40, Ø18 y una pared de 11 mm en verdadera magnitud.'}
           {mode === 'concurrente' && 'El plano B gira hasta alinearse con A: todo en una sola vista.'}
         </div>
       </div>
