@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useRef, useState } from 'react'
 import gsap from 'gsap'
-import { slides, exerciseWhy, SPEAKER_NAMES } from '../content/slides'
+import { slides, exerciseWhy } from '../content/slides'
 import { DiagramFigure, HeroArt, MiniIcon } from './Diagrams'
 import { LightweightSectionDemo } from './LightweightSectionDemo'
 
@@ -498,10 +498,6 @@ export function Presentation({ onOpenFullscreenDemo }: PresentationProps) {
           <span>
             Tema
             <b>Corte girado o abatido</b>
-          </span>
-          <span>
-            Expone
-            <b>{SPEAKER_NAMES[slide.speaker]}</b>
           </span>
           <span>
             Lámina

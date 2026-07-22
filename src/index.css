@@ -2108,8 +2108,7 @@ a {
     display: none;
   }
 
-  .cajetin > span:nth-child(1),
-  .cajetin > span:nth-child(2) {
+  .cajetin > span:nth-child(1) {
     display: none;
   }
 

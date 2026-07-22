@@ -14,16 +14,6 @@ export interface SlideContent {
   kind?: 'hero' | 'chapter' | 'content' | 'demo' | 'compare' | 'exercise' | 'close'
 }
 
-export const SPEAKER_LABELS: Record<Speaker, string> = {
-  1: 'Luis Carela · 0–4 min',
-  2: 'Arantza Cáceres · 4–8 min',
-}
-
-export const SPEAKER_NAMES: Record<Speaker, string> = {
-  1: 'Luis Eduardo Carela',
-  2: 'Arantza Naomi Cáceres',
-}
-
 export const slides: SlideContent[] = [
   /* ============ PORTADA ============ */
   {
@@ -177,15 +167,15 @@ export const slides: SlideContent[] = [
     speaker: 2,
     kind: 'content',
     figure: 'aplicacion',
-    eyebrow: 'Aplicación',
-    title: 'Un recurso, tres escalas',
+    eyebrow: 'Segundo ejemplo · Mecánica',
+    title: 'El radio revela otro perfil',
     bullets: [
-      'Mecánica: radios de volante, palancas, brazos.',
-      'Constructiva: el corte revela el perfil I de la viga.',
-      'Arquitectura: pasamanos, barandillas, montantes.',
+      'El brazo se ve alargado, pero su espesor real permanece oculto.',
+      'El plano A–A corta perpendicularmente el eje del radio.',
+      'La sección trapezoidal gira 90° sobre la vista y queda lista para acotar.',
     ],
-    key: 'Cambia la pieza y la escala; el recurso es siempre el mismo abatido.',
-    note: 'Solo nombrar las tres disciplinas (10–15 s). No repetir "pieza alargada" — eso ya está en Cuándo. Puente al ejercicio: "nuestra pieza es un buje".',
+    key: 'La pieza permanece quieta: gira únicamente el perfil tocado por A–A.',
+    note: '30 s. Segundo caso completo: identifiquen el radio de volante, sigan el plano A–A y señalen cómo la línea de canto se abre hasta formar un trapecio rayado. Las cotas 52 × 60 mm pertenecen a esta pieza didáctica. Cierre-puente: "el principio funciona con una corona circular y también con un perfil trapezoidal".',
   },
   {
     id: 'ejercicio',

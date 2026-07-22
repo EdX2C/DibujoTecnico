@@ -530,77 +530,105 @@ function RayadoFig({ active }: FigProps) {
 }
 
 /* ================================================================
-   APLICACIÓN — tres contextos, en secuencia
+   APLICACIÓN — segundo caso completo: radio de volante trapezoidal
    ================================================================ */
 function buildAplicacion(tl: TL, root: SVGSVGElement) {
-  const groups = ['.a-g1', '.a-g2', '.a-g3']
-  groups.forEach((sel, i) => {
-    const base = i * 0.95
-    pop(tl, q(root, `${sel} .a-t`), base)
-    qa(root, `${sel} .a-c`).forEach((el, j) => drawIn(tl, el, 0.5, base + 0.15 + j * 0.1))
-    fadeIn(tl, q(root, `${sel} .a-plane`), base + 0.55, 0.35)
-    fadeIn(tl, q(root, `${sel} .a-zoom`), base + 0.75, 0.45)
-    pop(tl, q(root, `${sel} .a-lab`), base + 0.95)
-  })
-  pop(tl, q(root, '.a-cap'), 3.35)
+  pop(tl, qa(root, '.a-title'), 0)
+  qa(root, '.a-part').forEach((el, i) => drawIn(tl, el, 0.62, 0.25 + i * 0.1))
+  fadeIn(tl, qa(root, '.a-body-fill'), 0.65, 0.5)
+  qa(root, '.a-cut').forEach((el, i) => drawIn(tl, el, 0.48, 1.15 + i * 0.08))
+  pop(tl, qa(root, '.a-cut-label'), 1.35)
+  drawIn(tl, q(root, '.a-edge'), 0.45, 1.75)
+  drawIn(tl, q(root, '.a-rotation'), 0.65, 2)
+  pop(tl, q(root, '.a-rotation-label'), 2.12)
+  tl.fromTo(
+    q(root, '.a-section'),
+    { opacity: 0.28, scaleX: 0.035, transformOrigin: '50% 50%' },
+    { opacity: 1, scaleX: 1, duration: 1.05, ease: 'power3.inOut' },
+    2.25,
+  )
+  fadeIn(tl, q(root, '.a-detail'), 3.05, 0.6)
+  fadeIn(tl, qa(root, '.a-dim'), 3.45, 0.5, 0.08)
+  pop(tl, q(root, '.a-cap'), 4.05)
 }
 
 function AplicacionFig({ active }: FigProps) {
   const ref = useBuildOnce(buildAplicacion, active)
   return (
     <svg ref={ref} viewBox="0 0 480 310" style={baseStyle} role="img" aria-hidden>
+      <Defs />
       <defs>
         <pattern id="appHatch45" width="9" height="9" patternUnits="userSpaceOnUse" patternTransform="rotate(45)">
           <line x1="0" y1="0" x2="0" y2="9" stroke={C.section} strokeWidth="1.1" />
         </pattern>
+        <linearGradient id="appMetal" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0" stopColor="#70869a" stopOpacity="0.72" />
+          <stop offset="0.48" stopColor="#293746" stopOpacity="0.86" />
+          <stop offset="1" stopColor="#121a22" stopOpacity="0.96" />
+        </linearGradient>
+        <marker id="appDimArrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+          <path d="M0,0 L10,5 L0,10 Z" fill="#8fe15f" />
+        </marker>
       </defs>
-      <line x1="160" y1="28" x2="160" y2="270" stroke={C.thin} strokeWidth="0.8" opacity="0.32" />
-      <line x1="320" y1="28" x2="320" y2="270" stroke={C.thin} strokeWidth="0.8" opacity="0.32" />
+      <Label cls="a-title" x={26} y={26} size={13} color={C.cut}>CASO B · RADIO DE VOLANTE</Label>
+      <Label cls="a-title" x={454} y={26} size={12} color={C.thin} anchor="end">PIEZA DIDÁCTICA · mm</Label>
 
-      <g className="a-g1" transform="translate(0,0)">
-        <Label cls="a-t" x={80} y={32} size={14} color={C.cut}>MECÁNICA</Label>
-        <line className="a-c" x1="22" y1="102" x2="138" y2="102" stroke={C.thin} strokeWidth="1" strokeDasharray="10 3 2 3" opacity="0" />
-        <path className="a-c" d="M28,82 H126 A13,20 0 0 1 126,122 H28 A13,20 0 0 1 28,82 Z" fill="none" stroke={C.contour} strokeWidth="2" opacity="0" />
-        <line className="a-plane" x1="80" y1="70" x2="80" y2="136" stroke={C.cut} strokeWidth="1.7" strokeDasharray="9 4 2 4" opacity="0" />
-        <line className="a-plane" x1="80" y1="136" x2="80" y2="168" stroke={C.thin} strokeWidth="1" opacity="0" />
-        <g className="a-zoom" opacity="0">
-          <circle cx="80" cy="202" r="34" fill={C.solid} stroke={C.section} strokeWidth="1.5" />
-          <ellipse cx="80" cy="202" rx="15" ry="23" fill="url(#appHatch45)" stroke={C.section} strokeWidth="2" />
-        </g>
-        <Label cls="a-lab" x={80} y={252} size={13.5}>MANIJA · OVAL</Label>
+      {/* vista exterior del radio: cubo, brazo cónico y tramo del aro */}
+      <g>
+        <circle className="a-body-fill" cx="62" cy="144" r="44" fill="url(#appMetal)" opacity="0" />
+        <path className="a-body-fill" d="M93,113 L315,91 L315,197 L93,175 Z" fill="url(#appMetal)" opacity="0" />
+        <path className="a-part" d="M93,113 L315,91 L315,197 L93,175 Z" fill="none" stroke={C.contour} strokeWidth="2.2" opacity="0" />
+        <circle className="a-part" cx="62" cy="144" r="44" fill="none" stroke={C.contour} strokeWidth="2.2" opacity="0" />
+        <circle className="a-part" cx="62" cy="144" r="17" fill={C.solid} stroke={C.contour} strokeWidth="2" opacity="0" />
+        <path className="a-part" d="M318,76 Q352,144 318,212" fill="none" stroke={C.contour} strokeWidth="24" strokeLinecap="round" opacity="0" />
+        <path className="a-part" d="M318,82 Q345,144 318,206" fill="none" stroke={C.thin} strokeWidth="1.4" opacity="0" />
+        <line className="a-part" x1="12" y1="144" x2="342" y2="144" stroke={C.hidden} strokeWidth="1.1" strokeDasharray="14 5 3 5" opacity="0" />
       </g>
 
-      <g className="a-g2" transform="translate(160,0)">
-        <Label cls="a-t" x={80} y={32} size={14} color={C.section}>CONSTRUCCIÓN</Label>
-        <rect className="a-c" x="24" y="88" width="112" height="40" rx="2" fill="none" stroke={C.contour} strokeWidth="2" opacity="0" />
-        <line className="a-c" x1="24" y1="98" x2="136" y2="98" stroke={C.hidden} strokeWidth="1.2" strokeDasharray="7 5" opacity="0" />
-        <line className="a-c" x1="24" y1="118" x2="136" y2="118" stroke={C.hidden} strokeWidth="1.2" strokeDasharray="7 5" opacity="0" />
-        <line className="a-plane" x1="80" y1="70" x2="80" y2="145" stroke={C.cut} strokeWidth="1.7" strokeDasharray="9 4 2 4" opacity="0" />
-        <line className="a-plane" x1="80" y1="145" x2="80" y2="168" stroke={C.thin} strokeWidth="1" opacity="0" />
-        <g className="a-zoom" opacity="0">
-          <circle cx="80" cy="202" r="34" fill={C.solid} stroke={C.section} strokeWidth="1.5" />
-          <path d="M52,181 H108 V191 H87 V213 H108 V223 H52 V213 H73 V191 H52 Z" fill="url(#appHatch45)" stroke={C.section} strokeWidth="1.8" />
-        </g>
-        <Label cls="a-lab" x={80} y={252} size={13.5}>VIGA · PERFIL I</Label>
+      {/* plano A–A y dirección de observación */}
+      <g>
+        <line className="a-cut" x1="212" y1="65" x2="212" y2="225" stroke={C.cut} strokeWidth="1.9" strokeDasharray="11 4 2 4" opacity="0" />
+        <rect className="a-cut" x="207" y="61" width="10" height="16" fill={C.cut} opacity="0" />
+        <rect className="a-cut" x="207" y="215" width="10" height="16" fill={C.cut} opacity="0" />
+        <path className="a-cut" d="M176,76 H202" fill="none" stroke={C.cut} strokeWidth="2" markerEnd="url(#arrowCut)" opacity="0" />
+        <path className="a-cut" d="M176,216 H202" fill="none" stroke={C.cut} strokeWidth="2" markerEnd="url(#arrowCut)" opacity="0" />
+        <Label cls="a-cut-label" x={164} y={80} size={15} color={C.cut}>A</Label>
+        <Label cls="a-cut-label" x={164} y={220} size={15} color={C.cut}>A</Label>
       </g>
 
-      <g className="a-g3" transform="translate(320,0)">
-        <Label cls="a-t" x={80} y={32} size={14} color={C.cut}>ARQUITECTURA</Label>
-        <line className="a-c" x1="26" y1="84" x2="134" y2="84" stroke={C.contour} strokeWidth="8" strokeLinecap="round" opacity="0" />
-        <line className="a-c" x1="42" y1="84" x2="42" y2="136" stroke={C.contour} strokeWidth="3" opacity="0" />
-        <line className="a-c" x1="80" y1="84" x2="80" y2="136" stroke={C.contour} strokeWidth="3" opacity="0" />
-        <line className="a-c" x1="118" y1="84" x2="118" y2="136" stroke={C.contour} strokeWidth="3" opacity="0" />
-        <line className="a-plane" x1="80" y1="64" x2="80" y2="102" stroke={C.cut} strokeWidth="1.7" strokeDasharray="9 4 2 4" opacity="0" />
-        <line className="a-plane" x1="80" y1="136" x2="80" y2="168" stroke={C.thin} strokeWidth="1" opacity="0" />
-        <g className="a-zoom" opacity="0">
-          <circle cx="80" cy="202" r="34" fill={C.solid} stroke={C.section} strokeWidth="1.5" />
-          <circle cx="80" cy="202" r="24" fill="url(#appHatch45)" stroke={C.section} strokeWidth="2" />
-          <circle cx="80" cy="202" r="13" fill={C.solid} stroke={C.contour} strokeWidth="1.6" />
-        </g>
-        <Label cls="a-lab" x={80} y={252} size={13.5}>PASAMANOS · TUBO</Label>
+      {/* de canto → giro → sección abatida superpuesta */}
+      <line className="a-edge" x1="212" y1="109" x2="212" y2="179" stroke={C.section} strokeWidth="3" opacity="0" />
+      <path className="a-rotation" d="M218,105 A62,62 0 0 1 274,146" fill="none" stroke={C.cut} strokeWidth="2.2" strokeDasharray="7 4" markerEnd="url(#arrowCut)" opacity="0" />
+      <Label cls="a-rotation-label" x={270} y={105} size={14} color={C.cut}>90°</Label>
+      <g className="a-section" opacity="0">
+        <path d="M184,111 H240 L232,177 H192 Z" fill={C.solid} stroke={C.contour} strokeWidth="4.4" />
+        <path d="M184,111 H240 L232,177 H192 Z" fill="url(#appHatch45)" stroke={C.section} strokeWidth="2.2" />
+        <line x1="176" y1="144" x2="248" y2="144" stroke={C.hidden} strokeWidth="1" strokeDasharray="9 4 2 4" />
       </g>
 
-      <Label cls="a-cap" x={240} y={292} size={14} color={C.section}>UNA MISMA REGLA · TRES ESCALAS DE PROYECTO</Label>
+      {/* detalle en verdadera magnitud */}
+      <g className="a-detail" opacity="0">
+        <line x1="338" y1="46" x2="338" y2="244" stroke={C.thin} strokeWidth="0.8" opacity="0.4" />
+        <Label x={404} y={44} size={12.5} color={C.section} visible>SECCIÓN A–A</Label>
+        <path d="M370,92 H438 L429,204 H379 Z" fill={C.solid} stroke={C.contour} strokeWidth="4" />
+        <path d="M370,92 H438 L429,204 H379 Z" fill="url(#appHatch45)" stroke={C.section} strokeWidth="2.2" />
+        <line x1="355" y1="148" x2="452" y2="148" stroke={C.hidden} strokeWidth="1" strokeDasharray="11 4 2 4" />
+      </g>
+
+      <g className="a-dim" opacity="0" fill="none" stroke="#8fe15f">
+        <line x1="370" y1="82" x2="370" y2="68" strokeWidth="1" />
+        <line x1="438" y1="82" x2="438" y2="68" strokeWidth="1" />
+        <line x1="370" y1="70" x2="438" y2="70" strokeWidth="1.6" markerStart="url(#appDimArrow)" markerEnd="url(#appDimArrow)" />
+        <text x="404" y="64" fill="#8fe15f" stroke="none" fontSize="12" fontFamily={MONO} textAnchor="middle">52</text>
+      </g>
+      <g className="a-dim" opacity="0" fill="none" stroke="#8fe15f">
+        <line x1="448" y1="92" x2="463" y2="92" strokeWidth="1" />
+        <line x1="439" y1="204" x2="463" y2="204" strokeWidth="1" />
+        <line x1="458" y1="92" x2="458" y2="204" strokeWidth="1.6" markerStart="url(#appDimArrow)" markerEnd="url(#appDimArrow)" />
+        <text x="454" y="152" fill="#8fe15f" stroke="none" fontSize="12" fontFamily={MONO} textAnchor="end">60</text>
+      </g>
+      <Label cls="a-dim" x={404} y={225} size={11.5} color="#8fe15f">VERDADERA MAGNITUD</Label>
+      <Label cls="a-cap" x={240} y={292} size={13} color={C.section}>MISMO PRINCIPIO · OTRO PERFIL</Label>
     </svg>
   )
 }
@@ -976,7 +1004,7 @@ const registry: Record<string, { comp: (p: FigProps) => ReactElement; caption: R
   },
   aplicacion: {
     comp: AplicacionFig,
-    caption: 'Tres objetos y tres escalas: la sección revela el perfil real',
+    caption: 'Radio de volante: el perfil trapezoidal gira 90° sobre A–A y aparece en verdadera magnitud',
   },
   ejercicio: {
     comp: EjercicioFig,
