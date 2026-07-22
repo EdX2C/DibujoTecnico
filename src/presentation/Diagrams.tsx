@@ -715,15 +715,12 @@ function buildPuente(tl: TL, root: SVGSVGElement) {
   drawIn(tl, q(root, '.b-pl1'), 0.45, 2.75)
   drawIn(tl, q(root, '.b-pl2'), 0.4, 2.9)
   fadeIn(tl, qa(root, '.b-vax'), 3.15, 0.35)
-  fadeIn(tl, qa(root, '.b-corr'), 3.35, 0.3)
-  pop(tl, q(root, '.b-hid'), 3.6)
   tl.fromTo(
     q(root, '.b-hoy'),
     { opacity: 0, scale: 0.85, transformOrigin: '50% 50%', transformBox: 'fill-box' },
     { opacity: 1, scale: 1, duration: 0.5, ease: 'back.out(2)' },
-    4.05,
+    3.65,
   )
-  pop(tl, q(root, '.b-cap'), 4.25)
 }
 
 function PuenteFig({ active }: FigProps) {
@@ -731,7 +728,7 @@ function PuenteFig({ active }: FigProps) {
   return (
     <svg
       ref={ref}
-      viewBox="0 0 480 310"
+      viewBox="0 0 480 212"
       style={baseStyle}
       role="img"
       aria-label="Del isométrico del cilindro salen las tres vistas: alzado PV y planta PH como rectángulos con el agujero en líneas ocultas, y perfil PL como dos círculos; la sección abatida entrega ese perfil dentro del alzado"
@@ -770,18 +767,11 @@ function PuenteFig({ active }: FigProps) {
       <line className="b-vax" x1="432" y1="22" x2="432" y2="98" stroke={C.thin} strokeWidth="1" strokeDasharray="12 4 2 4" opacity="0" />
       <line className="b-vax" x1="232" y1="150" x2="398" y2="150" stroke={C.thin} strokeWidth="1" strokeDasharray="12 4 2 4" opacity="0" />
 
-      {/* correspondencia PV ↔ PH */}
-      <line className="b-corr" x1="240" y1="92" x2="240" y2="118" stroke={C.thin} strokeWidth="1" strokeDasharray="4 4" opacity="0" />
-      <line className="b-corr" x1="390" y1="92" x2="390" y2="118" stroke={C.thin} strokeWidth="1" strokeDasharray="4 4" opacity="0" />
-
-      <Label cls="b-hid" x={240} y={226} size={13} color={C.cut}>EL INTERIOR: SOLO LÍNEAS OCULTAS</Label>
-
       {/* el gancho: los círculos de la PL se encienden en cian */}
       <g className="b-hoy" opacity="0">
         <circle cx="432" cy="60" r="30" fill="none" stroke={C.section} strokeWidth="2.6" />
         <circle cx="432" cy="60" r="13.5" fill="none" stroke={C.section} strokeWidth="2.2" />
       </g>
-      <Label cls="b-cap" x={240} y={290} size={13.5} color={C.section}>HOY: LO QUE DA LA PL · RAYADO · SIN SALIR DE LA PV</Label>
     </svg>
   )
 }
