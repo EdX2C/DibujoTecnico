@@ -9,7 +9,7 @@ Participación equilibrada: cada integrante habla aproximadamente 4 minutos. La 
 | 0:00 | 01 · Portada | Nombres y gancho: “cortar y girar 90° permite ver lo que la pieza oculta”. |
 | 0:20 | 02 · No se ve el interior | Problema: líneas ocultas ambiguas. Objetivo: interior visible y medible. |
 | 0:55 | 03 · Un lenguaje común | Monge → industria → ISO/R 128:1959 → ISO 128-3:2022 → CAD/BIM. La convención resuelve un problema común. |
-| 1:25 | 04 · Esto ya lo saben hacer | Del isométrico salen PV, PH y PL. En el buje: PV y PH rectángulos con líneas ocultas; PL de dos círculos. Gancho: “hoy, la PL sin dibujarla aparte”. |
+| 1:25 | 04 · Esto ya lo saben hacer | Del isométrico del cilindro salen PV, PH y PL: rectángulos con líneas ocultas y la PL de dos círculos. Gancho: “hoy, la PL sin dibujarla aparte”. |
 | 1:55 | 05 · Cortar y girar 90° | Señalar la secuencia: corta → de canto → gira → verdadera magnitud. Regla conocida: perpendicular = línea, paralela = VM. |
 | 2:25 | 06 · Corte ≠ sección | La cara cortada gira alrededor de la traza hasta apoyarse sobre la vista. Buje: corte = corona + fondo; sección = solo corona. Señalar las flechas de observación de la figura. |
 | 3:10 | 07 · Cuándo usarlo | Piezas largas y sección constante. Dentro de la PV → fina; la desplazada se define en Diferencias. |

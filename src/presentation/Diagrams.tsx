@@ -702,26 +702,28 @@ function AplicacionFig({ active }: FigProps) {
    ================================================================ */
 function buildPuente(tl: TL, root: SVGSVGElement) {
   pop(tl, q(root, '.b-tiso'), 0)
-  qa(root, '.b-iso').forEach((el, i) => drawIn(tl, el, 0.5, 0.15 + i * 0.12))
-  fadeIn(tl, q(root, '.b-isoax'), 0.85, 0.3)
-  pop(tl, q(root, '.b-lpv'), 1.1)
-  drawIn(tl, q(root, '.b-pv'), 0.5, 1.2)
-  fadeIn(tl, qa(root, '.b-pvhid'), 1.55, 0.3)
-  pop(tl, q(root, '.b-lph'), 1.85)
-  drawIn(tl, q(root, '.b-ph'), 0.5, 1.95)
-  fadeIn(tl, qa(root, '.b-phhid'), 2.3, 0.3)
-  pop(tl, q(root, '.b-lpl'), 2.6)
-  drawIn(tl, q(root, '.b-pl1'), 0.45, 2.7)
-  drawIn(tl, q(root, '.b-pl2'), 0.4, 2.85)
-  fadeIn(tl, qa(root, '.b-corr'), 3.2, 0.35)
-  pop(tl, q(root, '.b-hid'), 3.5)
+  qa(root, '.b-iso').forEach((el, i) => drawIn(tl, el, 0.45, 0.12 + i * 0.1))
+  fadeIn(tl, qa(root, '.b-isohid'), 0.95, 0.3)
+  fadeIn(tl, q(root, '.b-isoax'), 1.05, 0.3)
+  pop(tl, q(root, '.b-lpv'), 1.25)
+  drawIn(tl, q(root, '.b-pv'), 0.5, 1.35)
+  fadeIn(tl, qa(root, '.b-pvhid'), 1.7, 0.3)
+  pop(tl, q(root, '.b-lph'), 1.95)
+  drawIn(tl, q(root, '.b-ph'), 0.5, 2.05)
+  fadeIn(tl, qa(root, '.b-phhid'), 2.4, 0.3)
+  pop(tl, q(root, '.b-lpl'), 2.65)
+  drawIn(tl, q(root, '.b-pl1'), 0.45, 2.75)
+  drawIn(tl, q(root, '.b-pl2'), 0.4, 2.9)
+  fadeIn(tl, qa(root, '.b-vax'), 3.15, 0.35)
+  fadeIn(tl, qa(root, '.b-corr'), 3.35, 0.3)
+  pop(tl, q(root, '.b-hid'), 3.6)
   tl.fromTo(
     q(root, '.b-hoy'),
-    { scale: 0.55, opacity: 0, transformOrigin: '50% 50%', transformBox: 'fill-box' },
-    { scale: 1, opacity: 1, duration: 0.5, ease: 'back.out(2)' },
-    4.0,
+    { opacity: 0, scale: 0.85, transformOrigin: '50% 50%', transformBox: 'fill-box' },
+    { opacity: 1, scale: 1, duration: 0.5, ease: 'back.out(2)' },
+    4.05,
   )
-  pop(tl, q(root, '.b-cap'), 4.2)
+  pop(tl, q(root, '.b-cap'), 4.25)
 }
 
 function PuenteFig({ active }: FigProps) {
@@ -732,43 +734,54 @@ function PuenteFig({ active }: FigProps) {
       viewBox="0 0 480 310"
       style={baseStyle}
       role="img"
-      aria-label="Del isométrico del buje salen las tres vistas: alzado PV y planta PH como rectángulos con el agujero en líneas ocultas, y perfil PL como dos círculos; la sección abatida entrega ese perfil dentro del alzado"
+      aria-label="Del isométrico del cilindro salen las tres vistas: alzado PV y planta PH como rectángulos con el agujero en líneas ocultas, y perfil PL como dos círculos; la sección abatida entrega ese perfil dentro del alzado"
     >
-      {/* isométrico del buje (pictórico, eje a ~22°) */}
-      <g transform="translate(96,118) rotate(-22)">
-        <line className="b-isoax" x1="-78" y1="0" x2="84" y2="0" stroke={C.thin} strokeWidth="1" strokeDasharray="12 4 2 4" opacity="0" />
-        <path className="b-iso" d="M-58,-30 H58" fill="none" stroke={C.contour} strokeWidth="2.2" opacity="0" />
-        <path className="b-iso" d="M-58,30 H58" fill="none" stroke={C.contour} strokeWidth="2.2" opacity="0" />
-        <path className="b-iso" d="M-58,-30 A13,30 0 0 0 -58,30" fill="none" stroke={C.contour} strokeWidth="2" opacity="0" />
-        <ellipse className="b-iso" cx="58" cy="0" rx="13" ry="30" fill="none" stroke={C.contour} strokeWidth="2.2" opacity="0" />
-        <ellipse className="b-iso" cx="58" cy="0" rx="5.5" ry="13" fill="none" stroke={C.contour} strokeWidth="1.8" opacity="0" />
+      {/* isométrico del cilindro: eje a 30°, tapas elípticas tangentes,
+          taladro pasante insinuado en líneas ocultas */}
+      <g transform="translate(105,106) rotate(-30)">
+        <line className="b-isoax" x1="-68" y1="0" x2="72" y2="0" stroke={C.thin} strokeWidth="1" strokeDasharray="12 4 2 4" opacity="0" />
+        <path className="b-iso" d="M-55,-22 H55" fill="none" stroke={C.contour} strokeWidth="2.2" opacity="0" />
+        <path className="b-iso" d="M-55,22 H55" fill="none" stroke={C.contour} strokeWidth="2.2" opacity="0" />
+        <path className="b-iso" d="M-55,-22 A9,22 0 0 0 -55,22" fill="none" stroke={C.contour} strokeWidth="2" opacity="0" />
+        <ellipse className="b-iso" cx="55" cy="0" rx="9" ry="22" fill="none" stroke={C.contour} strokeWidth="2.2" opacity="0" />
+        <ellipse className="b-iso" cx="55" cy="0" rx="4" ry="9.9" fill="none" stroke={C.contour} strokeWidth="1.8" opacity="0" />
+        <line className="b-isohid" x1="-55" y1="-9.9" x2="53" y2="-9.9" stroke={C.hidden} strokeWidth="1.2" strokeDasharray="6 4" opacity="0" />
+        <line className="b-isohid" x1="-55" y1="9.9" x2="53" y2="9.9" stroke={C.hidden} strokeWidth="1.2" strokeDasharray="6 4" opacity="0" />
       </g>
-      <Label cls="b-tiso" x={96} y={200} size={13}>ISOMÉTRICO · LO QUE YA DIBUJAN</Label>
+      <Label cls="b-tiso" x={105} y={192} size={13}>ISOMÉTRICO</Label>
 
-      {/* PV (alzado) con la planta debajo y el perfil a la derecha: primer diedro */}
-      <Label cls="b-lpv" x={321} y={26} size={13}>PV · ALZADO</Label>
-      <rect className="b-pv" x="246" y="34" width="150" height="60" fill="none" stroke={C.contour} strokeWidth="2" opacity="0" />
-      <line className="b-pvhid" x1="246" y1="50.5" x2="396" y2="50.5" stroke={C.hidden} strokeWidth="1.3" strokeDasharray="7 5" opacity="0" />
-      <line className="b-pvhid" x1="246" y1="77.5" x2="396" y2="77.5" stroke={C.hidden} strokeWidth="1.3" strokeDasharray="7 5" opacity="0" />
+      {/* primer diedro: PV arriba, PH debajo (misma x), PL a la derecha (misma y) */}
+      <Label cls="b-lpv" x={315} y={20} size={13}>PV · ALZADO</Label>
+      <rect className="b-pv" x="240" y="30" width="150" height="60" fill="none" stroke={C.contour} strokeWidth="2" opacity="0" />
+      <line className="b-pvhid" x1="240" y1="46.5" x2="390" y2="46.5" stroke={C.hidden} strokeWidth="1.3" strokeDasharray="7 5" opacity="0" />
+      <line className="b-pvhid" x1="240" y1="73.5" x2="390" y2="73.5" stroke={C.hidden} strokeWidth="1.3" strokeDasharray="7 5" opacity="0" />
 
-      <Label cls="b-lph" x={321} y={122} size={13}>PH · PLANTA</Label>
-      <rect className="b-ph" x="246" y="130" width="150" height="60" fill="none" stroke={C.contour} strokeWidth="2" opacity="0" />
-      <line className="b-phhid" x1="246" y1="146.5" x2="396" y2="146.5" stroke={C.hidden} strokeWidth="1.3" strokeDasharray="7 5" opacity="0" />
-      <line className="b-phhid" x1="246" y1="173.5" x2="396" y2="173.5" stroke={C.hidden} strokeWidth="1.3" strokeDasharray="7 5" opacity="0" />
+      <Label cls="b-lpl" x={432} y={20} size={13}>PL · PERFIL</Label>
+      <circle className="b-pl1" cx="432" cy="60" r="30" fill="none" stroke={C.contour} strokeWidth="2" opacity="0" />
+      <circle className="b-pl2" cx="432" cy="60" r="13.5" fill="none" stroke={C.contour} strokeWidth="1.8" opacity="0" />
 
-      <circle className="b-pl1" cx="436" cy="64" r="30" fill="none" stroke={C.contour} strokeWidth="2" opacity="0" />
-      <circle className="b-pl2" cx="436" cy="64" r="13.5" fill="none" stroke={C.contour} strokeWidth="1.8" opacity="0" />
-      <Label cls="b-lpl" x={436} y={116} size={13}>PL · PERFIL</Label>
+      <rect className="b-ph" x="240" y="120" width="150" height="60" fill="none" stroke={C.contour} strokeWidth="2" opacity="0" />
+      <line className="b-phhid" x1="240" y1="136.5" x2="390" y2="136.5" stroke={C.hidden} strokeWidth="1.3" strokeDasharray="7 5" opacity="0" />
+      <line className="b-phhid" x1="240" y1="163.5" x2="390" y2="163.5" stroke={C.hidden} strokeWidth="1.3" strokeDasharray="7 5" opacity="0" />
+      <Label cls="b-lph" x={315} y={198} size={13}>PH · PLANTA</Label>
 
-      {/* correspondencia entre vistas */}
-      <line className="b-corr" x1="398" y1="64" x2="404" y2="64" stroke={C.thin} strokeWidth="1" opacity="0" />
-      <line className="b-corr" x1="321" y1="96" x2="321" y2="128" stroke={C.thin} strokeWidth="1" strokeDasharray="4 4" opacity="0" />
+      {/* ejes: uno común PV→PL y los del perfil y la planta */}
+      <line className="b-vax" x1="232" y1="60" x2="470" y2="60" stroke={C.thin} strokeWidth="1" strokeDasharray="12 4 2 4" opacity="0" />
+      <line className="b-vax" x1="432" y1="22" x2="432" y2="98" stroke={C.thin} strokeWidth="1" strokeDasharray="12 4 2 4" opacity="0" />
+      <line className="b-vax" x1="232" y1="150" x2="398" y2="150" stroke={C.thin} strokeWidth="1" strokeDasharray="12 4 2 4" opacity="0" />
 
-      <Label cls="b-hid" x={321} y={212} size={13} color={C.cut}>EL INTERIOR: SOLO LÍNEAS OCULTAS</Label>
+      {/* correspondencia PV ↔ PH */}
+      <line className="b-corr" x1="240" y1="92" x2="240" y2="118" stroke={C.thin} strokeWidth="1" strokeDasharray="4 4" opacity="0" />
+      <line className="b-corr" x1="390" y1="92" x2="390" y2="118" stroke={C.thin} strokeWidth="1" strokeDasharray="4 4" opacity="0" />
 
-      {/* el gancho: hoy conseguimos la PL sin dibujarla aparte */}
-      <circle className="b-hoy" cx="436" cy="64" r="38" fill="none" stroke={C.section} strokeWidth="2" strokeDasharray="6 4" opacity="0" />
-      <Label cls="b-cap" x={240} y={292} size={13.5} color={C.section}>HOY: LO QUE DA LA PL · RAYADO · SIN SALIR DE LA PV</Label>
+      <Label cls="b-hid" x={240} y={226} size={13} color={C.cut}>EL INTERIOR: SOLO LÍNEAS OCULTAS</Label>
+
+      {/* el gancho: los círculos de la PL se encienden en cian */}
+      <g className="b-hoy" opacity="0">
+        <circle cx="432" cy="60" r="30" fill="none" stroke={C.section} strokeWidth="2.6" />
+        <circle cx="432" cy="60" r="13.5" fill="none" stroke={C.section} strokeWidth="2.2" />
+      </g>
+      <Label cls="b-cap" x={240} y={290} size={13.5} color={C.section}>HOY: LO QUE DA LA PL · RAYADO · SIN SALIR DE LA PV</Label>
     </svg>
   )
 }
