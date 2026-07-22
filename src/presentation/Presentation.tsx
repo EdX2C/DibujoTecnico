@@ -99,12 +99,13 @@ function CutTitle() {
   )
 }
 
-/** Visual chapter (0=portada, 1..4) after condensing the deck to 13 slides. */
+/** Visual chapter (0=portada, 1..4) for the 14-slide deck.
+    Act II opens with the bridge slide (isométrico → PV/PH/PL). */
 function actForIndex(i: number): VisualAct {
   if (i === 0) return 0
   if (i <= 2) return 1
-  if (i <= 5) return 2
-  if (i <= 9) return 3
+  if (i <= 6) return 2
+  if (i <= 10) return 3
   return 4
 }
 

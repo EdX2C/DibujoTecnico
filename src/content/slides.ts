@@ -63,6 +63,21 @@ export const slides: SlideContent[] = [
 
   /* ============ CONCEPTO Y DEFINICIÓN ============ */
   {
+    id: 'puente',
+    speaker: 1,
+    kind: 'content',
+    figure: 'puente',
+    eyebrow: 'Lo que ya dominan',
+    title: 'Esto ya lo saben hacer',
+    bullets: [
+      'Del isométrico del buje ya sacan las tres vistas: PV, PH y PL.',
+      'PV y PH: rectángulos con el interior en líneas ocultas. PL: dos círculos.',
+      'Ninguna muestra el material cortado: el interior sigue en discontinuas.',
+    ],
+    key: 'Hoy: lo que daría la PL, rayado y sin salir de la PV.',
+    note: '30 s. Arrancar desde lo conocido: "esto ya lo hacen ustedes". Señalar el isométrico y las tres vistas: PV y PH son rectángulos con el agujero en líneas ocultas; la PL son dos círculos. El gancho, mirando la PL resaltada: "hoy vamos a conseguir exactamente esto, pero rayado y sin dibujar la PL aparte". No definir nada todavía. Puente: "veamos el gesto".',
+  },
+  {
     id: 'idea',
     speaker: 1,
     kind: 'content',
