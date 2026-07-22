@@ -4,9 +4,10 @@ import { useFrame } from '@react-three/fiber'
 import { Edges } from '@react-three/drei'
 
 /* La pieza del demo: un buje — casquillo alargado (largo > diámetro) con agujero pasante.
-   Coincide con la pieza del ejercicio gráfico. */
-export const OUTER_R = 0.55
-export const INNER_R = 0.3
+   Coincide con la pieza del ejercicio gráfico: Ø40 exterior, Ø18 interior, largo 100 mm
+   (escala de escena: 1 unidad ≈ 38.5 mm, para conservar el encuadre de cámara). */
+export const OUTER_R = 0.52
+export const INNER_R = 0.234
 export const LENGTH = 2.6
 const CHAMFER = 0.035
 
@@ -626,7 +627,7 @@ function makeLongitudinalTexture() {
   ctx.clearRect(0, 0, w, h)
 
   // fracción de la altura ocupada por el taladro (centro), resto = paredes
-  const boreFrac = INNER_R / OUTER_R // 0.545
+  const boreFrac = INNER_R / OUTER_R // 0.45 (Ø18 / Ø40)
   const wall = (h * (1 - boreFrac)) / 2
   const bands = [
     { y0: 0, y1: wall },

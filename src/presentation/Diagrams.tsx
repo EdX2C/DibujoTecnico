@@ -129,7 +129,7 @@ function Label({
   y,
   children,
   color = C.thin,
-  size = 12,
+  size = 13,
   anchor = 'middle',
   cls,
   visible = false,
@@ -184,7 +184,13 @@ function buildProblema(tl: TL, root: SVGSVGElement) {
 function ProblemaFig({ active }: FigProps) {
   const ref = useBuildOnce(buildProblema, active)
   return (
-    <svg ref={ref} viewBox="0 0 480 300" style={baseStyle} role="img" aria-hidden>
+    <svg
+      ref={ref}
+      viewBox="0 0 480 300"
+      style={baseStyle}
+      role="img"
+      aria-label="Comparación: la vista exterior deja el interior en líneas ocultas ambiguas; la vista en corte muestra las cavidades visibles y el material rayado"
+    >
       <defs>
         <pattern id="probHatch45" width="9" height="9" patternUnits="userSpaceOnUse" patternTransform="rotate(45)">
           <line x1="0" y1="0" x2="0" y2="9" stroke={C.section} strokeWidth="1.1" />
@@ -261,7 +267,13 @@ function buildIdea(tl: TL, root: SVGSVGElement) {
 function IdeaFig({ active }: FigProps) {
   const ref = useBuildOnce(buildIdea, active)
   return (
-    <svg ref={ref} viewBox="0 0 480 280" style={baseStyle} role="img" aria-hidden>
+    <svg
+      ref={ref}
+      viewBox="0 0 480 280"
+      style={baseStyle}
+      role="img"
+      aria-label="Secuencia en cuatro pasos: cortar la barra, ver la sección de canto como una línea, girarla 90 grados y verla de frente en magnitud real"
+    >
       <Defs />
       <defs>
         <pattern id="ideaHatch45" width="9" height="9" patternTransform="rotate(45)" patternUnits="userSpaceOnUse">
@@ -284,13 +296,13 @@ function IdeaFig({ active }: FigProps) {
         <ellipse className="i-oval" cx="0" cy="0" rx="2" ry="28" fill="url(#ideaHatch45)" stroke={C.section} strokeWidth="2.2" opacity="0" />
         <path className="i-arc" d="M0,-42 A42,42 0 0 1 40,-12" fill="none" stroke={C.cut} strokeWidth="2.2" markerEnd="url(#arrowCut)" opacity="0" />
       </g>
-      <Label cls="i-s2" x={365} y={248} size={12.5} color={C.section}>
+      <Label cls="i-s2" x={365} y={248} size={13} color={C.section}>
         2 · DE CANTO: LÍNEA
       </Label>
-      <Label cls="i-s3" x={365} y={248} size={12.5} color={C.cut}>
+      <Label cls="i-s3" x={365} y={248} size={13} color={C.cut}>
         3 · GIRA 90°
       </Label>
-      <Label cls="i-s4" x={365} y={248} size={12.5} color={C.section}>
+      <Label cls="i-s4" x={365} y={248} size={13} color={C.section}>
         4 · DE FRENTE: MAGNITUD REAL
       </Label>
     </svg>
@@ -306,16 +318,28 @@ function buildDefinicion(tl: TL, root: SVGSVGElement) {
   drawIn(tl, q(root, '.d-source'), 0.75, 0.1)
   fadeIn(tl, qa(root, '.d-hidden'), 0.55, 0.35)
   fadeIn(tl, qa(root, '.d-plane'), 0.9, 0.35)
-  pop(tl, qa(root, '.d-title'), 1.25)
-  drawIn(tl, q(root, '.d-behind'), 0.55, 1.45)
-  fadeIn(tl, qa(root, '.d-face'), 1.75, 0.55)
-  pop(tl, qa(root, '.d-label'), 2.35)
+  tl.fromTo(
+    qa(root, '.d-arrow'),
+    { opacity: 0, x: -12 },
+    { opacity: 1, x: 0, duration: 0.4, stagger: 0.12, ease: 'power2.out' },
+    1.15,
+  )
+  pop(tl, qa(root, '.d-title'), 1.45)
+  drawIn(tl, q(root, '.d-behind'), 0.55, 1.65)
+  fadeIn(tl, qa(root, '.d-face'), 1.95, 0.55)
+  pop(tl, qa(root, '.d-label'), 2.55)
 }
 
 function DefinicionFig({ active }: FigProps) {
   const ref = useBuildOnce(buildDefinicion, active)
   return (
-    <svg ref={ref} viewBox="0 0 480 310" style={baseStyle} role="img" aria-hidden>
+    <svg
+      ref={ref}
+      viewBox="0 0 480 310"
+      style={baseStyle}
+      role="img"
+      aria-label="Buje escalonado cortado por el plano A–A: el corte muestra la cara rayada más el contorno de la brida posterior; la sección muestra solo la cara cortada"
+    >
       <defs>
         <pattern id="defHatch45" width="9" height="9" patternUnits="userSpaceOnUse" patternTransform="rotate(45)">
           <line x1="0" y1="0" x2="0" y2="9" stroke={C.section} strokeWidth="1.1" />
@@ -334,6 +358,15 @@ function DefinicionFig({ active }: FigProps) {
         <rect className="d-plane" x="106" y="102" width="12" height="8" fill={C.cut} opacity="0" />
         <Label cls="d-plane" x={132} y={6} color={C.cut} size={14}>A</Label>
         <Label cls="d-plane" x={132} y={106} color={C.cut} size={14}>A</Label>
+        {/* dirección de observación: hacia la brida, que queda detrás del plano */}
+        <g className="d-arrow" opacity="0">
+          <line x1="64" y1="-4" x2="94" y2="-4" stroke={C.section} strokeWidth="2.2" />
+          <path d="M108,-4 L96,-10 V2 Z" fill={C.section} />
+        </g>
+        <g className="d-arrow" opacity="0">
+          <line x1="64" y1="106" x2="94" y2="106" stroke={C.section} strokeWidth="2.2" />
+          <path d="M108,106 L96,100 V112 Z" fill={C.section} />
+        </g>
       </g>
 
       <g transform="translate(130,224)">
@@ -341,14 +374,14 @@ function DefinicionFig({ active }: FigProps) {
         <circle className="d-behind" cx="0" cy="0" r="58" fill="none" stroke={C.cut} strokeWidth="2" opacity="0" />
         <circle className="d-face" cx="0" cy="0" r="42" fill="url(#defHatch45)" stroke={C.section} strokeWidth="2" opacity="0" />
         <circle className="d-face" cx="0" cy="0" r="18" fill={C.solid} stroke={C.contour} strokeWidth="2" opacity="0" />
-        <Label cls="d-label" x={0} y={78} size={12.5}>cara cortada + contorno detrás</Label>
+        <Label cls="d-label" x={0} y={78} size={13}>cara cortada + contorno detrás</Label>
       </g>
 
       <g transform="translate(350,224)">
         <Label cls="d-title" x={0} y={-72} color={C.section} size={15}>SECCIÓN A–A</Label>
         <circle className="d-face" cx="0" cy="0" r="42" fill="url(#defHatch45)" stroke={C.section} strokeWidth="2" opacity="0" />
         <circle className="d-face" cx="0" cy="0" r="18" fill={C.solid} stroke={C.contour} strokeWidth="2" opacity="0" />
-        <Label cls="d-label" x={0} y={78} size={12.5}>solo la cara cortada</Label>
+        <Label cls="d-label" x={0} y={78} size={13}>solo la cara cortada</Label>
       </g>
     </svg>
   )
@@ -376,7 +409,13 @@ function buildCuando(tl: TL, root: SVGSVGElement) {
 function CuandoFig({ active }: FigProps) {
   const ref = useBuildOnce(buildCuando, active)
   return (
-    <svg ref={ref} viewBox="0 0 480 300" style={baseStyle} role="img" aria-hidden>
+    <svg
+      ref={ref}
+      viewBox="0 0 480 300"
+      style={baseStyle}
+      role="img"
+      aria-label="Pieza larga de perfil constante con la sección girada 90 grados superpuesta sobre la propia vista, dibujada con contorno fino"
+    >
       <Defs />
       <defs>
         <pattern id="whenHatch45" width="9" height="9" patternTransform="rotate(45)" patternUnits="userSpaceOnUse">
@@ -393,7 +432,7 @@ function CuandoFig({ active }: FigProps) {
         <Label cls="c-l1" x={110} y={64} color={C.section} size={13.5}>
           perfil girado sobre la vista
         </Label>
-        <Label cls="c-l2" x={110} y={80} size={12.5}>
+        <Label cls="c-l2" x={110} y={80} size={13}>
           contorno en línea fina (norma)
         </Label>
         <Label cls="c-l3" x={300} y={-58} size={13}>
@@ -434,7 +473,13 @@ function buildPlano(tl: TL, root: SVGSVGElement) {
 function PlanoFig({ active }: FigProps) {
   const ref = useBuildOnce(buildPlano, active)
   return (
-    <svg ref={ref} viewBox="0 0 480 310" style={baseStyle} role="img" aria-hidden>
+    <svg
+      ref={ref}
+      viewBox="0 0 480 310"
+      style={baseStyle}
+      role="img"
+      aria-label="Plano de corte A–A: traza de trazo y punto con extremos gruesos, letras A, flechas de observación en el mismo sentido y la mitad retirada sombreada"
+    >
       <Defs />
       <Label cls="pl-title" x={240} y={24} size={15} color={C.cut}>PLANO DE CORTE A–A</Label>
 
@@ -442,7 +487,7 @@ function PlanoFig({ active }: FigProps) {
       <line className="pl-hidden" x1="45" y1="147" x2="435" y2="147" stroke={C.thin} strokeWidth="1" strokeDasharray="12 4 2 4" opacity="0" />
       <circle className="pl-hidden" cx="240" cy="147" r="34" fill="none" stroke={C.hidden} strokeWidth="1.3" strokeDasharray="7 5" opacity="0" />
       <rect className="pl-removed" x="65" y="88" width="175" height="118" fill={C.cut} fillOpacity="0.1" opacity="0" />
-      <Label cls="pl-removed" x={150} y={126} size={12.5} color={C.cut}>MITAD RETIRADA</Label>
+      <Label cls="pl-removed" x={150} y={126} size={13} color={C.cut}>MITAD RETIRADA</Label>
 
       <line className="pl-line" x1="240" y1="64" x2="240" y2="230" stroke={C.cut} strokeWidth="1.9" strokeDasharray="14 5 3 5" opacity="0" />
       <rect className="pl-end" x="232" y="54" width="16" height="12" fill={C.cut} opacity="0" />
@@ -454,7 +499,7 @@ function PlanoFig({ active }: FigProps) {
         <g className="pl-eye" opacity="0">
           <path d="M0,10 Q16,-5 32,10 Q16,25 0,10 Z" fill={C.solid} stroke={C.section} strokeWidth="1.8" />
           <circle cx="16" cy="10" r="4" fill={C.section} />
-          <text x="16" y="38" fill={C.section} fontSize="12.5" fontFamily={MONO} textAnchor="middle">OBS.</text>
+          <text x="16" y="38" fill={C.section} fontSize="13" fontFamily={MONO} textAnchor="middle">OBS.</text>
         </g>
       </g>
       <g className="pl-arr" opacity="0">
@@ -494,7 +539,13 @@ function buildRayado(tl: TL, root: SVGSVGElement) {
 function RayadoFig({ active }: FigProps) {
   const ref = useBuildOnce(buildRayado, active)
   return (
-    <svg ref={ref} viewBox="0 0 480 310" style={baseStyle} role="img" aria-hidden>
+    <svg
+      ref={ref}
+      viewBox="0 0 480 310"
+      style={baseStyle}
+      role="img"
+      aria-label="Regla del rayado: líneas finas a 45 grados solo en el material cortado, huecos sin rayar y piezas contiguas con direcciones distintas"
+    >
       <defs>
         <pattern id="rayHatch45" width="10" height="10" patternUnits="userSpaceOnUse" patternTransform="rotate(45)">
           <line x1="0" y1="0" x2="0" y2="10" stroke={C.section} strokeWidth="1.2" />
@@ -557,7 +608,13 @@ function buildAplicacion(tl: TL, root: SVGSVGElement) {
 function AplicacionFig({ active }: FigProps) {
   const ref = useBuildOnce(buildAplicacion, active)
   return (
-    <svg ref={ref} viewBox="0 0 480 310" style={baseStyle} role="img" aria-hidden>
+    <svg
+      ref={ref}
+      viewBox="0 0 480 310"
+      style={baseStyle}
+      role="img"
+      aria-label="Mango ovalado en vista lateral: la sección A–A se ve de canto como una línea y, al girar 90 grados, aparece el óvalo de 26 por 38 milímetros sobre la misma vista"
+    >
       <Defs />
       <defs>
         <pattern id="appHatch45" width="9" height="9" patternUnits="userSpaceOnUse" patternTransform="rotate(45)">
@@ -573,7 +630,7 @@ function AplicacionFig({ active }: FigProps) {
         </marker>
       </defs>
       <Label cls="a-title" x={26} y={26} size={13} color={C.cut} anchor="start">CASO B · MANGO OVALADO</Label>
-      <Label cls="a-title" x={454} y={26} size={12} color={C.thin} anchor="end">PIEZA DIDÁCTICA · mm</Label>
+      <Label cls="a-title" x={454} y={26} size={13} color={C.thin} anchor="end">PIEZA DIDÁCTICA · mm</Label>
 
       {/* una sola pieza: la silueta lateral del mango */}
       <g>
@@ -593,7 +650,7 @@ function AplicacionFig({ active }: FigProps) {
         />
         <path className="a-part" d="M48,126 C135,128 233,128 327,130 L405,134" fill="none" stroke={C.thin} strokeWidth="1.1" opacity="0" />
         <line className="a-part" x1="18" y1="150" x2="457" y2="150" stroke={C.hidden} strokeWidth="1.1" strokeDasharray="14 5 3 5" opacity="0" />
-        <Label cls="a-view-label" x={87} y={95} size={12.5} color={C.thin}>VISTA LATERAL</Label>
+        <Label cls="a-view-label" x={87} y={95} size={13} color={C.thin}>VISTA LATERAL</Label>
       </g>
 
       {/* plano A–A y dirección de observación */}
@@ -609,7 +666,7 @@ function AplicacionFig({ active }: FigProps) {
 
       {/* de canto → giro → sección abatida, todo en el mismo lugar */}
       <line className="a-edge" x1="252" y1="114" x2="252" y2="186" stroke={C.section} strokeWidth="3.2" opacity="0" />
-      <Label cls="a-edge-label" x={252} y={254} size={11.5} color={C.section}>DE CANTO = LÍNEA</Label>
+      <Label cls="a-edge-label" x={252} y={254} size={13} color={C.section}>DE CANTO = LÍNEA</Label>
       <path className="a-rotation" d="M260,107 A61,61 0 0 1 315,149" fill="none" stroke={C.cut} strokeWidth="2.2" strokeDasharray="7 4" markerEnd="url(#arrowCut)" opacity="0" />
       <Label cls="a-rotation-label" x={358} y={108} size={13.5} color={C.cut}>GIRA 90°</Label>
       <g className="a-section" opacity="0">
@@ -624,15 +681,15 @@ function AplicacionFig({ active }: FigProps) {
         <line x1="227" y1="190" x2="227" y2="207" strokeWidth="1" />
         <line x1="277" y1="190" x2="277" y2="207" strokeWidth="1" />
         <line x1="227" y1="204" x2="277" y2="204" strokeWidth="1.6" markerStart="url(#appDimArrow)" markerEnd="url(#appDimArrow)" />
-        <text x="252" y="218" fill="#8fe15f" stroke="none" fontSize="12" fontFamily={MONO} textAnchor="middle">26</text>
+        <text x="252" y="218" fill="#8fe15f" stroke="none" fontSize="13" fontFamily={MONO} textAnchor="middle">26</text>
       </g>
       <g className="a-dim" opacity="0" fill="none" stroke="#8fe15f">
         <line x1="283" y1="114" x2="332" y2="114" strokeWidth="1" />
         <line x1="283" y1="186" x2="332" y2="186" strokeWidth="1" />
         <line x1="328" y1="114" x2="328" y2="186" strokeWidth="1.6" markerStart="url(#appDimArrow)" markerEnd="url(#appDimArrow)" />
-        <text x="340" y="154" fill="#8fe15f" stroke="none" fontSize="12" fontFamily={MONO}>38</text>
+        <text x="340" y="154" fill="#8fe15f" stroke="none" fontSize="13" fontFamily={MONO}>38</text>
       </g>
-      <Label cls="a-section-label" x={395} y={206} size={11.5} color={C.section}>SECCIÓN A–A</Label>
+      <Label cls="a-section-label" x={395} y={206} size={13} color={C.section}>SECCIÓN A–A</Label>
       <Label cls="a-cap" x={240} y={290} size={13} color={C.section}>LÍNEA → GIRO 90° → ÓVALO 26 × 38 mm</Label>
     </svg>
   )
@@ -661,7 +718,13 @@ function buildHistoria(tl: TL, root: SVGSVGElement) {
 function HistoriaFig({ active }: FigProps) {
   const ref = useBuildOnce(buildHistoria, active)
   return (
-    <svg ref={ref} viewBox="0 0 480 300" style={baseStyle} role="img" aria-hidden>
+    <svg
+      ref={ref}
+      viewBox="0 0 480 300"
+      style={baseStyle}
+      role="img"
+      aria-label="Línea de tiempo de la convención: Monge en 1795, la industria en 1850, la norma ISO R 128 en 1959 y CAD y BIM hoy"
+    >
       <Defs />
       <line className="hi-line" x1="30" y1="150" x2="450" y2="150" stroke={C.thin} strokeWidth="1.6" opacity="0" />
 
@@ -674,10 +737,10 @@ function HistoriaFig({ active }: FigProps) {
         <Label cls="hi-txt" x={70} y={190} size={13}>
           MONGE
         </Label>
-        <Label cls="hi-txt" x={70} y={206} size={12} color={C.thin}>
+        <Label cls="hi-txt" x={70} y={206} size={13} color={C.thin}>
           geometría
         </Label>
-        <Label cls="hi-txt" x={70} y={220} size={12} color={C.thin}>
+        <Label cls="hi-txt" x={70} y={220} size={13} color={C.thin}>
           descriptiva
         </Label>
         <path className="hi-icon" d="M50,56 h40 v28 h-40 Z" fill="none" stroke={C.contour} strokeWidth="1.8" opacity="0" />
@@ -693,10 +756,10 @@ function HistoriaFig({ active }: FigProps) {
         <Label cls="hi-txt" x={190} y={190} size={13}>
           INDUSTRIA
         </Label>
-        <Label cls="hi-txt" x={190} y={206} size={12} color={C.thin}>
+        <Label cls="hi-txt" x={190} y={206} size={13} color={C.thin}>
           piezas
         </Label>
-        <Label cls="hi-txt" x={190} y={220} size={12} color={C.thin}>
+        <Label cls="hi-txt" x={190} y={220} size={13} color={C.thin}>
           en serie
         </Label>
         <path
@@ -718,10 +781,10 @@ function HistoriaFig({ active }: FigProps) {
         <Label cls="hi-txt" x={310} y={190} size={13}>
           ISO/R 128
         </Label>
-        <Label cls="hi-txt" x={310} y={206} size={12} color={C.thin}>
+        <Label cls="hi-txt" x={310} y={206} size={13} color={C.thin}>
           norma de
         </Label>
-        <Label cls="hi-txt" x={310} y={220} size={12} color={C.thin}>
+        <Label cls="hi-txt" x={310} y={220} size={13} color={C.thin}>
           líneas y cortes
         </Label>
         <g className="hi-icon" opacity="0">
@@ -743,10 +806,10 @@ function HistoriaFig({ active }: FigProps) {
         <Label cls="hi-txt" x={430} y={190} size={13}>
           CAD · BIM
         </Label>
-        <Label cls="hi-txt" x={430} y={206} size={12} color={C.thin}>
+        <Label cls="hi-txt" x={430} y={206} size={13} color={C.thin}>
           misma
         </Label>
-        <Label cls="hi-txt" x={430} y={220} size={12} color={C.thin}>
+        <Label cls="hi-txt" x={430} y={220} size={13} color={C.thin}>
           convención
         </Label>
         <path className="hi-icon" d="M412,60 h24 v24 h-24 Z" fill="none" stroke={C.contour} strokeWidth="1.6" opacity="0" />
@@ -790,7 +853,13 @@ function buildEjercicio(tl: TL, root: SVGSVGElement) {
 function EjercicioFig({ active }: FigProps) {
   const ref = useBuildOnce(buildEjercicio, active)
   return (
-    <svg ref={ref} viewBox="0 0 480 240" style={baseStyle} role="img" aria-hidden>
+    <svg
+      ref={ref}
+      viewBox="0 0 480 240"
+      style={baseStyle}
+      role="img"
+      aria-label="Buje del ejercicio: vista exterior con plano A–A, flechas de observación y la sección abatida superpuesta con la corona rayada"
+    >
       <Defs />
       <defs>
         <pattern id="exerciseHatch45" width="9" height="9" patternTransform="rotate(45)" patternUnits="userSpaceOnUse">
@@ -824,7 +893,7 @@ function EjercicioFig({ active }: FigProps) {
         <Label cls="e-90" x={250} y={110} color={C.cut} size={14}>
           90°
         </Label>
-        <Label cls="e-lab" x={190} y={150} color={C.section} size={12.5}>
+        <Label cls="e-lab" x={190} y={150} color={C.section} size={13}>
           SECCIÓN A–A ABATIDA · RÓTULO: CORTE A–A
         </Label>
       </g>
@@ -942,7 +1011,7 @@ const miniBodies: Record<string, (h: string) => ReactElement> = {
       <ellipse cx="26" cy="30" rx="8" ry="12" fill={`url(#${h})`} stroke={C.section} strokeWidth="2" />
     </>
   ),
-  'Corte girado concurrente': () => (
+  'Corte por planos concurrentes': () => (
     <>
       <circle cx="30" cy="30" r="22" fill="none" stroke={C.contour} strokeWidth="2" />
       <line x1="30" y1="8" x2="30" y2="52" stroke={C.cut} strokeWidth="1.6" strokeDasharray="6 3 1 3" />
