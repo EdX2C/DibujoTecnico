@@ -66,6 +66,32 @@ a {
   --act-accent: var(--orange);
 }
 
+.app-shell::before {
+  content: '';
+  position: fixed;
+  left: -12%;
+  right: -12%;
+  bottom: -28%;
+  z-index: 0;
+  height: 68%;
+  background-image:
+    linear-gradient(color-mix(in srgb, var(--act-accent) 16%, transparent) 1px, transparent 1px),
+    linear-gradient(90deg, color-mix(in srgb, var(--act-accent) 16%, transparent) 1px, transparent 1px);
+  background-size: 54px 54px;
+  mask-image: linear-gradient(to bottom, transparent, rgba(0, 0, 0, 0.72) 34%, #000 72%);
+  transform: perspective(520px) rotateX(61deg);
+  transform-origin: center bottom;
+  opacity: 0.3;
+  pointer-events: none;
+  animation: cad-grid-drift 18s linear infinite;
+}
+
+@keyframes cad-grid-drift {
+  to {
+    background-position: 0 54px, 54px 0;
+  }
+}
+
 /* chromatic identity per act: the journey changes color */
 .app-shell[data-act='1'] {
   --act-accent: #e9b44c;
@@ -99,8 +125,9 @@ a {
   height: 44vw;
   left: -12vw;
   top: -18vw;
-  background: radial-gradient(circle, rgba(255, 107, 46, 0.16), transparent 65%);
+  background: radial-gradient(circle, color-mix(in srgb, var(--act-accent) 18%, transparent), transparent 65%);
   animation: drift-a 16s ease-in-out infinite alternate;
+  transition: background 0.8s ease;
 }
 
 .glow-b {
@@ -108,8 +135,190 @@ a {
   height: 38vw;
   right: -10vw;
   bottom: -14vw;
-  background: radial-gradient(circle, rgba(83, 213, 224, 0.13), transparent 65%);
+  background: radial-gradient(circle, color-mix(in srgb, var(--act-accent) 13%, transparent), transparent 65%);
   animation: drift-b 20s ease-in-out infinite alternate;
+  transition: background 0.8s ease;
+}
+
+/* brief cinematic interstitials: chapter rhythm without adding slides */
+.act-splash {
+  --splash-accent: var(--orange);
+  position: fixed;
+  inset: 0;
+  z-index: 80;
+  display: grid;
+  place-content: center;
+  justify-items: center;
+  gap: 0.45rem;
+  overflow: hidden;
+  background:
+    radial-gradient(circle at center, color-mix(in srgb, var(--splash-accent) 15%, #090b0f) 0, rgba(9, 11, 15, 0.96) 42%, rgba(9, 11, 15, 0.82) 72%, transparent 100%);
+  text-align: center;
+  pointer-events: none;
+  animation: act-splash-shell 1.25s cubic-bezier(0.65, 0, 0.35, 1) both;
+}
+
+.act-splash.is-act-1 {
+  --splash-accent: #e9b44c;
+}
+
+.act-splash.is-act-2 {
+  --splash-accent: #53d5e0;
+}
+
+.act-splash.is-act-3 {
+  --splash-accent: #ff6b2e;
+}
+
+.act-splash.is-act-4 {
+  --splash-accent: #8fe15f;
+}
+
+.act-splash::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: -8%;
+  right: -8%;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, var(--splash-accent) 18%, #fff 50%, var(--splash-accent) 82%, transparent);
+  box-shadow: 0 0 14px var(--splash-accent), 0 0 42px color-mix(in srgb, var(--splash-accent) 48%, transparent);
+  animation: act-splash-beam 1.05s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.act-splash-roman {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  color: transparent;
+  font-family: var(--font-display);
+  font-size: clamp(16rem, 52vh, 34rem);
+  line-height: 0.72;
+  -webkit-text-stroke: 2px color-mix(in srgb, var(--splash-accent) 34%, transparent);
+  background: repeating-linear-gradient(45deg, color-mix(in srgb, var(--splash-accent) 22%, transparent) 0 2px, transparent 2px 12px);
+  -webkit-background-clip: text;
+  background-clip: text;
+  filter: drop-shadow(0 0 34px color-mix(in srgb, var(--splash-accent) 24%, transparent));
+  transform: translate(-50%, -50%);
+  animation: act-splash-roman 1.25s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.act-splash > span,
+.act-splash > strong,
+.act-splash > p {
+  position: relative;
+  z-index: 2;
+  text-shadow: 0 8px 30px #090b0f;
+}
+
+.act-splash > span {
+  color: var(--splash-accent);
+  font-family: var(--font-mono);
+  font-size: 0.76rem;
+  font-weight: 700;
+  letter-spacing: 0.36em;
+  animation: act-splash-copy 1.15s ease both;
+}
+
+.act-splash > strong {
+  width: min(1100px, 92vw);
+  color: var(--ink);
+  font-family: var(--font-display);
+  font-size: clamp(2.9rem, 7.6vw, 6.8rem);
+  font-weight: 400;
+  line-height: 0.95;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  animation: act-splash-title 1.2s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.act-splash > p {
+  color: color-mix(in srgb, var(--splash-accent) 75%, white);
+  font-family: var(--font-mono);
+  font-size: 0.74rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  animation: act-splash-copy 1.15s ease 0.06s both;
+}
+
+@keyframes act-splash-shell {
+  0% {
+    opacity: 0;
+  }
+  10%,
+  72% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
+@keyframes act-splash-roman {
+  0% {
+    opacity: 0;
+    transform: translate(-50%, -46%) scale(0.72);
+  }
+  24%,
+  72% {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
+  }
+  100% {
+    opacity: 0;
+    transform: translate(-50%, -54%) scale(1.1);
+  }
+}
+
+@keyframes act-splash-title {
+  0% {
+    opacity: 0;
+    letter-spacing: 0.14em;
+    transform: scale(0.86);
+  }
+  26%,
+  72% {
+    opacity: 1;
+    letter-spacing: 0.02em;
+    transform: scale(1);
+  }
+  100% {
+    opacity: 0;
+    transform: scale(1.045);
+  }
+}
+
+@keyframes act-splash-copy {
+  0%,
+  12% {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  34%,
+  72% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(-7px);
+  }
+}
+
+@keyframes act-splash-beam {
+  0% {
+    opacity: 0;
+    transform: scaleX(0);
+  }
+  34% {
+    opacity: 1;
+    transform: scaleX(1);
+  }
+  100% {
+    opacity: 0;
+    transform: scaleX(1) translateY(18px);
+  }
 }
 
 @keyframes drift-a {
@@ -1283,7 +1492,7 @@ a {
 .lite-demo {
   display: grid;
   grid-template-rows: auto minmax(300px, 1fr);
-  height: min(calc(100vh - 15rem), 600px);
+  height: min(calc(100vh - 15.8rem), 590px);
   width: min(1200px, 100%);
   gap: 0.75rem;
 }
@@ -1691,6 +1900,66 @@ a {
   color: var(--orange);
 }
 
+.slide.is-active .closing-formula span:nth-child(1) {
+  animation: closing-step 0.72s ease-out 0.22s both;
+}
+
+.slide.is-active .closing-formula span:nth-child(3) {
+  animation: closing-step 0.72s ease-out 0.5s both;
+}
+
+.slide.is-active .closing-formula span:nth-child(5) {
+  animation: closing-step-final 0.9s ease-out 0.78s both;
+}
+
+.slide.is-active .closing-formula i:nth-child(2) {
+  animation: closing-arrow 0.5s ease-out 0.42s both;
+}
+
+.slide.is-active .closing-formula i:nth-child(4) {
+  animation: closing-arrow 0.5s ease-out 0.7s both;
+}
+
+@keyframes closing-step {
+  from {
+    opacity: 0.18;
+    transform: translateY(9px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes closing-step-final {
+  0% {
+    opacity: 0.15;
+    text-shadow: none;
+    transform: translateY(9px) scale(0.94);
+  }
+  70% {
+    opacity: 1;
+    text-shadow: 0 0 26px rgba(255, 107, 46, 0.72);
+    transform: translateY(0) scale(1.08);
+  }
+  100% {
+    opacity: 1;
+    text-shadow: 0 0 14px rgba(255, 107, 46, 0.38);
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes closing-arrow {
+  from {
+    opacity: 0;
+    transform: translateX(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
 .closing-formula i {
   font-style: normal;
   color: var(--orange);
@@ -2068,14 +2337,21 @@ a {
 @media (prefers-reduced-motion: reduce) {
   .glow-a,
   .glow-b,
+  .app-shell::before,
   .marquee-track,
   .chapter-scan,
   .chapter-num {
     animation: none;
   }
 
+  .act-splash {
+    display: none;
+  }
+
   .slide.is-active::after,
-  .slide.is-active .figure-panel::after {
+  .slide.is-active .figure-panel::after,
+  .slide.is-active .closing-formula span,
+  .slide.is-active .closing-formula i {
     animation: none;
   }
 

@@ -255,6 +255,7 @@ export function AbatirSection({
 }) {
   const group = useRef<THREE.Group>(null)
   const trailAmounts = [Math.max(0, amount - 0.12), Math.max(0, amount - 0.26)]
+  const finishPulse = Math.sin(Math.PI * THREE.MathUtils.smoothstep(amount, 0.68, 1))
 
   useFrame(() => {
     const g = group.current
@@ -344,6 +345,39 @@ export function AbatirSection({
               toneMapped={false}
             />
           </mesh>
+          <mesh rotation={[0, Math.PI / 2, 0]} position={[-0.006, 0, 0]} renderOrder={19}>
+            <ringGeometry args={[OUTER_R * 0.9, OUTER_R * 1.18, 64]} />
+            <meshBasicMaterial
+              color="#53d5e0"
+              transparent
+              opacity={0.015 + amount * 0.065}
+              side={THREE.DoubleSide}
+              depthTest={false}
+              depthWrite={false}
+              blending={THREE.AdditiveBlending}
+              toneMapped={false}
+            />
+          </mesh>
+          {finishPulse > 0.01 && (
+            <mesh
+              rotation={[0, Math.PI / 2, 0]}
+              position={[0.012, 0, 0]}
+              scale={1 + finishPulse * 0.22}
+              renderOrder={24}
+            >
+              <ringGeometry args={[OUTER_R * 1.015, OUTER_R * 1.055, 64]} />
+              <meshBasicMaterial
+                color="#bdf9ff"
+                transparent
+                opacity={finishPulse * 0.62}
+                side={THREE.DoubleSide}
+                depthTest={false}
+                depthWrite={false}
+                blending={THREE.AdditiveBlending}
+                toneMapped={false}
+              />
+            </mesh>
+          )}
         </>
       ) : (
         <>

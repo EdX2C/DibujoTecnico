@@ -24,6 +24,15 @@ const MARQUEE_TERMS = [
 
 const REVERSED_FIGURE_SLIDES = new Set(['historia', 'definicion', 'plano', 'aplicacion'])
 
+type VisualAct = 0 | 1 | 2 | 3 | 4
+
+const ACT_SPLASHES: Record<Exclude<VisualAct, 0>, { roman: string; title: string; subtitle: string }> = {
+  1: { roman: 'I', title: 'Ver lo oculto', subtitle: 'El problema' },
+  2: { roman: 'II', title: 'Girar la sección', subtitle: 'La idea' },
+  3: { roman: 'III', title: 'Aplicar la norma', subtitle: 'El método' },
+  4: { roman: 'IV', title: 'Llevarlo a la pieza', subtitle: 'La prueba' },
+}
+
 function MarqueeStrip() {
   const items = [...MARQUEE_TERMS, ...MARQUEE_TERMS]
   return (
@@ -91,7 +100,7 @@ function CutTitle() {
 }
 
 /** Visual chapter (0=portada, 1..4) after condensing the deck to 13 slides. */
-function actForIndex(i: number) {
+function actForIndex(i: number): VisualAct {
   if (i === 0) return 0
   if (i <= 2) return 1
   if (i <= 5) return 2
@@ -118,14 +127,26 @@ function animateSlideIn(el: HTMLElement) {
 export function Presentation({ onOpenFullscreenDemo }: PresentationProps) {
   const [index, setIndex] = useState(0)
   const [notesOpen, setNotesOpen] = useState(false)
+  const [actSplash, setActSplash] = useState<Exclude<VisualAct, 0> | null>(null)
   const stageRef = useRef<HTMLDivElement>(null)
   const animating = useRef(false)
+  const actSplashTimer = useRef<number | null>(null)
 
   const goTo = useCallback(
     (next: number) => {
       if (animating.current) return
       const clamped = Math.max(0, Math.min(slides.length - 1, next))
       if (clamped === index) return
+
+      const nextAct = actForIndex(clamped)
+      if (nextAct !== actForIndex(index) && nextAct !== 0) {
+        if (actSplashTimer.current !== null) window.clearTimeout(actSplashTimer.current)
+        setActSplash(nextAct)
+        // The visual animation lasts 1.25 s; the now-transparent node remains
+        // inert a little longer so a fast second navigation can replace it
+        // cleanly without a remount flash.
+        actSplashTimer.current = window.setTimeout(() => setActSplash(null), 5000)
+      }
 
       const stage = stageRef.current
       if (!stage) {
@@ -218,6 +239,13 @@ export function Presentation({ onOpenFullscreenDemo }: PresentationProps) {
     if (first) animateSlideIn(first)
   }, [])
 
+  useEffect(
+    () => () => {
+      if (actSplashTimer.current !== null) window.clearTimeout(actSplashTimer.current)
+    },
+    [],
+  )
+
   const slide = slides[index]
   const progress = ((index + 1) / slides.length) * 100
   const act = actForIndex(index)
@@ -229,6 +257,15 @@ export function Presentation({ onOpenFullscreenDemo }: PresentationProps) {
       <div className="grain" />
       <div className="sheet-frame" />
       <div className="progress" style={{ width: `${progress}%` }} />
+
+      {actSplash !== null && (
+        <div key={`${actSplash}-${index}`} className={`act-splash is-act-${actSplash}`} aria-hidden="true">
+          <div className="act-splash-roman">{ACT_SPLASHES[actSplash].roman}</div>
+          <span>ACTO {ACT_SPLASHES[actSplash].roman}</span>
+          <strong>{ACT_SPLASHES[actSplash].title}</strong>
+          <p>{ACT_SPLASHES[actSplash].subtitle}</p>
+        </div>
+      )}
 
       <div className="speaker-rail" aria-hidden>
         {slides.map((s, i) => (
