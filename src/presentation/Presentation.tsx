@@ -142,10 +142,7 @@ export function Presentation({ onOpenFullscreenDemo }: PresentationProps) {
       if (nextAct !== actForIndex(index) && nextAct !== 0) {
         if (actSplashTimer.current !== null) window.clearTimeout(actSplashTimer.current)
         setActSplash(nextAct)
-        // The visual animation lasts 1.25 s; the now-transparent node remains
-        // inert a little longer so a fast second navigation can replace it
-        // cleanly without a remount flash.
-        actSplashTimer.current = window.setTimeout(() => setActSplash(null), 5000)
+        actSplashTimer.current = window.setTimeout(() => setActSplash(null), 1320)
       }
 
       const stage = stageRef.current
@@ -259,7 +256,7 @@ export function Presentation({ onOpenFullscreenDemo }: PresentationProps) {
       <div className="progress" style={{ width: `${progress}%` }} />
 
       {actSplash !== null && (
-        <div key={`${actSplash}-${index}`} className={`act-splash is-act-${actSplash}`} aria-hidden="true">
+        <div key={actSplash} className={`act-splash is-act-${actSplash}`} aria-hidden="true">
           <div className="act-splash-roman">{ACT_SPLASHES[actSplash].roman}</div>
           <span>ACTO {ACT_SPLASHES[actSplash].roman}</span>
           <strong>{ACT_SPLASHES[actSplash].title}</strong>
