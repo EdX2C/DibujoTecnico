@@ -71,9 +71,10 @@ export const slides: SlideContent[] = [
     title: 'Cortar y girar 90°',
     bullets: [
       'Cuatro pasos en la figura: corta → de canto → gira 90° → de frente.',
+      'Regla que ya usan: cara perpendicular al plano → línea; cara paralela al plano → verdadera magnitud.',
     ],
-    key: 'Se gira 90° para ver la sección en verdadera magnitud.',
-    note: '30 s. Hablar mirando la animación, no las viñetas. Analogía: tubo o barra — de canto es una línea; al girar 90° aparece el perfil (en el buje, la corona). El rayado a 45° marca el material macizo. Cierre-puente: "ya entendemos el gesto; ahora pongámosle el nombre correcto".',
+    key: 'El giro no crea la forma: cambia perpendicular (línea) por paralela (verdadera magnitud).',
+    note: '30 s. Hablar mirando la animación, no las viñetas. Anclar en lo que la clase ya hace: al sacar las vistas de un isométrico ya deciden qué caras salen como una raya y cuáles con su forma real — la perpendicular al plano se proyecta como línea, la paralela en verdadera magnitud. De canto, la cara cortada es perpendicular: por eso es una raya. Girar 90° la apoya sobre el plano de la vista. NO decir que en isométrico "no se puede acotar" (falso: las medidas sobre los ejes sí son verdaderas; lo que se deforma es la forma). Cierre-puente: "ya entendemos el gesto; ahora pongámosle el nombre correcto".',
   },
   {
     id: 'definicion',
@@ -83,12 +84,12 @@ export const slides: SlideContent[] = [
     eyebrow: 'Definición',
     title: 'Corte no es lo mismo que sección',
     bullets: [
-      'Sección abatida: el perfil transversal gira 90° alrededor de la traza del plano de corte.',
-      'Tras el giro queda paralelo al plano de proyección, superpuesto sobre la propia vista.',
+      'Sección abatida: la cara cortada, que está de canto, gira 90° alrededor de la traza del plano de corte.',
+      'Tras el giro queda apoyada sobre el plano de la vista: por eso se dibuja superpuesta, y la norma pide contorno fino para distinguirlas.',
       'En el buje escalonado: el corte conserva el contorno de la brida que queda detrás; la sección muestra solo la corona.',
     ],
     key: 'Sección = cara cortada. Corte = cara + fondo. Aquí gira la sección, no la pieza.',
-    note: '45 s. Definición formal: el perfil gira 90° ALREDEDOR DE LA TRAZA hasta que su plano queda paralelo al plano de proyección. Después usar el buje escalonado: en CORTE aparece la corona rayada y también la brida posterior; en SECCIÓN queda solo la corona. No decir que la sección gira "en su propio plano". Puente: "¿cuándo vale la pena usarla?".',
+    note: '45 s. Definición formal: la cara cortada gira 90° ALREDEDOR DE LA TRAZA hasta APOYARSE sobre el plano de la vista (coincidente, no solo paralela) — ahí deja de estar de canto y se ve en verdadera magnitud. Ojo: el contorno fino es prescripción de la norma, no algo que se deduzca del giro. Después usar el buje escalonado: en CORTE aparece la corona rayada y también la brida posterior; en SECCIÓN queda solo la corona. No decir que la sección gira "en su propio plano". Puente: "¿cuándo vale la pena usarla?".',
   },
 
   /* ============ APLICACIÓN DE LA NORMA ============ */
@@ -103,7 +104,7 @@ export const slides: SlideContent[] = [
       'Manijas, radios, brazos, nervios, perfiles.',
       'Cuando un corte total no aporta nada más.',
     ],
-    key: 'Superpuesta en la vista → contorno fino. Desplazada (lámina Diferencias) → grueso.',
+    key: 'Dentro de la PV → contorno fino. Fuera de la PV (lámina Diferencias) → grueso.',
     note: '30 s. La chip Clave lleva la norma fina/gruesa — no la lean dos veces. La "desplazada" se define en la lámina Diferencias; aquí basta decir "si se saca de la vista, cambia la regla". Hablar ejemplos: mango de herramienta, radio de volante, ala de perfil. No re-explicar el "por qué 90°" (ya está en Idea; el demo lo integrará luego). Puente: "elegida la pieza, hay que indicar por dónde se corta".',
   },
   {
@@ -118,8 +119,8 @@ export const slides: SlideContent[] = [
       'Letras A–A y flechas perpendiculares, ambas en el mismo sentido.',
       'El observador está en la cola de las flechas; se retira la mitad que queda delante del plano.',
     ],
-    key: 'La traza se marca en otra vista; las flechas indican desde dónde mirar.',
-    note: '50 s. Esta lámina reúne plano de corte y dirección de observación. Primero: traza de trazo y punto, extremos gruesos y letras A–A. Segundo: las flechas son perpendiculares y apuntan igual. El observador está en la cola; se elimina mentalmente la mitad entre observador y plano. Handoff: "ya sabemos por dónde mirar; Arantza mostrará qué superficies se rayan".',
+    key: 'La traza A–A va en la PV; lo que aparece al abatir es lo que daría la PL.',
+    note: '50 s. Esta lámina reúne plano de corte y dirección de observación. Primero: traza de trazo y punto, extremos gruesos y letras A–A, marcada sobre la PV. Segundo: las flechas son perpendiculares y apuntan igual — es la misma dirección de mirada con la que ya deciden si algo va en PH, PV o PL. El observador está en la cola; se elimina mentalmente la mitad entre observador y plano. Handoff: "ya sabemos por dónde mirar; Arantza mostrará qué superficies se rayan".',
   },
   {
     id: 'rayado',
@@ -185,7 +186,7 @@ export const slides: SlideContent[] = [
     eyebrow: 'Ejercicio gráfico',
     title: 'Ejercicio: el buje',
     bullets: [
-      'Marca el plano A–A y las flechas sobre la vista exterior.',
+      'Marca el plano A–A y las flechas sobre la PV del buje (la de los 100 mm de largo).',
       'Gira la sección 90° y déjala superpuesta con contorno fino.',
       'Raya solo la corona; rotula «Corte A–A» como pide la consigna.',
     ],
@@ -206,4 +207,4 @@ export const slides: SlideContent[] = [
 ]
 
 export const exerciseWhy =
-  'El buje tiene perfil constante. La sección abatida muestra la corona en verdadera magnitud sobre la propia vista y evita otra proyección. Técnicamente es una sección; se rotula «Corte A–A» para cumplir la consigna.'
+  'El buje tiene sección constante. De canto, la cara cortada solo daba una línea; abatida 90° queda apoyada sobre la misma PV y la corona se ve en verdadera magnitud, lista para acotar, sin dibujar la PL aparte. Técnicamente es una sección; se rotula «Corte A–A» para cumplir la consigna.'

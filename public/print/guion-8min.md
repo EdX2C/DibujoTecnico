@@ -28,7 +28,7 @@ Participación equilibrada: cada integrante habla aproximadamente 4 minutos. La 
 
 ## Frase de justificación
 
-> El buje tiene perfil constante. La sección abatida muestra la corona en verdadera magnitud sobre la propia vista, sin otra proyección. Técnicamente es una sección; se rotula “Corte A–A” para cumplir la consigna.
+> El buje tiene sección constante. De canto, la cara cortada solo daba una línea; abatida 90° queda apoyada sobre la misma PV y la corona se ve en verdadera magnitud, lista para acotar, sin dibujar la PL aparte. Técnicamente es una sección; se rotula “Corte A–A” para cumplir la consigna.
 
 ## Respuestas rápidas
 
@@ -36,7 +36,9 @@ Participación equilibrada: cada integrante habla aproximadamente 4 minutos. La 
 - **¿Qué mitad se elimina?** La que queda entre el observador y el plano.
 - **¿Corte o sección?** Sección = superficie cortada; corte = superficie + fondo.
 - **¿Abatida o concurrente?** Abatida: perfil sobre la vista. Concurrente: alinea un plano oblicuo.
-- **¿Por qué 90°?** Para mostrar el perfil en verdadera magnitud.
+- **¿Por qué 90°?** Partiendo de canto (cara perpendicular al plano de la vista), 90° la deja justo apoyada sobre él y se ve en verdadera magnitud. Cualquier otro ángulo la deja oblicua y deformada.
+- **¿Qué relación tiene con las vistas que hacemos?** La traza A–A va en la PV; lo que aparece al abatir es lo que daría la PL. El abatimiento ahorra dibujarla aparte.
+- **Cuidado al responder:** en isométrico las medidas sobre los ejes SÍ son verdaderas; lo que se deforma es la forma (un círculo se proyecta como elipse, que a mano se traza con el óvalo de cuatro centros).
 - **¿Medidas del buje?** Longitud 100 · Ø40 exterior · Ø18 agujero · pared 11 mm (idénticas en demo, plantilla y dibujo físico).
 
 ## Fuentes técnicas visibles en la presentación

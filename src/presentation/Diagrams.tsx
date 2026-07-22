@@ -202,7 +202,7 @@ function ProblemaFig({ active }: FigProps) {
 
       <g transform="translate(20,54)">
         <Label cls="p-title" x={95} y={-20} size={13.5}>
-          ANTES · VISTA EXTERIOR
+          ANTES · PV SIN CORTAR
         </Label>
         <rect className="p-c1" x="0" y="0" width="190" height="150" fill="none" stroke={C.contour} strokeWidth="2.4" opacity="0" />
         <rect className="p-hid" x="52" y="32" width="86" height="70" fill="none" stroke={C.hidden} strokeWidth="1.5" strokeDasharray="7 5" opacity="0" />
@@ -218,7 +218,7 @@ function ProblemaFig({ active }: FigProps) {
 
       <g transform="translate(270,54)">
         <Label cls="p-title" x={95} y={-20} color={C.section} size={13.5}>
-          DESPUÉS · EN CORTE
+          DESPUÉS · PV EN CORTE
         </Label>
         <rect className="p-hatch" x="0" y="0" width="190" height="150" fill="url(#probHatch45)" opacity="0" />
         <rect className="p-c2" x="0" y="0" width="190" height="150" fill="none" stroke={C.contour} strokeWidth="2.4" opacity="0" />
@@ -347,7 +347,7 @@ function DefinicionFig({ active }: FigProps) {
       </defs>
 
       <Label cls="d-source-title" x={240} y={18} size={13}>
-        MISMO BUJE ESCALONADO · PLANO A–A
+        MISMO BUJE ESCALONADO · PV CON EL PLANO A–A
       </Label>
       <g transform="translate(90,32)">
         <path className="d-source" d="M0,24 H180 V8 H250 V24 H300 V76 H250 V92 H180 V76 H0 Z" fill="none" stroke={C.contour} strokeWidth="2" opacity="0" />
@@ -481,7 +481,7 @@ function PlanoFig({ active }: FigProps) {
       aria-label="Plano de corte A–A: traza de trazo y punto con extremos gruesos, letras A, flechas de observación en el mismo sentido y la mitad retirada sombreada"
     >
       <Defs />
-      <Label cls="pl-title" x={240} y={24} size={15} color={C.cut}>PLANO DE CORTE A–A</Label>
+      <Label cls="pl-title" x={240} y={24} size={15} color={C.cut}>PLANO DE CORTE A–A SOBRE LA PV</Label>
 
       <rect className="pl-piece" x="65" y="88" width="350" height="118" fill="none" stroke={C.contour} strokeWidth="2.2" opacity="0" />
       <line className="pl-hidden" x1="45" y1="147" x2="435" y2="147" stroke={C.thin} strokeWidth="1" strokeDasharray="12 4 2 4" opacity="0" />
@@ -867,8 +867,8 @@ function EjercicioFig({ active }: FigProps) {
         </pattern>
       </defs>
       <g transform="translate(50,38)">
-        <Label cls="e-t" x={342} y={-14} size={13}>
-          BUJE
+        <Label cls="e-t" x={330} y={-14} size={13}>
+          BUJE · PV
         </Label>
         <line className="e-ax" x1="-10" y1="48" x2="400" y2="48" stroke={C.thin} strokeWidth="1" strokeDasharray="12 4 2 4" opacity="0" />
         <path className="e-body" d="M0,8 h380 v80 h-380 Z" fill="none" stroke={C.contour} strokeWidth="2.4" opacity="0" />
@@ -894,7 +894,10 @@ function EjercicioFig({ active }: FigProps) {
           90°
         </Label>
         <Label cls="e-lab" x={190} y={150} color={C.section} size={13}>
-          SECCIÓN A–A ABATIDA · RÓTULO: CORTE A–A
+          ABATIDA SOBRE LA PV · LO QUE DARÍA LA PL
+        </Label>
+        <Label cls="e-lab" x={190} y={170} size={13}>
+          RÓTULO: CORTE A–A
         </Label>
       </g>
     </svg>
@@ -1070,7 +1073,7 @@ const registry: Record<string, { comp: (p: FigProps) => ReactElement; caption: R
   },
   plano: {
     comp: PlanoFig,
-    caption: 'Traza A–A y dirección de observación en una sola vista; el observador queda en la cola',
+    caption: 'Traza A–A y dirección de observación sobre la PV; el observador queda en la cola de las flechas',
   },
   rayado: {
     comp: RayadoFig,
@@ -1082,7 +1085,7 @@ const registry: Record<string, { comp: (p: FigProps) => ReactElement; caption: R
   },
   ejercicio: {
     comp: EjercicioFig,
-    caption: 'Vista exterior, plano A–A, flechas y sección abatida superpuesta',
+    caption: 'PV del buje, plano A–A, flechas y sección abatida superpuesta en verdadera magnitud',
   },
 }
 

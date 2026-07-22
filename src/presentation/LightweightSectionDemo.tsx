@@ -10,12 +10,12 @@ const STEP_COPY: Record<DemoStep, { title: string; body: string; term: string }>
   },
   2: {
     title: 'Separamos la mitad situada frente al plano.',
-    body: 'La sección permanece en su plano: desde esta vista se reduce a una línea.',
+    body: 'La cara cortada queda perpendicular al plano de la vista: por eso solo se proyecta como una línea.',
     term: 'Sección de canto',
   },
   3: {
     title: 'Giramos solamente la sección 90°.',
-    body: 'La corona aparece de frente: Ø40 exterior, Ø18 interior y pared de 11 mm — el buje del ejercicio.',
+    body: 'Apoyada ya sobre el plano de la vista, la corona se ve en verdadera magnitud — Ø40, Ø18 y pared de 11 mm.',
     term: 'Sección abatida · verdadera magnitud',
   },
 }
