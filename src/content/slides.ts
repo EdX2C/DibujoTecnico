@@ -53,7 +53,7 @@ export const slides: SlideContent[] = [
       'De canto, la sección se reduce a una línea.',
       'Al girarla 90°, aparece en verdadera magnitud sobre la misma vista.',
     ],
-    key: 'Sección = cara tocada por el plano. La pieza permanece quieta.',
+    key: 'Cambia de orientación, no de escala: la pieza permanece quieta.',
     note: '45 s. Este es el concepto central. Digan «sección», no «pieza cortada completa»: se toma únicamente el perfil que toca A–A. Primero está de canto y por eso parece una línea; luego se abate 90° alrededor de la traza hasta quedar paralelo al plano de proyección.',
   },
   {

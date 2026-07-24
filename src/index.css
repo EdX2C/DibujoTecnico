@@ -66,6 +66,20 @@ a {
   --act-accent: var(--orange);
 }
 
+.app-shell::after {
+  content: '';
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background:
+    radial-gradient(ellipse at 73% 46%, color-mix(in srgb, var(--act-accent) 10%, transparent), transparent 28%),
+    linear-gradient(118deg, transparent 42%, color-mix(in srgb, var(--act-accent) 4%, transparent) 49.8%, transparent 57%);
+  mix-blend-mode: screen;
+  opacity: 0.78;
+  transition: background 0.8s ease;
+}
+
 .app-shell::before {
   content: '';
   position: fixed;
@@ -376,6 +390,9 @@ a {
   z-index: 60;
   max-width: calc(100% - 32px);
   background: linear-gradient(90deg, var(--orange), var(--act-accent, var(--cyan)));
+  box-shadow:
+    0 0 10px color-mix(in srgb, var(--act-accent) 72%, transparent),
+    0 0 24px color-mix(in srgb, var(--act-accent) 30%, transparent);
   transition: width 0.4s cubic-bezier(0.22, 1, 0.36, 1), background 0.6s;
 }
 
@@ -545,6 +562,34 @@ a {
   z-index: 1;
 }
 
+.slide-inner::before {
+  content: '';
+  position: absolute;
+  inset: -14% -8%;
+  z-index: -1;
+  pointer-events: none;
+  background: radial-gradient(ellipse at 72% 48%, color-mix(in srgb, var(--act-accent) 13%, transparent), transparent 35%);
+  opacity: 0;
+}
+
+.slide.is-active .slide-inner::before {
+  animation: slide-energy-reveal 1.25s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+@keyframes slide-energy-reveal {
+  0% {
+    opacity: 0;
+    filter: blur(22px);
+  }
+  45% {
+    opacity: 0.72;
+  }
+  100% {
+    opacity: 0.34;
+    filter: blur(0);
+  }
+}
+
 /* giant ghost numeral */
 .ghost-num {
   position: absolute;
@@ -555,9 +600,25 @@ a {
   font-size: clamp(11rem, 26vw, 22rem);
   line-height: 1;
   color: transparent;
-  -webkit-text-stroke: 1.5px rgba(242, 245, 247, 0.035);
+  -webkit-text-stroke: 1.5px color-mix(in srgb, var(--act-accent) 11%, transparent);
+  filter: drop-shadow(0 0 24px color-mix(in srgb, var(--act-accent) 8%, transparent));
   pointer-events: none;
   user-select: none;
+}
+
+.slide.is-active .ghost-num {
+  animation: ghost-lock-in 1.2s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+@keyframes ghost-lock-in {
+  from {
+    opacity: 0;
+    transform: translateX(36px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
 }
 
 .sheet-kicker {
@@ -607,6 +668,8 @@ a {
 }
 
 .slide h2 {
+  position: relative;
+  display: table;
   font-family: var(--font-display);
   font-weight: 400;
   font-size: clamp(2.3rem, 5.5vw, 3.9rem);
@@ -616,6 +679,32 @@ a {
   margin-bottom: 1.6rem;
   text-wrap: balance;
   max-width: 18ch;
+  text-shadow:
+    0 10px 34px rgba(0, 0, 0, 0.72),
+    0 0 28px color-mix(in srgb, var(--act-accent) 9%, transparent);
+}
+
+.slide h2::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: -0.65rem;
+  width: min(120px, 34%);
+  height: 2px;
+  background: linear-gradient(90deg, var(--act-accent), color-mix(in srgb, var(--act-accent) 15%, transparent));
+  box-shadow: 0 0 12px color-mix(in srgb, var(--act-accent) 56%, transparent);
+  transform: scaleX(0);
+  transform-origin: left center;
+}
+
+.slide.is-active h2::after {
+  animation: title-calibration 0.72s ease-out 0.28s both;
+}
+
+@keyframes title-calibration {
+  to {
+    transform: scaleX(1);
+  }
 }
 
 .lead {
@@ -836,6 +925,9 @@ a {
 .hero-art {
   width: 100%;
   max-height: 58vh;
+  filter:
+    drop-shadow(0 18px 34px rgba(0, 0, 0, 0.48))
+    drop-shadow(0 0 18px color-mix(in srgb, var(--act-accent) 12%, transparent));
 }
 
 .hero-strip {
@@ -857,14 +949,47 @@ a {
 
 /* ---------- "Clave" chip ---------- */
 .clave {
+  position: relative;
+  overflow: hidden;
   display: flex;
   align-items: baseline;
   gap: 0.7rem;
   margin-top: 1.5rem;
   padding: 0.7rem 0.95rem;
   border-left: 3px solid var(--act-accent, var(--orange));
-  background: rgba(255, 255, 255, 0.03);
+  background:
+    linear-gradient(90deg, color-mix(in srgb, var(--act-accent) 9%, transparent), rgba(255, 255, 255, 0.025) 52%, transparent);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.035),
+    0 14px 32px rgba(0, 0, 0, 0.13);
   border-radius: 0 4px 4px 0;
+}
+
+.clave::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: -24%;
+  width: 16%;
+  pointer-events: none;
+  background: linear-gradient(90deg, transparent, color-mix(in srgb, var(--act-accent) 22%, transparent), transparent);
+  transform: skewX(-12deg);
+  opacity: 0;
+}
+
+.slide.is-active .clave::after {
+  animation: key-scan 0.9s ease-out 0.72s both;
+}
+
+@keyframes key-scan {
+  22% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+    transform: translateX(760%) skewX(-12deg);
+  }
 }
 
 .clave b {
@@ -952,16 +1077,24 @@ a {
 }
 
 .split-figure {
+  position: relative;
   min-width: 0;
+  filter: drop-shadow(0 18px 34px rgba(0, 0, 0, 0.22));
 }
 
 .figure-panel {
   position: relative;
   padding: 1.4rem 1.4rem 0;
-  border: 1px solid rgba(242, 245, 247, 0.11);
-  background: linear-gradient(145deg, rgba(18, 22, 28, 0.62), rgba(10, 12, 16, 0.38));
+  border: 1px solid color-mix(in srgb, var(--act-accent) 18%, rgba(242, 245, 247, 0.11));
+  background:
+    radial-gradient(circle at 72% 38%, color-mix(in srgb, var(--act-accent) 7%, transparent), transparent 36%),
+    linear-gradient(145deg, rgba(20, 25, 31, 0.72), rgba(8, 10, 14, 0.46));
   backdrop-filter: blur(4px);
   overflow: hidden;
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.035),
+    0 18px 44px rgba(0, 0, 0, 0.16);
+  transition: border-color 0.6s, box-shadow 0.6s;
 }
 
 /* cap figure height so tall diagrams never push the slide off-screen */
@@ -992,6 +1125,27 @@ a {
 
 .slide.is-active .figure-panel::after {
   animation: figure-sweep 1.15s ease-out 0.28s both;
+}
+
+.slide.is-active .figure-panel {
+  animation: panel-energize 1s ease-out 0.16s both;
+}
+
+@keyframes panel-energize {
+  0% {
+    border-color: rgba(242, 245, 247, 0.08);
+    box-shadow: 0 0 0 transparent;
+  }
+  45% {
+    border-color: color-mix(in srgb, var(--act-accent) 52%, rgba(242, 245, 247, 0.15));
+    box-shadow: 0 0 34px color-mix(in srgb, var(--act-accent) 14%, transparent);
+  }
+  100% {
+    border-color: color-mix(in srgb, var(--act-accent) 18%, rgba(242, 245, 247, 0.11));
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.035),
+      0 18px 44px rgba(0, 0, 0, 0.16);
+  }
 }
 
 @keyframes figure-sweep {
@@ -2348,6 +2502,11 @@ a {
   }
 
   .slide.is-active::after,
+  .slide.is-active .slide-inner::before,
+  .slide.is-active .ghost-num,
+  .slide.is-active h2::after,
+  .slide.is-active .clave::after,
+  .slide.is-active .figure-panel,
   .slide.is-active .figure-panel::after,
   .slide.is-active .closing-formula span,
   .slide.is-active .closing-formula i {

@@ -663,19 +663,19 @@ function AplicacionFig({ active }: FigProps) {
         <Label cls="a-cut-label" x={209} y={153} size={14.5} color={C.cut}>A</Label>
 
         <g className="a-section" opacity="0">
-          <circle cx="226" cy="63" r="31" fill="url(#appHatch45)" stroke={C.section} strokeWidth="1.9" />
-          <circle cx="226" cy="63" r="24.8" fill={C.solid} stroke={C.contour} strokeWidth="1.7" />
-          <line x1="188" y1="63" x2="264" y2="63" stroke={C.hidden} strokeWidth="1" strokeDasharray="9 4 2 4" />
-          <line x1="226" y1="25" x2="226" y2="101" stroke={C.hidden} strokeWidth="1" strokeDasharray="9 4 2 4" />
+          <circle cx="226" cy="63" r="21" fill="url(#appHatch45)" stroke={C.section} strokeWidth="1.9" />
+          <circle cx="226" cy="63" r="16.8" fill={C.solid} stroke={C.contour} strokeWidth="1.7" />
+          <line x1="199" y1="63" x2="253" y2="63" stroke={C.hidden} strokeWidth="1" strokeDasharray="9 4 2 4" />
+          <line x1="226" y1="36" x2="226" y2="90" stroke={C.hidden} strokeWidth="1" strokeDasharray="9 4 2 4" />
         </g>
 
         <g className="a-dim" opacity="0" stroke="#8fe15f" fill="none">
-          <line x1="187" y1="24" x2="187" y2="102" strokeWidth="1.2" markerStart="url(#appDimArrow)" markerEnd="url(#appDimArrow)" />
-          <text x="178" y="67" fill="#8fe15f" stroke="none" fontSize="12.5" fontFamily={MONO} textAnchor="end">Ø30 ±0.05</text>
+          <line x1="194" y1="42" x2="194" y2="84" strokeWidth="1.2" markerStart="url(#appDimArrow)" markerEnd="url(#appDimArrow)" />
+          <text x="185" y="67" fill="#8fe15f" stroke="none" fontSize="12.5" fontFamily={MONO} textAnchor="end">Ø30 ±0.05</text>
         </g>
         <g className="a-dim" opacity="0" stroke="#8fe15f" fill="none">
-          <line x1="270" y1="38" x2="270" y2="88" strokeWidth="1.2" markerStart="url(#appDimArrow)" markerEnd="url(#appDimArrow)" />
-          <text x="278" y="67" fill="#8fe15f" stroke="none" fontSize="12.5" fontFamily={MONO}>Ø24 ±0.05</text>
+          <line x1="258" y1="46.2" x2="258" y2="79.8" strokeWidth="1.2" markerStart="url(#appDimArrow)" markerEnd="url(#appDimArrow)" />
+          <text x="266" y="67" fill="#8fe15f" stroke="none" fontSize="12.5" fontFamily={MONO}>Ø24 ±0.05</text>
         </g>
       </g>
 
@@ -887,8 +887,8 @@ function EjercicioFig({ active }: FigProps) {
         <line className="e-arrow" x1="233" y1="-5" x2="268" y2="-5" stroke={C.section} strokeWidth="2.2" markerEnd="url(#arrow)" opacity="0" />
         <line className="e-arrow" x1="233" y1="126" x2="268" y2="126" stroke={C.section} strokeWidth="2.2" markerEnd="url(#arrow)" opacity="0" />
         <g className="e-sec" opacity="0">
-          <circle cx="220" cy="60" r="30" fill="url(#exerciseHatch45)" stroke={C.section} strokeWidth="1.7" />
-          <circle cx="220" cy="60" r="24" fill={C.solid} stroke={C.contour} strokeWidth="1.6" />
+          <circle cx="220" cy="60" r="21" fill="url(#exerciseHatch45)" stroke={C.section} strokeWidth="1.7" />
+          <circle cx="220" cy="60" r="16.8" fill={C.solid} stroke={C.contour} strokeWidth="1.6" />
         </g>
         <Label cls="e-lab" x={220} y={166} color={C.section} size={13}>
           CORTE A–A · Ø30 / Ø24 · e = 3 mm
@@ -959,8 +959,8 @@ export function HeroArt({ active }: { active: boolean }) {
         <rect className="h-blade" x="-45" y="-90" width="10" height="180" fill={C.cut} opacity="0" />
         {/* revolved oval */}
         <g className="h-oval" opacity="0">
-          <circle cx="-40" cy="0" r="43" fill="url(#heroHatch)" stroke={C.section} strokeWidth="2.8" />
-          <circle cx="-40" cy="0" r="34" fill={C.solid} stroke={C.contour} strokeWidth="2.2" />
+          <circle cx="-40" cy="0" r="34" fill="url(#heroHatch)" stroke={C.section} strokeWidth="2.8" />
+          <circle cx="-40" cy="0" r="27.2" fill={C.solid} stroke={C.contour} strokeWidth="2.2" />
         </g>
         {/* rotation sweep */}
         <path className="h-arc" d="M-40,-80 A80,80 0 0 1 36,-31" fill="none" stroke={C.cut} strokeWidth="2.2" markerEnd="url(#heroArrow)" opacity="0" />

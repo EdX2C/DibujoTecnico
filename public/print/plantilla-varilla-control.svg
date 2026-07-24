@@ -48,10 +48,10 @@
     <line class="thin" x1="330" y1="-5" x2="380" y2="-5" marker-end="url(#arrow)"/>
     <line class="thin" x1="330" y1="181" x2="380" y2="181" marker-end="url(#arrow)"/>
 
-    <circle cx="315" cy="85" r="42" fill="url(#hatch)" stroke="#111" stroke-width="1.5"/>
-    <circle cx="315" cy="85" r="33.6" fill="#fff" stroke="#111" stroke-width="1.5"/>
-    <line class="axis" x1="262" y1="85" x2="368" y2="85"/>
-    <line class="axis" x1="315" y1="32" x2="315" y2="138"/>
+    <circle cx="315" cy="85" r="30" fill="url(#hatch)" stroke="#111" stroke-width="1.5"/>
+    <circle cx="315" cy="85" r="24" fill="#fff" stroke="#111" stroke-width="1.5"/>
+    <line class="axis" x1="277" y1="85" x2="353" y2="85"/>
+    <line class="axis" x1="315" y1="47" x2="315" y2="123"/>
 
     <line class="thin" x1="150" y1="135" x2="150" y2="156"/>
     <line class="thin" x1="480" y1="135" x2="480" y2="156"/>
@@ -61,6 +61,7 @@
 
   <rect x="772" y="132" width="298" height="315" fill="#fff" stroke="#111"/>
   <text x="790" y="160" class="sans h">2 · LECTURA DE A–A</text>
+  <text x="1052" y="160" class="mono small" text-anchor="end">DETALLE 2.6:1</text>
   <g transform="translate(920 282)">
     <circle r="78" fill="url(#hatch)" stroke="#111" stroke-width="2"/>
     <circle r="62.4" fill="#fff" stroke="#111" stroke-width="2"/>

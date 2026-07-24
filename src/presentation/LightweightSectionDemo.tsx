@@ -15,7 +15,7 @@ const STEP_COPY: Record<DemoStep, { title: string; body: string; term: string }>
   },
   3: {
     title: 'El giro convierte la línea en información medible.',
-    body: 'Aparecen Ø30, Ø24 y una pared nominal de 3 mm.',
+    body: 'Sin ampliar la sección aparecen Ø30, Ø24 y una pared nominal de 3 mm.',
     term: 'Sección abatida · verdadera magnitud',
   },
 }
@@ -144,9 +144,9 @@ export function LightweightSectionDemo({ onOpen3D }: { onOpen3D: () => void }) {
           </g>
 
           <g className="lite-annulus" aria-hidden="true">
-            <circle cx="500" cy="215" r="70" fill="#173038" stroke="#e7eef5" strokeWidth="3" />
-            <circle cx="500" cy="215" r="68" fill={`url(#${hatchId})`} />
-            <circle cx="500" cy="215" r="54.4" fill="#0d1016" stroke="#e7eef5" strokeWidth="3" />
+            <circle cx="500" cy="215" r="40" fill="#173038" stroke="#e7eef5" strokeWidth="3" />
+            <circle cx="500" cy="215" r="38.5" fill={`url(#${hatchId})`} />
+            <circle cx="500" cy="215" r="32" fill="#0d1016" stroke="#e7eef5" strokeWidth="2.4" />
           </g>
 
           <g className="lite-dimensions lite-dimensions-1" aria-hidden="true">
@@ -161,30 +161,30 @@ export function LightweightSectionDemo({ onOpen3D }: { onOpen3D: () => void }) {
           </g>
 
           <g className="lite-dimensions lite-dimensions-3" aria-hidden="true">
-            <path className="lite-center-mark" d="M404 215 H596 M500 119 V311" />
-            <path className="lite-extension-line" d="M430 145 H405 M430 285 H405" />
+            <path className="lite-center-mark" d="M444 215 H556 M500 159 V271" />
+            <path className="lite-extension-line" d="M460 175 H435 M460 255 H435" />
             <path
               className="lite-dimension-line"
-              d="M405 145 V285"
+              d="M435 175 V255"
               markerStart={`url(#${dimensionArrowId})`}
               markerEnd={`url(#${dimensionArrowId})`}
             />
-            <text className="lite-dimension-text" x="392" y="220" textAnchor="end">Ø30</text>
+            <text className="lite-dimension-text" x="422" y="220" textAnchor="end">Ø30</text>
             <path
               className="lite-dimension-line"
-              d="M446 215 H554"
+              d="M468 215 H532"
               markerStart={`url(#${dimensionArrowId})`}
               markerEnd={`url(#${dimensionArrowId})`}
             />
-            <path className="lite-dimension-leader" d="M554 215 L592 246 H636" />
-            <text className="lite-dimension-text" x="644" y="251">Ø24</text>
+            <path className="lite-dimension-leader" d="M532 215 L570 241 H622" />
+            <text className="lite-dimension-text" x="630" y="246">Ø24</text>
             <path
               className="lite-dimension-leader lite-wall-leader"
-              d="M558 264 L600 296 H652"
+              d="M526 244 L570 282 H626"
               markerStart={`url(#${dimensionArrowId})`}
             />
-            <text className="lite-dimension-text" x="650" y="290" textAnchor="end">3</text>
-            <text className="lite-dimension-note" x="650" y="314" textAnchor="end">PARED NOMINAL</text>
+            <text className="lite-dimension-text" x="624" y="276" textAnchor="end">3</text>
+            <text className="lite-dimension-note" x="624" y="300" textAnchor="end">PARED NOMINAL</text>
           </g>
 
           <g className="lite-callouts lite-callouts-1" aria-hidden="true">
@@ -207,10 +207,10 @@ export function LightweightSectionDemo({ onOpen3D }: { onOpen3D: () => void }) {
           </g>
 
           <g className="lite-callouts lite-callouts-3" aria-hidden="true">
-            <path className="lite-rotation-arc" d="M510 137 A92 92 0 0 1 602 214" markerEnd={`url(#${orangeArrowId})`} />
-            <text className="lite-rotation-text" x="566" y="152">90°</text>
-            <text className="lite-callout-main lite-true-size" x="478" y="104" textAnchor="end">PERFIL LOCAL REAL</text>
-            <text className="lite-callout-sub" x="478" y="124" textAnchor="end">pared visible y medible</text>
+            <path className="lite-rotation-arc" d="M507 164 A56 56 0 0 1 558 213" markerEnd={`url(#${orangeArrowId})`} />
+            <text className="lite-rotation-text" x="548" y="176">90°</text>
+            <text className="lite-callout-main lite-true-size" x="478" y="137" textAnchor="end">PERFIL LOCAL REAL</text>
+            <text className="lite-callout-sub" x="478" y="157" textAnchor="end">Ø30 REAL · MISMA ESCALA</text>
           </g>
 
           <g className="lite-cad-reference" aria-hidden="true">
