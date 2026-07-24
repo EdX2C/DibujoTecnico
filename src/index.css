@@ -1357,6 +1357,7 @@ a {
 }
 
 .tool-btn {
+  position: relative;
   padding: 0.5rem 0.9rem;
   border: 1px solid var(--line);
   border-radius: 3px;
@@ -1389,6 +1390,144 @@ a {
 .tool-btn:disabled {
   opacity: 0.35;
   cursor: default;
+}
+
+.lite-demo-toolbar .tool-btn.is-next {
+  --next-color: var(--orange);
+  border-color: var(--next-color);
+  color: var(--next-color);
+  background: color-mix(in srgb, var(--next-color) 11%, var(--panel));
+  box-shadow:
+    0 0 0 1px color-mix(in srgb, var(--next-color) 42%, transparent),
+    0 0 22px color-mix(in srgb, var(--next-color) 26%, transparent);
+  animation: click-target-pulse 1.1s ease-out 2;
+}
+
+.lite-demo-toolbar .tool-btn.primary.is-next {
+  --next-color: var(--cyan);
+}
+
+.lite-demo-toolbar .tool-btn.is-next::after {
+  content: 'CLIC';
+  position: absolute;
+  top: -0.62rem;
+  right: -0.38rem;
+  padding: 0.08rem 0.28rem;
+  border: 1px solid color-mix(in srgb, var(--next-color) 70%, #fff);
+  background: #0b0e12;
+  color: var(--next-color);
+  font-size: 0.52rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  line-height: 1;
+  box-shadow: 0 0 12px color-mix(in srgb, var(--next-color) 32%, transparent);
+}
+
+.lite-click-guide {
+  --guide-color: var(--orange);
+  display: grid;
+  flex: 1 1 15rem;
+  grid-template-columns: auto 1fr auto;
+  align-items: center;
+  gap: 0.5rem;
+  min-width: 14rem;
+  max-width: 19rem;
+  margin-left: auto;
+  padding: 0.28rem 0.58rem;
+  border-left: 2px solid var(--guide-color);
+  background: linear-gradient(90deg, color-mix(in srgb, var(--guide-color) 10%, transparent), rgba(8, 10, 14, 0.42));
+  color: var(--guide-color);
+  box-shadow: inset 0 0 18px color-mix(in srgb, var(--guide-color) 5%, transparent);
+}
+
+.lite-click-guide.targets-2,
+.lite-click-guide.targets-3 {
+  --guide-color: var(--cyan);
+}
+
+.lite-click-guide.is-complete {
+  --guide-color: #9aec68;
+}
+
+.lite-click-pointer {
+  font-family: var(--font-mono);
+  font-size: 1.05rem;
+  font-weight: 700;
+  line-height: 1;
+}
+
+.lite-click-copy {
+  display: grid;
+  gap: 0.08rem;
+  min-width: 0;
+}
+
+.lite-click-copy small {
+  color: var(--muted);
+  font-family: var(--font-mono);
+  font-size: 0.5rem;
+  letter-spacing: 0.12em;
+  line-height: 1;
+  text-transform: uppercase;
+}
+
+.lite-click-copy strong {
+  overflow: hidden;
+  color: var(--guide-color);
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  letter-spacing: 0.05em;
+  line-height: 1.15;
+  text-overflow: ellipsis;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.lite-click-progress {
+  display: flex;
+  align-items: center;
+  gap: 0.22rem;
+}
+
+.lite-click-progress i {
+  display: grid;
+  width: 1rem;
+  height: 1rem;
+  place-items: center;
+  border: 1px solid rgba(242, 245, 247, 0.18);
+  border-radius: 50%;
+  color: var(--muted);
+  font-family: var(--font-mono);
+  font-size: 0.52rem;
+  font-style: normal;
+  line-height: 1;
+}
+
+.lite-click-progress i.is-current {
+  border-color: var(--guide-color);
+  color: var(--guide-color);
+  box-shadow: 0 0 10px color-mix(in srgb, var(--guide-color) 32%, transparent);
+}
+
+.lite-click-progress i.is-done {
+  border-color: rgba(154, 236, 104, 0.62);
+  color: #9aec68;
+  background: rgba(154, 236, 104, 0.08);
+}
+
+@keyframes click-target-pulse {
+  0% {
+    transform: translateY(0);
+  }
+  45% {
+    transform: translateY(-2px);
+    box-shadow:
+      0 0 0 3px color-mix(in srgb, var(--next-color) 22%, transparent),
+      0 0 30px color-mix(in srgb, var(--next-color) 34%, transparent);
+  }
+  100% {
+    transform: translateY(0);
+  }
 }
 
 .canvas-frame {
@@ -2508,7 +2647,8 @@ a {
   .slide.is-active .figure-panel,
   .slide.is-active .figure-panel::after,
   .slide.is-active .closing-formula span,
-  .slide.is-active .closing-formula i {
+  .slide.is-active .closing-formula i,
+  .lite-demo-toolbar .tool-btn.is-next {
     animation: none;
   }
 

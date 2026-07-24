@@ -22,6 +22,7 @@ const STEP_COPY: Record<DemoStep, { title: string; body: string; term: string }>
 
 export function LightweightSectionDemo({ onOpen3D }: { onOpen3D: () => void }) {
   const [step, setStep] = useState<DemoStep>(1)
+  const [nextStep, setNextStep] = useState<DemoStep | null>(1)
   const uid = useId().replace(/:/g, '')
   const metalId = `lite-metal-${uid}`
   const ghostId = `lite-ghost-${uid}`
@@ -30,20 +31,75 @@ export function LightweightSectionDemo({ onOpen3D }: { onOpen3D: () => void }) {
   const orangeArrowId = `lite-orange-arrow-${uid}`
   const dimensionArrowId = `lite-dimension-arrow-${uid}`
   const copy = STEP_COPY[step]
+  const selectStep = (selected: DemoStep) => {
+    setStep(selected)
+    setNextStep((current) => {
+      if (current !== selected) return current
+      return selected === 3 ? null : ((selected + 1) as DemoStep)
+    })
+  }
 
   return (
     <div className={`lite-demo is-step-${step}`}>
       <div className="demo-toolbar lite-demo-toolbar" aria-label="Pasos de la demostración">
-        <button type="button" className={`tool-btn ${step === 1 ? 'is-active' : ''}`} onClick={() => setStep(1)}>
+        <button
+          type="button"
+          aria-label="1 · Leer las vistas"
+          className={`tool-btn ${step === 1 ? 'is-active' : ''} ${nextStep === 1 ? 'is-next' : ''}`}
+          onClick={() => selectStep(1)}
+        >
           1 · Leer las vistas
         </button>
-        <button type="button" className={`tool-btn primary ${step === 2 ? 'is-active' : ''}`} onClick={() => setStep(2)}>
+        <button
+          type="button"
+          aria-label="2 · Cortar en A–A"
+          className={`tool-btn primary ${step === 2 ? 'is-active' : ''} ${nextStep === 2 ? 'is-next' : ''}`}
+          onClick={() => selectStep(2)}
+          disabled={nextStep === 1}
+        >
           2 · Cortar en A–A
         </button>
-        <button type="button" className={`tool-btn primary ${step === 3 ? 'is-active' : ''}`} onClick={() => setStep(3)}>
+        <button
+          type="button"
+          aria-label="3 · Girar la sección 90°"
+          className={`tool-btn primary ${step === 3 ? 'is-active' : ''} ${nextStep === 3 ? 'is-next' : ''}`}
+          onClick={() => selectStep(3)}
+          disabled={nextStep === 1 || nextStep === 2}
+        >
           3 · Girar la sección 90°
         </button>
-        <div className="spacer" />
+        <div
+          className={`lite-click-guide ${nextStep === null ? 'is-complete' : ''} ${nextStep ? `targets-${nextStep}` : ''}`}
+          aria-live="polite"
+        >
+          <span className="lite-click-pointer" aria-hidden="true">{nextStep === null ? '✓' : '↖'}</span>
+          <span className="lite-click-copy">
+            <small>Secuencia guiada</small>
+            <strong>
+              {nextStep === null
+                ? '3 pasos completados'
+                : nextStep === 1
+                  ? 'Haz clic en 1'
+                  : `Ahora haz clic en ${nextStep}`}
+            </strong>
+          </span>
+          <span className="lite-click-progress" aria-hidden="true">
+            {([1, 2, 3] as DemoStep[]).map((item) => (
+              <i
+                key={item}
+                className={
+                  nextStep === null || item < nextStep
+                    ? 'is-done'
+                    : item === nextStep
+                      ? 'is-current'
+                      : ''
+                }
+              >
+                {item}
+              </i>
+            ))}
+          </span>
+        </div>
         <button
           type="button"
           className="tool-btn lite-open-3d"
