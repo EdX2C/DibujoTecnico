@@ -509,14 +509,15 @@ function PlanoFig({ active }: FigProps) {
       <rect className="pl-piece" x="65" y="88" width="350" height="118" fill="none" stroke={C.contour} strokeWidth="2.2" opacity="0" />
       <line className="pl-hidden" x1="45" y1="147" x2="435" y2="147" stroke={C.thin} strokeWidth="1" strokeDasharray="12 4 2 4" opacity="0" />
       <rect className="pl-local" x="232" y="88" width="16" height="118" fill={C.section} fillOpacity="0.12" opacity="0" />
-      <Label cls="pl-local" x={142} y={126} size={13} color={C.section}>SECCIÓN PRODUCIDA EN A–A</Label>
+      <line className="pl-local" x1="174" y1="122" x2="226" y2="122" stroke={C.section} strokeWidth="1.2" opacity="0" />
+      <Label cls="pl-local" x={116} y={126} size={13} color={C.section}>SECCIÓN LOCAL</Label>
 
       <line className="pl-line" x1="240" y1="64" x2="240" y2="230" stroke={C.cut} strokeWidth="1.9" strokeDasharray="14 5 3 5" opacity="0" />
       <rect className="pl-end" x="232" y="54" width="16" height="12" fill={C.cut} opacity="0" />
       <rect className="pl-end" x="232" y="230" width="16" height="12" fill={C.cut} opacity="0" />
 
-      <Label cls="pl-letter" x={214} y={64} color={C.cut} size={19}>A</Label>
-      <Label cls="pl-letter" x={214} y={246} color={C.cut} size={19}>A</Label>
+      <Label cls="pl-letter" x={148} y={65} color={C.cut} size={19}>A</Label>
+      <Label cls="pl-letter" x={148} y={241} color={C.cut} size={19}>A</Label>
       <g transform="translate(18,136)">
         <g className="pl-eye" opacity="0">
           <path d="M0,10 Q16,-5 32,10 Q16,25 0,10 Z" fill={C.solid} stroke={C.section} strokeWidth="1.8" />
@@ -533,7 +534,8 @@ function PlanoFig({ active }: FigProps) {
         <path d="M236,236 L222,228 V244 Z" fill={C.section} />
       </g>
 
-      <Label cls="pl-callout" x={332} y={76} size={13.5} color={C.cut}>EXTREMO GRUESO</Label>
+      <line className="pl-callout" x1="268" y1="44" x2="249" y2="56" stroke={C.cut} strokeWidth="1.1" opacity="0" />
+      <Label cls="pl-callout" x={345} y={47} size={13.5} color={C.cut}>EXTREMO ENGROSADO</Label>
       <Label cls="pl-callout" x={348} y={226} size={13.5} color={C.section}>MISMO SENTIDO</Label>
       <Label cls="pl-note" x={240} y={288} size={13.5} color={C.section}>TRAZA = LUGAR · FLECHAS = MIRADA · GIRO = PERFIL</Label>
     </svg>
@@ -671,11 +673,13 @@ function AplicacionFig({ active }: FigProps) {
 
         <g className="a-dim" opacity="0" stroke="#8fe15f" fill="none">
           <line x1="194" y1="42" x2="194" y2="84" strokeWidth="1.2" markerStart="url(#appDimArrow)" markerEnd="url(#appDimArrow)" />
-          <text x="185" y="67" fill="#8fe15f" stroke="none" fontSize="12.5" fontFamily={MONO} textAnchor="end">Ø30 ±0.05</text>
+          <path d="M194,38 V29 H187" strokeWidth="1" />
+          <text x="181" y="32" fill="#8fe15f" stroke="none" fontSize="12.5" fontFamily={MONO} textAnchor="end">Ø30 ±0.05</text>
         </g>
         <g className="a-dim" opacity="0" stroke="#8fe15f" fill="none">
           <line x1="258" y1="46.2" x2="258" y2="79.8" strokeWidth="1.2" markerStart="url(#appDimArrow)" markerEnd="url(#appDimArrow)" />
-          <text x="266" y="67" fill="#8fe15f" stroke="none" fontSize="12.5" fontFamily={MONO}>Ø24 ±0.05</text>
+          <path d="M258,84 V96 H265" strokeWidth="1" />
+          <text x="271" y="100" fill="#8fe15f" stroke="none" fontSize="12.5" fontFamily={MONO}>Ø24 ±0.05</text>
         </g>
       </g>
 
