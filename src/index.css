@@ -464,7 +464,7 @@ a {
 /* Cajetín */
 .cajetin {
   display: grid;
-  grid-template-columns: repeat(4, auto);
+  grid-template-columns: max-content auto;
   border: 1px solid var(--frame);
   background: rgba(10, 11, 14, 0.85);
   backdrop-filter: blur(6px);
@@ -491,10 +491,9 @@ a {
   font-weight: 600;
   color: var(--ink);
   letter-spacing: 0.04em;
-  max-width: 24ch;
+  max-width: none;
   white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
+  overflow: visible;
 }
 
 .cajetin b.hl {
