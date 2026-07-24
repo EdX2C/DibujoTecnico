@@ -22,15 +22,14 @@ const MARQUEE_TERMS = [
   'GEOMETRÍA DESCRIPTIVA',
 ]
 
-const REVERSED_FIGURE_SLIDES = new Set(['historia', 'definicion', 'plano', 'aplicacion'])
+const REVERSED_FIGURE_SLIDES = new Set(['problema', 'plano', 'aplicacion'])
 
-type VisualAct = 0 | 1 | 2 | 3 | 4
+type VisualAct = 0 | 1 | 2 | 3
 
 const ACT_SPLASHES: Record<Exclude<VisualAct, 0>, { roman: string; title: string; subtitle: string }> = {
-  1: { roman: 'I', title: 'Ver lo oculto', subtitle: 'El problema' },
-  2: { roman: 'II', title: 'Girar la sección', subtitle: 'La idea' },
-  3: { roman: 'III', title: 'Aplicar la norma', subtitle: 'El método' },
-  4: { roman: 'IV', title: 'Llevarlo a la pieza', subtitle: 'La prueba' },
+  1: { roman: 'I', title: 'La pregunta', subtitle: 'Qué no muestran las vistas' },
+  2: { roman: 'II', title: 'El método', subtitle: 'Cortar · girar · representar' },
+  3: { roman: 'III', title: 'La prueba', subtitle: 'Pieza compuesta · tolerancia' },
 }
 
 function MarqueeStrip() {
@@ -99,13 +98,12 @@ function CutTitle() {
   )
 }
 
-/** Visual chapter (0=portada, 1..4) after condensing the deck to 13 slides. */
+/** Visual chapter (0=portada, 1..3) for the 11-slide narrative. */
 function actForIndex(i: number): VisualAct {
   if (i === 0) return 0
-  if (i <= 2) return 1
-  if (i <= 5) return 2
-  if (i <= 9) return 3
-  return 4
+  if (i <= 3) return 1
+  if (i <= 7) return 2
+  return 3
 }
 
 /** Slide-enter animation for text blocks; figures run one explanatory build. */
@@ -333,7 +331,7 @@ export function Presentation({ onOpenFullscreenDemo }: PresentationProps) {
                   ))}
                   <div className="chapter-rule anim-item" />
                   <div className="acts-track anim-item" aria-hidden>
-                    {['I', 'II', 'III', 'IV'].map((r) => (
+                    {['I', 'II', 'III'].map((r) => (
                       <span key={r} className={r === s.chapter ? 'is-here' : ''}>
                         {r}
                       </span>
@@ -436,7 +434,7 @@ export function Presentation({ onOpenFullscreenDemo }: PresentationProps) {
                         <h3>Por qué este corte</h3>
                         <p>{exerciseWhy}</p>
                         <p className="exercise-link">
-                          <a href="/print/plantilla-buje.svg" target="_blank" rel="noreferrer">
+                          <a href="/print/plantilla-varilla-control.svg" target="_blank" rel="noreferrer">
                             Plantilla imprimible →
                           </a>
                         </p>
@@ -455,8 +453,8 @@ export function Presentation({ onOpenFullscreenDemo }: PresentationProps) {
                   <h1 className="anim-item">
                     {s.title}
                   </h1>
-                  <div className="closing-formula anim-item" aria-label="De oculto a visible y medible">
-                    <span>OCULTO</span><i>→</i><span>VISIBLE</span><i>→</i><span>MEDIBLE</span>
+                  <div className="closing-formula anim-item" aria-label="Del extremo al perfil local real">
+                    <span>EXTREMO</span><i>→</i><span>A–A</span><i>→</i><span>PERFIL REAL</span>
                   </div>
                   {s.body?.map((p, bi) => (
                     <p key={p} className={`${bi === 0 ? 'lead' : 'closing-code'} anim-item`}>

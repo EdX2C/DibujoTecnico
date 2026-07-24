@@ -25,8 +25,8 @@ type GuidedBeat = 0 | 1 | 2 | 3 | 4
 const GUIDED_COPY: Record<GuidedBeat, { eyebrow: string; title: string; body: string }> = {
   0: {
     eyebrow: 'Problema',
-    title: 'El interior está oculto',
-    body: 'Por fuera no podemos leer el espesor.',
+    title: 'El extremo no describe el centro',
+    body: 'Ojo y horquilla no revelan la pared del tubo.',
   },
   1: {
     eyebrow: '1 · Cortar',
@@ -34,9 +34,9 @@ const GUIDED_COPY: Record<GuidedBeat, { eyebrow: string; title: string; body: st
     body: 'El plano imaginario atraviesa la pieza.',
   },
   2: {
-    eyebrow: '2 · Retirar',
-    title: 'Quitamos la mitad delantera',
-    body: 'La sección aparece de canto: todavía parece una línea.',
+    eyebrow: '2 · Aislar',
+    title: 'Tomamos solo la sección',
+    body: 'En A–A aparece de canto: todavía parece una línea.',
   },
   3: {
     eyebrow: '3 · Girar 90°',
@@ -46,7 +46,7 @@ const GUIDED_COPY: Record<GuidedBeat, { eyebrow: string; title: string; body: st
   4: {
     eyebrow: 'Resultado',
     title: 'Una línea se convierte en forma real',
-    body: 'Ahora podemos medir Ø40, Ø18 y una pared de 11 mm.',
+    body: 'Ahora podemos medir Ø30, Ø24 y una pared de 3 mm.',
   },
 }
 
@@ -349,7 +349,7 @@ export function DemoScene({ embedded = false, onOpenFullscreen }: DemoSceneProps
           {mode === 'solid' && (
             <>
               PLANO A–A
-              <span>VISTA ESPACIAL · L 100 mm · Ø40 mm</span>
+              <span>VARILLA COMPUESTA · TUBO Ø30 mm</span>
             </>
           )}
           {mode === 'reveal' && (
@@ -361,7 +361,7 @@ export function DemoScene({ embedded = false, onOpenFullscreen }: DemoSceneProps
           {mode === 'abatir' && (
             <>
               SECCIÓN ABATIDA A–A
-              <span>VERDADERA MAGNITUD · Ø40 · Ø18 · e 11 mm</span>
+              <span>VERDADERA MAGNITUD · Ø30 · Ø24 · e 3 mm</span>
             </>
           )}
           {mode === 'concurrente' && (
@@ -392,13 +392,13 @@ export function DemoScene({ embedded = false, onOpenFullscreen }: DemoSceneProps
         <div className="demo-hint">
           {mode === 'solid' &&
             (cutAxis === 'x'
-              ? 'Paso 1 · La abertura es visible, pero no revela el espesor interior.'
+              ? 'Paso 1 · Los terminales son visibles, pero no revelan la pared del tubo en A–A.'
               : 'Corte longitudinal: el plano recorre el eje del taladro. Pulse Revelar.')}
           {mode === 'reveal' &&
             (cutAxis === 'x'
-              ? 'Paso 2 · La mitad retirada queda tenue; la sección todavía se observa de canto sobre A–A.'
+              ? 'Paso 2 · Aislamos la sección transversal; todavía se observa de canto sobre A–A.'
               : 'Se retira la mitad superior: se ven las dos paredes y el hueco del taladro.')}
-          {mode === 'abatir' && 'Paso 3 · La sección gira 90° y permite leer Ø40, Ø18 y una pared de 11 mm en verdadera magnitud.'}
+          {mode === 'abatir' && 'Paso 3 · La sección gira 90° y permite leer Ø30, Ø24 y una pared nominal de 3 mm en verdadera magnitud.'}
           {mode === 'concurrente' && 'El plano B gira hasta alinearse con A: todo en una sola vista.'}
         </div>
       </div>
@@ -482,7 +482,7 @@ function SceneContent({
 
   return (
     <>
-      <OrthographicCamera makeDefault position={[0, 0.85, 6.6]} zoom={122} near={0.1} far={100} />
+      <OrthographicCamera makeDefault position={[0, 0.85, 6.6]} zoom={92} near={0.1} far={100} />
       <ambientLight intensity={0.42} />
       <hemisphereLight color="#d9e8f4" groundColor="#101820" intensity={0.82} />
       <directionalLight

@@ -29,24 +29,25 @@ En la demo: **Reveal corte**, **Abatir 90°**, **Planos concurrentes**, slider d
 
 ## Entregables incluidos
 
-- Presentación condensada de 13 láminas (rúbrica completa; recorrido vivo de 8 min)
-- Demo 3D del buje (casquillo alargado, Ø40 · Ø18 · 100 mm — la misma pieza del ejercicio) con revelar + abatir 90°
-- Plantilla imprimible: [`public/print/plantilla-buje.svg`](public/print/plantilla-buje.svg)
+- Presentación condensada de 11 láminas (rúbrica completa; recorrido vivo de 8 min)
+- Demo 3D de una varilla de control compuesta (tubo Ø30 · Ø24 · pared 3 mm) con sección de canto + abatimiento 90°
+- Plantilla imprimible: [`public/print/plantilla-varilla-control.svg`](public/print/plantilla-varilla-control.svg)
 - Pautas del dibujo: [`public/print/pautas-dibujo.md`](public/print/pautas-dibujo.md)
 - Guion cronometrado: [`public/print/guion-8min.md`](public/print/guion-8min.md)
 
-## Estructura (8 minutos, 4 actos)
+## Estructura (8 minutos, 3 actos)
 
-- **Integrante 1 (0:00–3:55):** problema, contexto Monge → ISO 128 → BIM, giro 90°, definición, cuándo usarlo y plano A–A.
-- **Integrante 2 (3:55–7:50):** rayado, demo ≤1:00 (3D opcional), diferencias, mango ovalado, ejercicio y cierre.
+- **Integrante 1 (0:00–3:10):** límite de las vistas, definición, regla de uso y plano A–A.
+- **Integrante 2 (3:10–7:50):** rayado, demo ≤1:05, diferencias, tolerancia industrial, ejercicio y cierre.
 
-## Checklist del ejercicio gráfico (buje: cilindro con agujero pasante)
+## Checklist del ejercicio gráfico (varilla de control compuesta)
 
-- [ ] Vista exterior del buje (rectángulo + agujero en líneas ocultas)
+- [ ] Vista exterior con ojo, tubo central y horquilla
 - [ ] Indicación del plano de corte A–A con extremos engrosados
 - [ ] Dos flechas de dirección de observación, mismo sentido
 - [ ] Letras A en ambos extremos
-- [ ] Sección girada 90° (corona rayada a 45°; el agujero limpio)
+- [ ] Sección girada 90° (pared tubular rayada a 45°; el hueco limpio)
+- [ ] Cotas Ø30, Ø24 y pared nominal e = 3 mm
 - [ ] Identificación “Corte A–A”
 - [ ] Explicación breve de por qué es adecuado
 

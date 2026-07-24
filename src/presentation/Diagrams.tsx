@@ -165,20 +165,21 @@ interface FigProps {
 }
 
 /* ================================================================
-   PROBLEMA — pieza con cámara interna + agujero: por fuera son
-   líneas ocultas confusas; el corte deja el interior nítido.
+   PROBLEMA — una pieza compuesta invalida la lectura por el extremo:
+   ojo y horquilla no revelan el perfil del tubo central.
    ================================================================ */
 function buildProblema(tl: TL, root: SVGSVGElement) {
   pop(tl, qa(root, '.p-title'), 0)
-  drawIn(tl, q(root, '.p-c1'), 0.65, 0.15)
-  drawIn(tl, q(root, '.p-c2'), 0.65, 0.15)
-  fadeIn(tl, qa(root, '.p-hid'), 0.75, 0.35, 0.12)
-  pop(tl, q(root, '.p-q'), 1.25)
-  fadeIn(tl, q(root, '.p-arr'), 1.55, 0.35)
-  fadeIn(tl, q(root, '.p-hatch'), 1.85, 0.55)
-  pop(tl, qa(root, '.p-hole'), 2.15)
-  pop(tl, q(root, '.p-ok'), 2.45)
-  pop(tl, q(root, '.p-result'), 2.75)
+  drawIn(tl, q(root, '.p-body'), 0.85, 0.15)
+  fadeIn(tl, qa(root, '.p-terminal'), 0.62, 0.55, 0.08)
+  fadeIn(tl, qa(root, '.p-center'), 0.3, 0.8)
+  fadeIn(tl, qa(root, '.p-plane'), 0.5, 1.02)
+  pop(tl, qa(root, '.p-letter'), 1.25)
+  pop(tl, qa(root, '.p-profile'), 1.48)
+  fadeIn(tl, qa(root, '.p-link'), 1.72, 0.4)
+  pop(tl, q(root, '.p-not-equal'), 2.05)
+  pop(tl, q(root, '.p-question'), 2.28)
+  pop(tl, q(root, '.p-result'), 2.55)
 }
 
 function ProblemaFig({ active }: FigProps) {
@@ -189,47 +190,57 @@ function ProblemaFig({ active }: FigProps) {
       viewBox="0 0 480 300"
       style={baseStyle}
       role="img"
-      aria-label="Comparación: la vista exterior deja el interior en líneas ocultas ambiguas; la vista en corte muestra las cavidades visibles y el material rayado"
+      aria-label="Varilla de control compuesta: el perfil de ojo y la horquilla de los extremos no revelan si el tubo central es macizo o hueco en A–A"
     >
       <defs>
-        <pattern id="probHatch45" width="9" height="9" patternUnits="userSpaceOnUse" patternTransform="rotate(45)">
-          <line x1="0" y1="0" x2="0" y2="9" stroke={C.section} strokeWidth="1.1" />
-        </pattern>
-        <marker id="probArrow" markerWidth="11" markerHeight="11" refX="8" refY="3.5" orient="auto">
-          <path d="M0,0 L8,3.5 L0,7 Z" fill={C.cut} />
-        </marker>
+        <linearGradient id="probMetal" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0" stopColor="#657b8c" stopOpacity=".66" />
+          <stop offset=".5" stopColor="#243340" stopOpacity=".78" />
+          <stop offset="1" stopColor="#0f171e" stopOpacity=".9" />
+        </linearGradient>
       </defs>
 
-      <g transform="translate(20,54)">
-        <Label cls="p-title" x={95} y={-20} size={13.5}>
-          ANTES · VISTA EXTERIOR
-        </Label>
-        <rect className="p-c1" x="0" y="0" width="190" height="150" fill="none" stroke={C.contour} strokeWidth="2.4" opacity="0" />
-        <rect className="p-hid" x="52" y="32" width="86" height="70" fill="none" stroke={C.hidden} strokeWidth="1.5" strokeDasharray="7 5" opacity="0" />
-        <circle className="p-hid" cx="95" cy="120" r="16" fill="none" stroke={C.hidden} strokeWidth="1.5" strokeDasharray="7 5" opacity="0" />
-        <line className="p-hid" x1="0" y1="32" x2="190" y2="32" stroke={C.hidden} strokeWidth="1.1" strokeDasharray="6 5" opacity="0" />
-        <line className="p-hid" x1="0" y1="102" x2="190" y2="102" stroke={C.hidden} strokeWidth="1.1" strokeDasharray="6 5" opacity="0" />
-        <Label cls="p-q" x={95} y={178} size={13} color={C.cut}>
-          ¿QUÉ HAY DENTRO?
-        </Label>
+      <Label cls="p-title" x={24} y={24} size={13} color={C.thin} anchor="start">
+        VISTAS CONOCIDAS · ALZADO
+      </Label>
+      <g transform="translate(18,44)">
+        <line className="p-center" x1="0" y1="74" x2="444" y2="74" stroke={C.hidden} strokeWidth="1" strokeDasharray="12 4 2 4" opacity="0" />
+        <path className="p-body" d="M104,50 H346 V98 H104 Z" fill="url(#probMetal)" stroke={C.contour} strokeWidth="2.2" opacity="0" />
+
+        {/* terminal articulado izquierdo */}
+        <path className="p-terminal" d="M104,54 L80,43 L70,30" fill="none" stroke={C.contour} strokeWidth="18" strokeLinecap="round" opacity="0" />
+        <circle className="p-terminal" cx="47" cy="26" r="31" fill={C.solid} stroke={C.contour} strokeWidth="2.2" opacity="0" />
+        <circle className="p-terminal" cx="47" cy="26" r="14" fill={C.solid} stroke={C.section} strokeWidth="2" opacity="0" />
+
+        {/* horquilla derecha */}
+        <path className="p-terminal" d="M346,61 H374 L391,42 H430" fill="none" stroke={C.contour} strokeWidth="17" strokeLinecap="round" strokeLinejoin="round" opacity="0" />
+        <path className="p-terminal" d="M346,87 H374 L391,106 H430" fill="none" stroke={C.contour} strokeWidth="17" strokeLinecap="round" strokeLinejoin="round" opacity="0" />
+        <circle className="p-terminal" cx="423" cy="42" r="7" fill={C.solid} stroke={C.section} strokeWidth="1.7" opacity="0" />
+        <circle className="p-terminal" cx="423" cy="106" r="7" fill={C.solid} stroke={C.section} strokeWidth="1.7" opacity="0" />
+
+        {/* punto que realmente se necesita inspeccionar */}
+        <line className="p-plane" x1="226" y1="17" x2="226" y2="128" stroke={C.cut} strokeWidth="2" strokeDasharray="11 4 2 4" opacity="0" />
+        <rect className="p-plane" x="221" y="11" width="10" height="10" fill={C.cut} opacity="0" />
+        <rect className="p-plane" x="221" y="127" width="10" height="10" fill={C.cut} opacity="0" />
+        <Label cls="p-letter" x={207} y={17} color={C.cut} size={15}>A</Label>
+        <Label cls="p-letter" x={207} y={140} color={C.cut} size={15}>A</Label>
       </g>
 
-      <path className="p-arr" d="M220,128 H260" stroke={C.cut} strokeWidth="2.4" markerEnd="url(#probArrow)" fill="none" opacity="0" />
-
-      <g transform="translate(270,54)">
-        <Label cls="p-title" x={95} y={-20} color={C.section} size={13.5}>
-          DESPUÉS · EN CORTE
-        </Label>
-        <rect className="p-hatch" x="0" y="0" width="190" height="150" fill="url(#probHatch45)" opacity="0" />
-        <rect className="p-c2" x="0" y="0" width="190" height="150" fill="none" stroke={C.contour} strokeWidth="2.4" opacity="0" />
-        <rect className="p-hole" x="52" y="32" width="86" height="70" fill={C.solid} stroke={C.contour} strokeWidth="2" opacity="0" />
-        <circle className="p-hole" cx="95" cy="120" r="16" fill={C.solid} stroke={C.contour} strokeWidth="2" opacity="0" />
-        <Label cls="p-ok" x={95} y={178} size={13} color={C.section}>
-          INTERIOR VISIBLE
-        </Label>
+      <g transform="translate(42,208)">
+        <circle className="p-profile" cx="44" cy="0" r="30" fill="none" stroke={C.contour} strokeWidth="2.2" opacity="0" />
+        <circle className="p-profile" cx="44" cy="0" r="13" fill="none" stroke={C.section} strokeWidth="2" opacity="0" />
+        <Label cls="p-profile" x={44} y={50} size={12.5}>PERFIL DEL OJO</Label>
       </g>
-      <Label cls="p-result" x={240} y={282} size={13} color={C.section}>
-        MISMA PIEZA · MENOS AMBIGÜEDAD
+      <path className="p-link" d="M122,208 H186" stroke={C.thin} strokeWidth="1.4" strokeDasharray="7 5" opacity="0" />
+      <Label cls="p-not-equal" x={218} y={213} size={26} color={C.cut}>≠</Label>
+      <path className="p-link" d="M247,208 H306" stroke={C.thin} strokeWidth="1.4" strokeDasharray="7 5" opacity="0" />
+      <g transform="translate(344,208)">
+        <circle className="p-question" cx="38" cy="0" r="30" fill="none" stroke={C.cut} strokeWidth="2" strokeDasharray="7 5" opacity="0" />
+        <Label cls="p-question" x={38} y={8} size={28} color={C.cut}>?</Label>
+        <Label cls="p-question" x={38} y={50} size={12.5} color={C.cut}>SECCIÓN EN A–A</Label>
+      </g>
+      <Label cls="p-result" x={240} y={292} size={13} color={C.section}>
+        EL EXTREMO NO REVELA SI EL CENTRO ES MACIZO O TUBULAR
       </Label>
     </svg>
   )
@@ -240,28 +251,25 @@ function ProblemaFig({ active }: FigProps) {
    ================================================================ */
 function buildIdea(tl: TL, root: SVGSVGElement) {
   fadeIn(tl, q(root, '.i-ax'), 0, 0.3)
-  drawIn(tl, q(root, '.i-bar'), 0.9, 0.1)
-  // 1) knife descends and cuts
-  pop(tl, q(root, '.i-s1'), 1.1)
-  tl.fromTo(q(root, '.i-knife'), { y: -70, opacity: 0 }, { y: 0, opacity: 1, duration: 0.5, ease: 'power3.in' }, 1.3)
-  tl.fromTo(q(root, '.i-flash'), { opacity: 0 }, { opacity: 1, duration: 0.1, yoyo: true, repeat: 1 }, 1.8)
-  // 2) the slice, seen edge-on, slides out
-  tl.fromTo(q(root, '.i-edge'), { opacity: 0 }, { opacity: 1, duration: 0.3 }, 1.95)
-  tl.to(q(root, '.i-knife'), { opacity: 0, duration: 0.3 }, 2.2)
-  // group starts at translate(145,78); move it to the empty stage at (365,155)
-  tl.to(q(root, '.i-slice'), { x: 365, y: 155, duration: 1.0, ease: 'power2.inOut' }, 2.5)
-  pop(tl, q(root, '.i-s2'), 3.4)
-  // 3) rotate 90°: the line becomes the circular profile in true size
-  tl.to(q(root, '.i-s2'), { opacity: 0, duration: 0.3 }, 4.6)
-  pop(tl, q(root, '.i-s3'), 4.7)
-  drawIn(tl, q(root, '.i-arc'), 0.6, 4.8)
-  tl.set(q(root, '.i-oval'), { opacity: 1 }, 5.0)
-  tl.fromTo(q(root, '.i-oval'), { attr: { rx: 2 } }, { attr: { rx: 28 }, duration: 0.9, ease: 'power2.inOut' }, 5.0)
-  tl.to(q(root, '.i-line'), { opacity: 0, duration: 0.4 }, 5.0)
-  tl.to(q(root, '.i-arc'), { opacity: 0, duration: 0.4 }, 5.9)
-  // 4) frontal, true size
-  tl.to(q(root, '.i-s3'), { opacity: 0, duration: 0.3 }, 6.1)
-  pop(tl, q(root, '.i-s4'), 6.2)
+  drawIn(tl, q(root, '.i-bar'), 0.65, 0.1)
+  pop(tl, q(root, '.i-s1'), 0.72)
+  tl.fromTo(q(root, '.i-knife'), { y: -70, opacity: 0 }, { y: 0, opacity: 1, duration: 0.38, ease: 'power3.in' }, 0.88)
+  tl.fromTo(q(root, '.i-flash'), { opacity: 0 }, { opacity: 1, duration: 0.09, yoyo: true, repeat: 1 }, 1.22)
+  tl.fromTo(q(root, '.i-edge'), { opacity: 0 }, { opacity: 1, duration: 0.25 }, 1.32)
+  tl.to(q(root, '.i-knife'), { opacity: 0, duration: 0.22 }, 1.5)
+  tl.to(q(root, '.i-slice'), { x: 365, y: 155, duration: 0.65, ease: 'power2.inOut' }, 1.62)
+  pop(tl, q(root, '.i-s2'), 2.08)
+  pop(tl, q(root, '.i-s3'), 2.4)
+  drawIn(tl, q(root, '.i-arc'), 0.42, 2.4)
+  tl.fromTo(
+    q(root, '.i-oval'),
+    { opacity: 0, scaleX: 0.04, transformOrigin: '50% 50%', transformBox: 'fill-box' },
+    { opacity: 1, scaleX: 1, duration: 0.62, ease: 'power2.inOut' },
+    2.48,
+  )
+  tl.to(q(root, '.i-line'), { opacity: 0, duration: 0.28 }, 2.5)
+  tl.to(q(root, '.i-arc'), { opacity: 0, duration: 0.3 }, 3.14)
+  pop(tl, q(root, '.i-s4'), 3.22)
 }
 
 function IdeaFig({ active }: FigProps) {
@@ -293,17 +301,20 @@ function IdeaFig({ active }: FigProps) {
       {/* slice: starts at the cut, travels to the right stage */}
       <g className="i-slice" transform="translate(145,78)">
         <line className="i-edge i-line" x1="0" y1="-28" x2="0" y2="28" stroke={C.section} strokeWidth="4" opacity="0" />
-        <ellipse className="i-oval" cx="0" cy="0" rx="2" ry="28" fill="url(#ideaHatch45)" stroke={C.section} strokeWidth="2.2" opacity="0" />
+        <g className="i-oval" opacity="0">
+          <ellipse cx="0" cy="0" rx="28" ry="28" fill="url(#ideaHatch45)" stroke={C.section} strokeWidth="2.2" />
+          <ellipse cx="0" cy="0" rx="17" ry="17" fill={C.solid} stroke={C.contour} strokeWidth="1.8" />
+        </g>
         <path className="i-arc" d="M0,-42 A42,42 0 0 1 40,-12" fill="none" stroke={C.cut} strokeWidth="2.2" markerEnd="url(#arrowCut)" opacity="0" />
       </g>
-      <Label cls="i-s2" x={365} y={248} size={13} color={C.section}>
+      <Label cls="i-s2" x={365} y={204} size={13} color={C.section}>
         2 · DE CANTO: LÍNEA
       </Label>
-      <Label cls="i-s3" x={365} y={248} size={13} color={C.cut}>
+      <Label cls="i-s3" x={365} y={226} size={13} color={C.cut}>
         3 · GIRA 90°
       </Label>
       <Label cls="i-s4" x={365} y={248} size={13} color={C.section}>
-        4 · DE FRENTE: MAGNITUD REAL
+        4 · PERFIL REAL DEL TUBO
       </Label>
     </svg>
   )
@@ -388,22 +399,24 @@ function DefinicionFig({ active }: FigProps) {
 }
 
 /* ================================================================
-   CUÁNDO — pieza larga: la sección girada aparece sobre la vista
+   CUÁNDO — regla visual de decisión: superponer un perfil local
+   simple o desplazarlo si roba claridad.
    ================================================================ */
 function buildCuando(tl: TL, root: SVGSVGElement) {
-  fadeIn(tl, q(root, '.c-ax'), 0, 0.3)
-  drawIn(tl, q(root, '.c-bar'), 0.9, 0.1)
-  drawIn(tl, q(root, '.c-brk'), 0.5, 1.0)
-  pop(tl, q(root, '.c-l3'), 1.4)
-  // the edge line appears at the cut, then rotates into an oval
-  tl.fromTo(q(root, '.c-line'), { opacity: 0 }, { opacity: 1, duration: 0.3 }, 2.0)
-  drawIn(tl, q(root, '.c-arc'), 0.6, 2.3)
-  tl.set(q(root, '.c-oval'), { opacity: 1 }, 2.5)
-  tl.fromTo(q(root, '.c-oval'), { attr: { rx: 2 } }, { attr: { rx: 21 }, duration: 0.8, ease: 'power2.inOut' }, 2.5)
-  tl.to(q(root, '.c-line'), { opacity: 0, duration: 0.3 }, 2.6)
-  tl.to(q(root, '.c-arc'), { opacity: 0, duration: 0.4 }, 3.3)
-  pop(tl, q(root, '.c-l1'), 3.4)
-  pop(tl, q(root, '.c-l2'), 3.6)
+  pop(tl, qa(root, '.c-head'), 0)
+  drawIn(tl, q(root, '.c-bar'), 0.65, 0.15)
+  fadeIn(tl, qa(root, '.c-plane'), 0.42, 0.58)
+  tl.fromTo(
+    q(root, '.c-simple'),
+    { opacity: 0, scaleX: 0.04, transformOrigin: '50% 50%', transformBox: 'fill-box' },
+    { opacity: 1, scaleX: 1, duration: 0.62, ease: 'power2.inOut' },
+    0.88,
+  )
+  pop(tl, qa(root, '.c-yes'), 1.35)
+  drawIn(tl, q(root, '.c-complex-body'), 0.55, 1.65)
+  fadeIn(tl, qa(root, '.c-complex'), 0.5, 2.03)
+  tl.fromTo(q(root, '.c-move'), { opacity: 0, x: -18 }, { opacity: 1, x: 0, duration: 0.42 }, 2.35)
+  pop(tl, qa(root, '.c-no'), 2.72)
 }
 
 function CuandoFig({ active }: FigProps) {
@@ -414,7 +427,7 @@ function CuandoFig({ active }: FigProps) {
       viewBox="0 0 480 300"
       style={baseStyle}
       role="img"
-      aria-label="Pieza larga de perfil constante con la sección girada 90 grados superpuesta sobre la propia vista, dibujada con contorno fino"
+      aria-label="Regla de decisión: un perfil local simple se superpone como sección abatida; un perfil complejo se desplaza fuera de la vista"
     >
       <Defs />
       <defs>
@@ -422,22 +435,32 @@ function CuandoFig({ active }: FigProps) {
           <line x1="0" y1="0" x2="0" y2="9" stroke={C.section} strokeWidth="1.2" />
         </pattern>
       </defs>
-      <g transform="translate(30,128)">
-        <line className="c-ax" x1="-6" y1="0" x2="366" y2="0" stroke={C.thin} strokeWidth="1" strokeDasharray="12 4 2 4" opacity="0" />
-        <path className="c-bar" d="M20,-36 h340 a18,36 0 0 1 0,72 h-340 a18,36 0 0 1 0,-72 Z" fill="none" stroke={C.contour} strokeWidth="2.2" opacity="0" />
-        <path className="c-brk" d="M250,-44 q7,11 -4,22 q-11,11 4,22 q11,11 0,24" fill="none" stroke={C.thin} strokeWidth="1.5" opacity="0" />
-        <line className="c-line" x1="110" y1="-36" x2="110" y2="36" stroke={C.section} strokeWidth="3.5" opacity="0" />
-        <ellipse className="c-oval" cx="110" cy="0" rx="2" ry="36" fill="url(#whenHatch45)" stroke={C.section} strokeWidth="1.2" opacity="0" />
-        <path className="c-arc" d="M110,-58 A58,58 0 0 1 166,-16" fill="none" stroke={C.cut} strokeWidth="2" markerEnd="url(#arrowCut)" opacity="0" />
-        <Label cls="c-l1" x={110} y={64} color={C.section} size={13.5}>
-          perfil girado sobre la vista
-        </Label>
-        <Label cls="c-l2" x={110} y={80} size={13}>
-          contorno en línea fina (norma)
-        </Label>
-        <Label cls="c-l3" x={300} y={-58} size={13}>
-          perfil constante → basta una sección
-        </Label>
+      <line x1="240" y1="18" x2="240" y2="282" stroke={C.thin} strokeWidth="1" strokeDasharray="3 6" opacity=".45" />
+      <Label cls="c-head" x={121} y={24} size={13.5} color={C.section}>SÍ · ABATIDA</Label>
+      <Label cls="c-head" x={360} y={24} size={13.5} color={C.cut}>NO LA FUERCES</Label>
+
+      <g transform="translate(18,54)">
+        <line x1="0" y1="63" x2="208" y2="63" stroke={C.hidden} strokeWidth="1" strokeDasharray="10 4 2 4" />
+        <path className="c-bar" d="M9,38 H199 Q212,38 212,63 Q212,88 199,88 H9 Q-4,88 -4,63 Q-4,38 9,38 Z" fill="none" stroke={C.contour} strokeWidth="2.1" opacity="0" />
+        <line className="c-plane" x1="106" y1="12" x2="106" y2="113" stroke={C.cut} strokeWidth="1.8" strokeDasharray="10 4 2 4" opacity="0" />
+        <Label cls="c-plane" x={91} y={13} size={13} color={C.cut}>A</Label>
+        <Label cls="c-plane" x={91} y={124} size={13} color={C.cut}>A</Label>
+        <g className="c-simple" opacity="0">
+          <circle cx="106" cy="63" r="25" fill="url(#whenHatch45)" stroke={C.section} strokeWidth="1.8" />
+          <circle cx="106" cy="63" r="15" fill={C.solid} stroke={C.contour} strokeWidth="1.5" />
+        </g>
+        <Label cls="c-yes" x={106} y={154} size={13} color={C.section}>LOCAL · SIMPLE · LEGIBLE</Label>
+        <Label cls="c-yes" x={106} y={173} size={12.5}>queda ligada a A–A</Label>
+      </g>
+
+      <g transform="translate(262,54)">
+        <path className="c-complex-body" d="M0,42 H145 L198,18 V108 L145,84 H0 Z" fill="none" stroke={C.contour} strokeWidth="2.1" opacity="0" />
+        <path className="c-complex" d="M98,32 L119,47 L143,39 L151,62 L139,86 L112,77 L91,94 L76,71 L78,43 Z" fill="none" stroke={C.cut} strokeWidth="2" opacity="0" />
+        <line className="c-complex" x1="110" y1="10" x2="110" y2="118" stroke={C.cut} strokeWidth="1.7" strokeDasharray="10 4 2 4" opacity="0" />
+        <path className="c-move" d="M138,118 C148,143 167,151 188,154" fill="none" stroke={C.section} strokeWidth="2" markerEnd="url(#arrow)" opacity="0" />
+        <path className="c-move" d="M154,142 l18,-5 15,13 -6,21 -21,5 -15,-14 Z" fill="url(#whenHatch45)" stroke={C.section} strokeWidth="1.8" opacity="0" />
+        <Label cls="c-no" x={99} y={194} size={13} color={C.contour}>COMPLEJA O SUPERPUESTA</Label>
+        <Label cls="c-no" x={99} y={213} size={12.5}>desplázala fuera</Label>
       </g>
     </svg>
   )
@@ -466,7 +489,7 @@ function buildPlano(tl: TL, root: SVGSVGElement) {
     1.75,
   )
   pop(tl, qa(root, '.pl-callout'), 2.15)
-  fadeIn(tl, qa(root, '.pl-removed'), 2.35, 0.35)
+  fadeIn(tl, qa(root, '.pl-local'), 2.35, 0.35)
   pop(tl, q(root, '.pl-note'), 2.75)
 }
 
@@ -478,16 +501,15 @@ function PlanoFig({ active }: FigProps) {
       viewBox="0 0 480 310"
       style={baseStyle}
       role="img"
-      aria-label="Plano de corte A–A: traza de trazo y punto con extremos gruesos, letras A, flechas de observación en el mismo sentido y la mitad retirada sombreada"
+      aria-label="Plano de corte A–A: traza de trazo y punto con extremos gruesos, letras A, flechas de observación en el mismo sentido y sección local producida en la traza"
     >
       <Defs />
       <Label cls="pl-title" x={240} y={24} size={15} color={C.cut}>PLANO DE CORTE A–A</Label>
 
       <rect className="pl-piece" x="65" y="88" width="350" height="118" fill="none" stroke={C.contour} strokeWidth="2.2" opacity="0" />
       <line className="pl-hidden" x1="45" y1="147" x2="435" y2="147" stroke={C.thin} strokeWidth="1" strokeDasharray="12 4 2 4" opacity="0" />
-      <circle className="pl-hidden" cx="240" cy="147" r="34" fill="none" stroke={C.hidden} strokeWidth="1.3" strokeDasharray="7 5" opacity="0" />
-      <rect className="pl-removed" x="65" y="88" width="175" height="118" fill={C.cut} fillOpacity="0.1" opacity="0" />
-      <Label cls="pl-removed" x={150} y={126} size={13} color={C.cut}>MITAD RETIRADA</Label>
+      <rect className="pl-local" x="232" y="88" width="16" height="118" fill={C.section} fillOpacity="0.12" opacity="0" />
+      <Label cls="pl-local" x={142} y={126} size={13} color={C.section}>SECCIÓN PRODUCIDA EN A–A</Label>
 
       <line className="pl-line" x1="240" y1="64" x2="240" y2="230" stroke={C.cut} strokeWidth="1.9" strokeDasharray="14 5 3 5" opacity="0" />
       <rect className="pl-end" x="232" y="54" width="16" height="12" fill={C.cut} opacity="0" />
@@ -513,7 +535,7 @@ function PlanoFig({ active }: FigProps) {
 
       <Label cls="pl-callout" x={332} y={76} size={13.5} color={C.cut}>EXTREMO GRUESO</Label>
       <Label cls="pl-callout" x={348} y={226} size={13.5} color={C.section}>MISMO SENTIDO</Label>
-      <Label cls="pl-note" x={240} y={288} size={13.5} color={C.section}>OBSERVADOR → FLECHAS → PLANO A–A</Label>
+      <Label cls="pl-note" x={240} y={288} size={13.5} color={C.section}>TRAZA = LUGAR · FLECHAS = MIRADA · GIRO = PERFIL</Label>
     </svg>
   )
 }
@@ -581,28 +603,24 @@ function RayadoFig({ active }: FigProps) {
 }
 
 /* ================================================================
-   APLICACIÓN — segundo caso completo: mango ergonómico ovalado
+   APLICACIÓN — varilla de control compuesta. Los terminales no
+   describen la pared central; A–A concentra cotas y tolerancias.
    ================================================================ */
 function buildAplicacion(tl: TL, root: SVGSVGElement) {
   pop(tl, qa(root, '.a-title'), 0)
-  fadeIn(tl, qa(root, '.a-body-fill'), 0.22, 0.55)
-  qa(root, '.a-part').forEach((el, i) => drawIn(tl, el, 0.58, 0.28 + i * 0.1))
-  pop(tl, q(root, '.a-view-label'), 0.72)
-  qa(root, '.a-cut').forEach((el, i) => drawIn(tl, el, 0.46, 1.05 + i * 0.08))
-  pop(tl, qa(root, '.a-cut-label'), 1.28)
-  drawIn(tl, q(root, '.a-edge'), 0.42, 1.58)
-  pop(tl, q(root, '.a-edge-label'), 1.7)
-  drawIn(tl, q(root, '.a-rotation'), 0.62, 1.9)
-  pop(tl, q(root, '.a-rotation-label'), 2)
+  drawIn(tl, q(root, '.a-body'), 0.7, 0.2)
+  fadeIn(tl, qa(root, '.a-terminal'), 0.58, 0.55, 0.08)
+  fadeIn(tl, qa(root, '.a-cut'), 0.45, 0.92)
+  pop(tl, qa(root, '.a-cut-label'), 1.12)
   tl.fromTo(
     q(root, '.a-section'),
-    { opacity: 0.3, scaleX: 0.025, transformOrigin: '50% 50%', transformBox: 'fill-box' },
-    { opacity: 1, scaleX: 1, duration: 0.95, ease: 'power3.inOut' },
-    2.12,
+    { opacity: 0.2, scaleX: 0.025, transformOrigin: '50% 50%', transformBox: 'fill-box' },
+    { opacity: 1, scaleX: 1, duration: 0.72, ease: 'power3.inOut' },
+    1.35,
   )
-  fadeIn(tl, qa(root, '.a-dim'), 2.92, 0.48, 0.08)
-  pop(tl, q(root, '.a-section-label'), 3.12)
-  pop(tl, q(root, '.a-cap'), 3.5)
+  fadeIn(tl, qa(root, '.a-dim'), 2.02, 0.42, 0.08)
+  pop(tl, qa(root, '.a-tolerance'), 2.45)
+  pop(tl, q(root, '.a-cap'), 2.78)
 }
 
 function AplicacionFig({ active }: FigProps) {
@@ -613,84 +631,63 @@ function AplicacionFig({ active }: FigProps) {
       viewBox="0 0 480 310"
       style={baseStyle}
       role="img"
-      aria-label="Mango ovalado en vista lateral: la sección A–A se ve de canto como una línea y, al girar 90 grados, aparece el óvalo de 26 por 38 milímetros sobre la misma vista"
+      aria-label="Varilla de control compuesta con ojo y horquilla; la sección A–A del tubo central muestra diámetros 30 y 24 milímetros y pared nominal de 3 milímetros"
     >
       <Defs />
       <defs>
         <pattern id="appHatch45" width="9" height="9" patternUnits="userSpaceOnUse" patternTransform="rotate(45)">
           <line x1="0" y1="0" x2="0" y2="9" stroke={C.section} strokeWidth="1.1" />
         </pattern>
-        <linearGradient id="appMetal" x1="0" y1="0" x2="0" y2="1">
-          <stop offset="0" stopColor="#70869a" stopOpacity="0.72" />
-          <stop offset="0.48" stopColor="#293746" stopOpacity="0.86" />
-          <stop offset="1" stopColor="#121a22" stopOpacity="0.96" />
-        </linearGradient>
         <marker id="appDimArrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
           <path d="M0,0 L10,5 L0,10 Z" fill="#8fe15f" />
         </marker>
       </defs>
-      <Label cls="a-title" x={26} y={26} size={13} color={C.cut} anchor="start">CASO B · MANGO OVALADO</Label>
-      <Label cls="a-title" x={454} y={26} size={13} color={C.thin} anchor="end">PIEZA DIDÁCTICA · mm</Label>
+      <Label cls="a-title" x={22} y={24} size={13} color={C.cut} anchor="start">VARILLA DE CONTROL · CASO DIDÁCTICO</Label>
+      <Label cls="a-title" x={458} y={24} size={12.5} color={C.thin} anchor="end">COTAS EN mm</Label>
 
-      {/* una sola pieza: la silueta lateral del mango */}
-      <g>
-        <path
-          className="a-body-fill"
-          d="M35,121 Q47,108 76,110 C160,116 245,117 328,119 L411,124 Q438,127 443,150 Q438,173 411,176 L328,181 C245,183 160,184 76,190 Q47,192 35,179 Q24,150 35,121 Z"
-          fill="url(#appMetal)"
-          opacity="0"
-        />
-        <path
-          className="a-part"
-          d="M35,121 Q47,108 76,110 C160,116 245,117 328,119 L411,124 Q438,127 443,150 Q438,173 411,176 L328,181 C245,183 160,184 76,190 Q47,192 35,179 Q24,150 35,121 Z"
-          fill="none"
-          stroke={C.contour}
-          strokeWidth="2.2"
-          opacity="0"
-        />
-        <path className="a-part" d="M48,126 C135,128 233,128 327,130 L405,134" fill="none" stroke={C.thin} strokeWidth="1.1" opacity="0" />
-        <line className="a-part" x1="18" y1="150" x2="457" y2="150" stroke={C.hidden} strokeWidth="1.1" strokeDasharray="14 5 3 5" opacity="0" />
-        <Label cls="a-view-label" x={87} y={95} size={13} color={C.thin}>VISTA LATERAL</Label>
-      </g>
+      <g transform="translate(18,72)">
+        <line x1="0" y1="63" x2="444" y2="63" stroke={C.hidden} strokeWidth="1" strokeDasharray="12 4 2 4" />
+        <path className="a-body" d="M104,42 H346 V84 H104 Z" fill="none" stroke={C.contour} strokeWidth="2.2" opacity="0" />
+        <path className="a-terminal" d="M104,50 L78,38 L68,24" fill="none" stroke={C.contour} strokeWidth="17" strokeLinecap="round" opacity="0" />
+        <circle className="a-terminal" cx="46" cy="21" r="28" fill={C.solid} stroke={C.contour} strokeWidth="2.2" opacity="0" />
+        <circle className="a-terminal" cx="46" cy="21" r="12" fill={C.solid} stroke={C.section} strokeWidth="2" opacity="0" />
+        <path className="a-terminal" d="M346,52 H374 L392,35 H430" fill="none" stroke={C.contour} strokeWidth="16" strokeLinecap="round" strokeLinejoin="round" opacity="0" />
+        <path className="a-terminal" d="M346,75 H374 L392,92 H430" fill="none" stroke={C.contour} strokeWidth="16" strokeLinecap="round" strokeLinejoin="round" opacity="0" />
+        <circle className="a-terminal" cx="424" cy="35" r="6.5" fill={C.solid} stroke={C.section} strokeWidth="1.6" opacity="0" />
+        <circle className="a-terminal" cx="424" cy="92" r="6.5" fill={C.solid} stroke={C.section} strokeWidth="1.6" opacity="0" />
 
-      {/* plano A–A y dirección de observación */}
-      <g>
-        <line className="a-cut" x1="252" y1="66" x2="252" y2="234" stroke={C.cut} strokeWidth="1.9" strokeDasharray="11 4 2 4" opacity="0" />
-        <rect className="a-cut" x="247" y="62" width="10" height="16" fill={C.cut} opacity="0" />
-        <rect className="a-cut" x="247" y="222" width="10" height="16" fill={C.cut} opacity="0" />
-        <path className="a-cut" d="M205,76 H242" fill="none" stroke={C.cut} strokeWidth="2" markerEnd="url(#arrowCut)" opacity="0" />
-        <path className="a-cut" d="M205,224 H242" fill="none" stroke={C.cut} strokeWidth="2" markerEnd="url(#arrowCut)" opacity="0" />
-        <Label cls="a-cut-label" x={191} y={80} size={15} color={C.cut}>A</Label>
-        <Label cls="a-cut-label" x={191} y={228} size={15} color={C.cut}>A</Label>
-      </g>
+        <line className="a-cut" x1="226" y1="-12" x2="226" y2="138" stroke={C.cut} strokeWidth="1.9" strokeDasharray="11 4 2 4" opacity="0" />
+        <rect className="a-cut" x="221" y="-17" width="10" height="12" fill={C.cut} opacity="0" />
+        <rect className="a-cut" x="221" y="138" width="10" height="12" fill={C.cut} opacity="0" />
+        <Label cls="a-cut-label" x={209} y={-9} size={14.5} color={C.cut}>A</Label>
+        <Label cls="a-cut-label" x={209} y={153} size={14.5} color={C.cut}>A</Label>
 
-      {/* de canto → giro → sección abatida, todo en el mismo lugar */}
-      <line className="a-edge" x1="252" y1="114" x2="252" y2="186" stroke={C.section} strokeWidth="3.2" opacity="0" />
-      <Label cls="a-edge-label" x={252} y={254} size={13} color={C.section}>DE CANTO = LÍNEA</Label>
-      <path className="a-rotation" d="M260,107 A61,61 0 0 1 315,149" fill="none" stroke={C.cut} strokeWidth="2.2" strokeDasharray="7 4" markerEnd="url(#arrowCut)" opacity="0" />
-      <Label cls="a-rotation-label" x={358} y={108} size={13.5} color={C.cut}>GIRA 90°</Label>
-      <g className="a-section" opacity="0">
-        <ellipse cx="252" cy="150" rx="25" ry="36" fill={C.solid} stroke={C.contour} strokeWidth="4.4" />
-        <ellipse cx="252" cy="150" rx="25" ry="36" fill="url(#appHatch45)" stroke={C.section} strokeWidth="2.2" />
-        <line x1="217" y1="150" x2="287" y2="150" stroke={C.hidden} strokeWidth="1" strokeDasharray="9 4 2 4" />
-        <line x1="252" y1="104" x2="252" y2="196" stroke={C.hidden} strokeWidth="1" strokeDasharray="9 4 2 4" />
+        <g className="a-section" opacity="0">
+          <circle cx="226" cy="63" r="31" fill="url(#appHatch45)" stroke={C.section} strokeWidth="1.9" />
+          <circle cx="226" cy="63" r="24.8" fill={C.solid} stroke={C.contour} strokeWidth="1.7" />
+          <line x1="188" y1="63" x2="264" y2="63" stroke={C.hidden} strokeWidth="1" strokeDasharray="9 4 2 4" />
+          <line x1="226" y1="25" x2="226" y2="101" stroke={C.hidden} strokeWidth="1" strokeDasharray="9 4 2 4" />
+        </g>
+
+        <g className="a-dim" opacity="0" stroke="#8fe15f" fill="none">
+          <line x1="187" y1="24" x2="187" y2="102" strokeWidth="1.2" markerStart="url(#appDimArrow)" markerEnd="url(#appDimArrow)" />
+          <text x="178" y="67" fill="#8fe15f" stroke="none" fontSize="12.5" fontFamily={MONO} textAnchor="end">Ø30 ±0.05</text>
+        </g>
+        <g className="a-dim" opacity="0" stroke="#8fe15f" fill="none">
+          <line x1="270" y1="38" x2="270" y2="88" strokeWidth="1.2" markerStart="url(#appDimArrow)" markerEnd="url(#appDimArrow)" />
+          <text x="278" y="67" fill="#8fe15f" stroke="none" fontSize="12.5" fontFamily={MONO}>Ø24 ±0.05</text>
+        </g>
       </g>
 
-      {/* cotas del óvalo ya girado */}
-      <g className="a-dim" opacity="0" fill="none" stroke="#8fe15f">
-        <line x1="227" y1="190" x2="227" y2="207" strokeWidth="1" />
-        <line x1="277" y1="190" x2="277" y2="207" strokeWidth="1" />
-        <line x1="227" y1="204" x2="277" y2="204" strokeWidth="1.6" markerStart="url(#appDimArrow)" markerEnd="url(#appDimArrow)" />
-        <text x="252" y="218" fill="#8fe15f" stroke="none" fontSize="13" fontFamily={MONO} textAnchor="middle">26</text>
+      <g transform="translate(30,228)">
+        <rect className="a-tolerance" x="0" y="0" width="420" height="48" rx="4" fill="none" stroke={C.thin} strokeWidth="1.2" opacity="0" />
+        <Label cls="a-tolerance" x={105} y={21} size={11.8} color={C.thin}>PARED NOMINAL</Label>
+        <Label cls="a-tolerance" x={105} y={40} size={13} color={C.section}>e = (30 − 24) / 2 = 3.00</Label>
+        <line className="a-tolerance" x1="214" y1="7" x2="214" y2="41" stroke={C.thin} strokeWidth="1" opacity="0" />
+        <Label cls="a-tolerance" x={325} y={21} size={11.8} color={C.thin}>INTERVALO RESULTANTE</Label>
+        <Label cls="a-tolerance" x={325} y={40} size={14} color={C.cut}>2.95 ≤ e ≤ 3.05</Label>
       </g>
-      <g className="a-dim" opacity="0" fill="none" stroke="#8fe15f">
-        <line x1="283" y1="114" x2="332" y2="114" strokeWidth="1" />
-        <line x1="283" y1="186" x2="332" y2="186" strokeWidth="1" />
-        <line x1="328" y1="114" x2="328" y2="186" strokeWidth="1.6" markerStart="url(#appDimArrow)" markerEnd="url(#appDimArrow)" />
-        <text x="340" y="154" fill="#8fe15f" stroke="none" fontSize="13" fontFamily={MONO}>38</text>
-      </g>
-      <Label cls="a-section-label" x={395} y={206} size={13} color={C.section}>SECCIÓN A–A</Label>
-      <Label cls="a-cap" x={240} y={290} size={13} color={C.section}>LÍNEA → GIRO 90° → ÓVALO 26 × 38 mm</Label>
+      <Label cls="a-cap" x={240} y={301} size={11.8} color={C.cut}>COTAS DIDÁCTICAS · NO CORRESPONDEN A UNA PIEZA CERTIFICADA</Label>
     </svg>
   )
 }
@@ -824,30 +821,28 @@ function HistoriaFig({ active }: FigProps) {
 }
 
 /* ================================================================
-   EJERCICIO — buje: cilindro con agujero pasante
+   EJERCICIO — la misma varilla compuesta, ahora como entrega.
    ================================================================ */
 function buildEjercicio(tl: TL, root: SVGSVGElement) {
   pop(tl, q(root, '.e-t'), 0)
   fadeIn(tl, q(root, '.e-ax'), 0.15, 0.3)
   drawIn(tl, q(root, '.e-body'), 0.7, 0.45)
-  fadeIn(tl, qa(root, '.e-hid'), 1.2, 0.35)
-  // plane trace + thick ends
-  fadeIn(tl, qa(root, '.e-plane'), 1.7, 0.4)
-  pop(tl, qa(root, '.e-letter'), 2.05)
+  fadeIn(tl, qa(root, '.e-terminal'), 0.75, 0.8, 0.06)
+  fadeIn(tl, qa(root, '.e-plane'), 0.5, 1.25)
+  pop(tl, qa(root, '.e-letter'), 1.52)
   tl.fromTo(
     qa(root, '.e-arrow'),
     { opacity: 0, x: -14 },
     { opacity: 1, x: 0, duration: 0.4, stagger: 0.12 },
-    2.4,
+    1.72,
   )
-  // la sección aparece de canto en A–A y gira sin abandonar la vista
-  tl.set(q(root, '.e-sec'), { opacity: 1 }, 2.95)
-  drawIn(tl, q(root, '.e-arc'), 0.5, 3.05)
-  pop(tl, q(root, '.e-90'), 3.15)
-  tl.fromTo(q(root, '.e-out'), { attr: { rx: 3 } }, { attr: { rx: 38 }, duration: 0.9, ease: 'power2.inOut' }, 3.35)
-  tl.fromTo(q(root, '.e-in'), { attr: { rx: 1.4 } }, { attr: { rx: 17 }, duration: 0.9, ease: 'power2.inOut' }, 3.35)
-  tl.to(qa(root, '.e-arc, .e-90'), { opacity: 0, duration: 0.3 }, 4.35)
-  pop(tl, qa(root, '.e-lab'), 4.55)
+  tl.fromTo(
+    q(root, '.e-sec'),
+    { opacity: 0.2, scaleX: 0.035, transformOrigin: '50% 50%', transformBox: 'fill-box' },
+    { opacity: 1, scaleX: 1, duration: 0.72, ease: 'power2.inOut' },
+    2.05,
+  )
+  pop(tl, qa(root, '.e-lab'), 2.75)
 }
 
 function EjercicioFig({ active }: FigProps) {
@@ -858,7 +853,7 @@ function EjercicioFig({ active }: FigProps) {
       viewBox="0 0 480 240"
       style={baseStyle}
       role="img"
-      aria-label="Buje del ejercicio: vista exterior con plano A–A, flechas de observación y la sección abatida superpuesta con la corona rayada"
+      aria-label="Ejercicio de varilla de control: vista exterior compuesta, plano A–A, flechas y sección abatida del tubo central con pared rayada"
     >
       <Defs />
       <defs>
@@ -866,35 +861,37 @@ function EjercicioFig({ active }: FigProps) {
           <line x1="0" y1="0" x2="0" y2="9" stroke={C.section} strokeWidth="1.25" />
         </pattern>
       </defs>
-      <g transform="translate(50,38)">
-        <Label cls="e-t" x={342} y={-14} size={13}>
-          BUJE
+      <g transform="translate(20,38)">
+        <Label cls="e-t" x={220} y={-15} size={13}>
+          VARILLA DE CONTROL · VISTA EXTERIOR
         </Label>
-        <line className="e-ax" x1="-10" y1="48" x2="400" y2="48" stroke={C.thin} strokeWidth="1" strokeDasharray="12 4 2 4" opacity="0" />
-        <path className="e-body" d="M0,8 h380 v80 h-380 Z" fill="none" stroke={C.contour} strokeWidth="2.4" opacity="0" />
-        <line className="e-hid" x1="0" y1="30" x2="380" y2="30" stroke={C.hidden} strokeWidth="1.5" strokeDasharray="7 5" opacity="0" />
-        <line className="e-hid" x1="0" y1="66" x2="380" y2="66" stroke={C.hidden} strokeWidth="1.5" strokeDasharray="7 5" opacity="0" />
-        <rect className="e-plane" x="184" y="-22" width="12" height="12" fill={C.cut} opacity="0" />
-        <rect className="e-plane" x="184" y="96" width="12" height="12" fill={C.cut} opacity="0" />
-        <line className="e-plane" x1="190" y1="-10" x2="190" y2="96" stroke={C.cut} strokeWidth="1.8" strokeDasharray="12 4 2 4" opacity="0" />
-        <Label cls="e-letter" x={172} y={-12} color={C.cut} size={16}>
+        <line className="e-ax" x1="0" y1="60" x2="440" y2="60" stroke={C.thin} strokeWidth="1" strokeDasharray="12 4 2 4" opacity="0" />
+        <path className="e-body" d="M105,39 H335 V81 H105 Z" fill="none" stroke={C.contour} strokeWidth="2.2" opacity="0" />
+        <path className="e-terminal" d="M105,47 L80,36 L68,23" fill="none" stroke={C.contour} strokeWidth="16" strokeLinecap="round" opacity="0" />
+        <circle className="e-terminal" cx="45" cy="20" r="27" fill={C.solid} stroke={C.contour} strokeWidth="2.1" opacity="0" />
+        <circle className="e-terminal" cx="45" cy="20" r="11" fill={C.solid} stroke={C.section} strokeWidth="1.8" opacity="0" />
+        <path className="e-terminal" d="M335,49 H365 L384,33 H426" fill="none" stroke={C.contour} strokeWidth="15" strokeLinecap="round" strokeLinejoin="round" opacity="0" />
+        <path className="e-terminal" d="M335,72 H365 L384,88 H426" fill="none" stroke={C.contour} strokeWidth="15" strokeLinecap="round" strokeLinejoin="round" opacity="0" />
+        <circle className="e-terminal" cx="421" cy="33" r="6" fill={C.solid} stroke={C.section} strokeWidth="1.5" opacity="0" />
+        <circle className="e-terminal" cx="421" cy="88" r="6" fill={C.solid} stroke={C.section} strokeWidth="1.5" opacity="0" />
+
+        <rect className="e-plane" x="215" y="-10" width="10" height="11" fill={C.cut} opacity="0" />
+        <rect className="e-plane" x="215" y="120" width="10" height="11" fill={C.cut} opacity="0" />
+        <line className="e-plane" x1="220" y1="1" x2="220" y2="120" stroke={C.cut} strokeWidth="1.8" strokeDasharray="12 4 2 4" opacity="0" />
+        <Label cls="e-letter" x={203} y={-6} color={C.cut} size={15}>
           A
         </Label>
-        <Label cls="e-letter" x={168} y={124} color={C.cut} size={16}>
+        <Label cls="e-letter" x={203} y={141} color={C.cut} size={15}>
           A
         </Label>
-        <line className="e-arrow" x1="206" y1="-16" x2="250" y2="-16" stroke={C.section} strokeWidth="2.2" markerEnd="url(#arrow)" opacity="0" />
-        <line className="e-arrow" x1="206" y1="102" x2="250" y2="102" stroke={C.section} strokeWidth="2.2" markerEnd="url(#arrow)" opacity="0" />
+        <line className="e-arrow" x1="233" y1="-5" x2="268" y2="-5" stroke={C.section} strokeWidth="2.2" markerEnd="url(#arrow)" opacity="0" />
+        <line className="e-arrow" x1="233" y1="126" x2="268" y2="126" stroke={C.section} strokeWidth="2.2" markerEnd="url(#arrow)" opacity="0" />
         <g className="e-sec" opacity="0">
-          <ellipse className="e-out" cx="190" cy="48" rx="3" ry="38" fill="url(#exerciseHatch45)" stroke={C.contour} strokeWidth="1.4" />
-          <ellipse className="e-in" cx="190" cy="48" rx="1.4" ry="17" fill={C.solid} stroke={C.contour} strokeWidth="1.4" />
+          <circle cx="220" cy="60" r="30" fill="url(#exerciseHatch45)" stroke={C.section} strokeWidth="1.7" />
+          <circle cx="220" cy="60" r="24" fill={C.solid} stroke={C.contour} strokeWidth="1.6" />
         </g>
-        <path className="e-arc" d="M190,100 A52,52 0 0 1 238,122" fill="none" stroke={C.cut} strokeWidth="2" markerEnd="url(#arrowCut)" opacity="0" />
-        <Label cls="e-90" x={250} y={110} color={C.cut} size={14}>
-          90°
-        </Label>
-        <Label cls="e-lab" x={190} y={150} color={C.section} size={13}>
-          SECCIÓN A–A ABATIDA · RÓTULO: CORTE A–A
+        <Label cls="e-lab" x={220} y={166} color={C.section} size={13}>
+          CORTE A–A · Ø30 / Ø24 · e = 3 mm
         </Label>
       </g>
     </svg>
@@ -907,6 +904,7 @@ function EjercicioFig({ active }: FigProps) {
 function buildHero(tl: TL, root: SVGSVGElement) {
   fadeIn(tl, q(root, '.h-ax'), 0, 0.3)
   drawIn(tl, q(root, '.h-body'), 1.2, 0.1)
+  fadeIn(tl, qa(root, '.h-terminal'), 0.4, 0.45, 0.06)
   // plane appears
   fadeIn(tl, qa(root, '.h-plane'), 1.3, 0.4)
   pop(tl, qa(root, '.h-letter'), 1.6)
@@ -915,10 +913,14 @@ function buildHero(tl: TL, root: SVGSVGElement) {
   tl.fromTo(q(root, '.h-blade'), { scaleY: 0, transformOrigin: '50% 0%', opacity: 0.9 }, { scaleY: 1, duration: 0.35, ease: 'power3.in' }, 2.3)
   tl.to(q(root, '.h-blade'), { opacity: 0, duration: 0.35 }, 2.7)
   // slice appears edge-on, rotates 90° to face us
-  tl.set(q(root, '.h-oval'), { opacity: 1 }, 2.75)
   drawIn(tl, q(root, '.h-arc'), 0.7, 2.9)
   pop(tl, q(root, '.h-90'), 3.2)
-  tl.fromTo(q(root, '.h-oval'), { attr: { rx: 3 } }, { attr: { rx: 31 }, duration: 1.0, ease: 'power2.inOut' }, 3.0)
+  tl.fromTo(
+    q(root, '.h-oval'),
+    { opacity: 0, scaleX: 0.05, transformOrigin: '50% 50%', transformBox: 'fill-box' },
+    { opacity: 1, scaleX: 1, duration: 1.0, ease: 'power2.inOut' },
+    3.0,
+  )
   tl.to(q(root, '.h-arc'), { opacity: 0, duration: 0.4 }, 4.2)
   // dimension line last
   fadeIn(tl, q(root, '.h-dim'), 4.4, 0.5)
@@ -940,16 +942,26 @@ export function HeroArt({ active }: { active: boolean }) {
         <line className="h-ax" x1="-215" y1="0" x2="215" y2="0" stroke={C.thin} strokeWidth="1" strokeDasharray="16 5 3 5" opacity="0" />
         <path
           className="h-body"
-          d="M-150,-48 h300 a25,48 0 0 1 0,96 h-300 a25,48 0 0 1 0,-96 Z"
+          d="M-120,-34 H120 V34 H-120 Z"
           fill="none"
           stroke={C.contour}
           strokeWidth="2.6"
           opacity="0"
         />
+        <path className="h-terminal" d="M-120,-20 L-145,-31 L-155,-45" fill="none" stroke={C.contour} strokeWidth="19" strokeLinecap="round" opacity="0" />
+        <circle className="h-terminal" cx="-184" cy="-49" r="39" fill={C.solid} stroke={C.contour} strokeWidth="2.6" opacity="0" />
+        <circle className="h-terminal" cx="-184" cy="-49" r="17" fill={C.solid} stroke={C.section} strokeWidth="2.2" opacity="0" />
+        <path className="h-terminal" d="M120,-19 H145 L166,-38 H208" fill="none" stroke={C.contour} strokeWidth="18" strokeLinecap="round" strokeLinejoin="round" opacity="0" />
+        <path className="h-terminal" d="M120,19 H145 L166,38 H208" fill="none" stroke={C.contour} strokeWidth="18" strokeLinecap="round" strokeLinejoin="round" opacity="0" />
+        <circle className="h-terminal" cx="201" cy="-38" r="7" fill={C.solid} stroke={C.section} strokeWidth="1.8" opacity="0" />
+        <circle className="h-terminal" cx="201" cy="38" r="7" fill={C.solid} stroke={C.section} strokeWidth="1.8" opacity="0" />
         {/* blade */}
         <rect className="h-blade" x="-45" y="-90" width="10" height="180" fill={C.cut} opacity="0" />
         {/* revolved oval */}
-        <ellipse className="h-oval" cx="-40" cy="0" rx="3" ry="54" fill="url(#heroHatch)" stroke={C.section} strokeWidth="2.8" opacity="0" />
+        <g className="h-oval" opacity="0">
+          <circle cx="-40" cy="0" r="43" fill="url(#heroHatch)" stroke={C.section} strokeWidth="2.8" />
+          <circle cx="-40" cy="0" r="34" fill={C.solid} stroke={C.contour} strokeWidth="2.2" />
+        </g>
         {/* rotation sweep */}
         <path className="h-arc" d="M-40,-80 A80,80 0 0 1 36,-31" fill="none" stroke={C.cut} strokeWidth="2.2" markerEnd="url(#heroArrow)" opacity="0" />
         <text className="h-90" x="34" y="-66" fill={C.cut} fontSize="22" fontFamily={MONO} opacity="0">
@@ -967,9 +979,9 @@ export function HeroArt({ active }: { active: boolean }) {
         </text>
         <line className="h-arrow" x1="-20" y1="-97" x2="30" y2="-97" stroke={C.section} strokeWidth="2.4" markerEnd="url(#heroArrow)" opacity="0" />
         <g className="h-dim" opacity="0">
-          <line x1="-150" y1="76" x2="-150" y2="102" stroke={C.thin} strokeWidth="1" />
-          <line x1="150" y1="76" x2="150" y2="102" stroke={C.thin} strokeWidth="1" />
-          <line x1="-150" y1="96" x2="150" y2="96" stroke={C.thin} strokeWidth="1" />
+          <line x1="-120" y1="54" x2="-120" y2="102" stroke={C.thin} strokeWidth="1" />
+          <line x1="120" y1="54" x2="120" y2="102" stroke={C.thin} strokeWidth="1" />
+          <line x1="-120" y1="96" x2="120" y2="96" stroke={C.thin} strokeWidth="1" />
           <text x="0" y="90" fill={C.thin} fontSize="14" fontFamily={MONO} textAnchor="middle">
             120
           </text>
@@ -1041,32 +1053,25 @@ export function MiniIcon({ label }: { label: string }) {
    Registry
    ================================================================ */
 const registry: Record<string, { comp: (p: FigProps) => ReactElement; caption: ReactNode }> = {
-  historia: {
+  _historyReference: {
     comp: HistoriaFig,
-    caption: (
-      <>
-        Evolución técnica ·{' '}
-        <a href="https://www.iso.org/standard/83356.html" target="_blank" rel="noreferrer">ISO 128-3:2022</a>
-        {' · '}
-        <a href="https://virtual.unphu.edu.do/mod/url/view.php?id=1753645" target="_blank" rel="noreferrer">material UNPHU</a>
-      </>
-    ),
+    caption: 'Material de respaldo no incluido en el recorrido de 8 minutos',
+  },
+  _sectionDifferenceReference: {
+    comp: DefinicionFig,
+    caption: 'Material de respaldo no incluido en el recorrido de 8 minutos',
   },
   objetivo: {
     comp: ProblemaFig,
-    caption: 'Antes: líneas ocultas ambiguas · Después: cavidades visibles y material rayado',
+    caption: 'El ojo y la horquilla describen los extremos; ninguno revela el perfil del tubo en A–A',
   },
   idea: {
     comp: IdeaFig,
-    caption: 'Corta → de canto es línea → gira 90° → de frente en magnitud real',
-  },
-  definicion: {
-    comp: DefinicionFig,
-    caption: 'Buje escalonado: el corte incluye la brida posterior; la sección conserva solo la corona',
+    caption: 'Aísla la sección → de canto es línea → gira 90° → aparece el perfil local real',
   },
   cuando: {
     comp: CuandoFig,
-    caption: 'Sección girada sobre la pieza: contorno fino para no confundir con aristas',
+    caption: 'Abatida si el perfil local es simple; desplazada si superponerlo sacrifica claridad',
   },
   plano: {
     comp: PlanoFig,
@@ -1078,11 +1083,19 @@ const registry: Record<string, { comp: (p: FigProps) => ReactElement; caption: R
   },
   aplicacion: {
     comp: AplicacionFig,
-    caption: 'Mango ovalado: la línea de canto gira 90° y revela un óvalo 26 × 38 mm sobre la propia vista',
+    caption: (
+      <>
+        Caso didáctico inspirado en varillas push-pull ·{' '}
+        <a href="https://www.faa.gov/documentLibrary/media/Advisory_Circular/AC_65-15A.pdf" target="_blank" rel="noreferrer">
+          FAA AC 65-15A
+        </a>
+        {' · '}cotas no certificadas
+      </>
+    ),
   },
   ejercicio: {
     comp: EjercicioFig,
-    caption: 'Vista exterior, plano A–A, flechas y sección abatida superpuesta',
+    caption: 'Vista exterior compuesta, plano A–A, flechas, sección abatida y cotas de la pared tubular',
   },
 }
 

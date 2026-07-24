@@ -1,39 +1,48 @@
-# Pautas del dibujo físico — Buje (cilindro con agujero pasante)
+# Pautas del dibujo físico — Varilla de control compuesta
 
-Pieza más sencilla imposible de dibujar bien: un rectángulo, dos círculos concéntricos y el rayado. Todo con compás y escuadras.
+La pieza combina un terminal articulado, un tubo central y una horquilla. Esa composición impide deducir la sección central mirando un extremo y justifica el uso de A–A.
 
 ## Materiales
-- Hoja A3 (preferible) o A4
-- Lápiz 2H (construcciones) y HB/0.5 tinta (definitivo)
+
+- Hoja A3 preferible o A4 horizontal
+- Lápiz 2H para construcción y HB/0.5 para líneas definitivas
 - Escuadras, regla y compás
-- Rotulador fino opcional para rótulos
+- Plantilla SVG incluida como guía de composición
 
 ## Pasos
-1. **Cajetín** abajo a la derecha (usar la plantilla SVG o el del formato de la asignatura).
-2. **Eje de simetría** horizontal (línea fina de trazo y punto).
-3. **Vista exterior**: rectángulo de 100 × 40 mm centrado en el eje. Contorno con **línea continua gruesa**.
-4. **Agujero pasante** (Ø 18): dos **líneas ocultas** (discontinuas finas) paralelas al eje, a 9 mm de él.
-5. **Plano de corte A–A** en el centro del rectángulo: trazo y punto con **extremos engrosados**.
-6. **Dos flechas** perpendiculares a la traza, ambas en el **mismo sentido** de observación, tocando los extremos gruesos.
-7. **Letras A / A** en ambos extremos, junto a las flechas.
-8. **Sección girada 90° sin desplazamiento**: abatirla alrededor de la traza A–A hasta dejarla paralela al plano de proyección. Sobre la propia vista, dibujar dos **círculos concéntricos**: Ø 40 exterior y Ø 18 interior. Contorno **fino**.
-9. **Rayado a 45°** (línea fina) SOLO en la corona entre los dos círculos. **El agujero queda limpio: no se raya.**
-10. **Rótulo** `Corte A–A` (como pide la asignación). En la explicación, aclarar que la figura superpuesta es técnicamente una **sección A–A abatida**.
-11. **Nota breve** (2–3 líneas) explicando por qué el corte abatido es adecuado.
 
-## Cotas sugeridas (mm)
+1. Dibujar el eje horizontal con línea fina de trazo y punto.
+2. Construir el cuerpo tubular de 120 × 30 mm en alzado.
+3. Añadir un terminal de ojo a la izquierda y una horquilla a la derecha. Las dimensiones de los terminales son libres: su función didáctica es impedir que el perfil del extremo revele la sección del centro.
+4. Situar A–A en el centro del tubo con línea de trazo y punto, extremos engrosados, letras A y dos flechas en el mismo sentido.
+5. Dibujar la sección de canto sobre la traza.
+6. Abatirla 90° sin desplazarla: dos círculos concéntricos Ø30 y Ø24.
+7. Rayar a 45° solo la pared comprendida entre ambos círculos. El hueco queda limpio.
+8. Usar contorno fino en la sección superpuesta.
+9. Acotar Ø30 ±0.05, Ø24 ±0.05 y pared nominal e = 3.00 mm.
+10. Rotular `Corte A–A`, como pide la consigna, y añadir la justificación.
+
+## Cotas didácticas
+
 | Elemento | Medida |
-|---|---|
-| Longitud | 100 |
-| Ø exterior | 40 |
-| Ø agujero | 18 |
-| Espesor de pared | 11 |
+|---|---:|
+| Longitud del tubo central | 120 mm |
+| Ø exterior | 30.00 ±0.05 mm |
+| Ø interior | 24.00 ±0.05 mm |
+| Pared nominal | 3.00 mm |
+| Intervalo resultante de pared | 2.95–3.05 mm |
+
+Estas cotas son didácticas y no corresponden a una pieza aeronáutica certificada.
+
+## Justificación
+
+La vista de perfil describe los terminales, no el tubo central. La sección abatida muestra la pared exactamente en A–A, mantiene el perfil ligado a su posición y evita una proyección separada.
 
 ## Errores a evitar
-- Rayar el agujero (solo se raya la corona: el material que tocó el plano)
-- Olvidar los extremos engrosados del plano de corte
-- Poner una sola flecha o flechas en sentidos opuestos (van las dos, mismo sentido)
-- Olvidar una de las dos letras A
-- Separar la sección de la vista: en este ejercicio debe permanecer superpuesta
-- Usar línea gruesa en la sección abatida superpuesta (ahí va fina)
-- Círculos descentrados: usar el mismo centro de compás para ambos
+
+- Usar el círculo del terminal como si describiera el tubo central
+- Rayar el hueco
+- Omitir extremos engrosados, flechas o una de las letras A
+- Girar la pieza completa en lugar de solo la sección
+- Dibujar grueso el contorno de la sección superpuesta
+- Presentar las tolerancias didácticas como datos de una pieza real

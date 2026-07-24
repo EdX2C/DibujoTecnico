@@ -90,8 +90,8 @@ function SolidDimensions() {
       <ArrowHead position={[LENGTH / 2, -0.82, FRONT_Z]} direction="left" />
       <ArrowHead position={[1.6, -OUTER_R, FRONT_Z]} direction="up" />
       <ArrowHead position={[1.6, OUTER_R, FRONT_Z]} direction="down" />
-      <DimensionLabel position={[0, -0.82, FRONT_Z]}>100</DimensionLabel>
-      <DimensionLabel position={[1.86, 0, FRONT_Z]}>Ø40</DimensionLabel>
+      <DimensionLabel position={[0, -0.82, FRONT_Z]}>120</DimensionLabel>
+      <DimensionLabel position={[1.86, 0, FRONT_Z]}>Ø30</DimensionLabel>
     </group>
   )
 }
@@ -142,9 +142,9 @@ function AbatirDimensions({
       <ArrowHead position={[cutPosition - INNER_R, 0, frontZ]} direction="right" opacity={innerOpacity} />
       <ArrowHead position={[cutPosition + INNER_R, 0, frontZ]} direction="left" opacity={innerOpacity} />
       <ArrowHead position={[cutPosition + 0.27, -0.27, frontZ]} direction="left" opacity={wallOpacity} />
-      {outerOpacity > 0.7 && <DimensionLabel position={[cutPosition - 1.02, 0, frontZ]}>Ø40</DimensionLabel>}
-      {innerOpacity > 0.7 && <DimensionLabel position={[cutPosition + 1.18, 0.28, frontZ]}>Ø18</DimensionLabel>}
-      {wallOpacity > 0.7 && <DimensionLabel position={[cutPosition + 1.26, -0.7, frontZ]}>11</DimensionLabel>}
+      {outerOpacity > 0.7 && <DimensionLabel position={[cutPosition - 1.02, 0, frontZ]}>Ø30</DimensionLabel>}
+      {innerOpacity > 0.7 && <DimensionLabel position={[cutPosition + 1.18, 0.28, frontZ]}>Ø24</DimensionLabel>}
+      {wallOpacity > 0.7 && <DimensionLabel position={[cutPosition + 1.26, -0.7, frontZ]}>3</DimensionLabel>}
     </group>
   )
 }

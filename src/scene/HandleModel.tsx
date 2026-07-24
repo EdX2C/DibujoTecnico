@@ -3,11 +3,11 @@ import * as THREE from 'three'
 import { useFrame } from '@react-three/fiber'
 import { Edges } from '@react-three/drei'
 
-/* La pieza del demo: un buje — casquillo alargado (largo > diámetro) con agujero pasante.
-   Coincide con la pieza del ejercicio gráfico: Ø40 exterior, Ø18 interior, largo 100 mm
-   (escala de escena: 1 unidad ≈ 38.5 mm, para conservar el encuadre de cámara). */
+/* Pieza didáctica: varilla de control compuesta. El cuerpo central es un tubo
+   Ø30 / Ø24; el ojo y la horquilla demuestran por qué el perfil de un extremo
+   no permite deducir la sección local A–A. */
 export const OUTER_R = 0.52
-export const INNER_R = 0.234
+export const INNER_R = 0.416
 export const LENGTH = 2.6
 const CHAMFER = 0.035
 
@@ -204,6 +204,32 @@ export function BujeBody({
           opacity={ghost ? 0.32 : 0.68}
         />
       </mesh>
+      <>
+          {/* terminal articulado: ojo esférico */}
+          <mesh position={[-1.48, 0, 0]} rotation={[0, 0, Math.PI / 2]} material={endMaterial} castShadow={!ghost}>
+            <cylinderGeometry args={[0.19, 0.19, 0.42, 28]} />
+          </mesh>
+          <mesh position={[-1.78, 0, 0]} rotation={[0, Math.PI / 2, 0]} material={endMaterial} castShadow={!ghost}>
+            <torusGeometry args={[0.35, 0.13, 18, 56]} />
+          </mesh>
+
+          {/* terminal de horquilla: dos orejas separadas */}
+          <mesh position={[1.5, 0, 0]} material={endMaterial} castShadow={!ghost}>
+            <boxGeometry args={[0.4, 0.34, 0.34]} />
+          </mesh>
+          <mesh position={[1.83, 0.3, 0]} material={endMaterial} castShadow={!ghost}>
+            <boxGeometry args={[0.58, 0.18, 0.34]} />
+          </mesh>
+          <mesh position={[1.83, -0.3, 0]} material={endMaterial} castShadow={!ghost}>
+            <boxGeometry args={[0.58, 0.18, 0.34]} />
+          </mesh>
+          <mesh position={[1.96, 0.3, 0.18]} material={endMaterial} castShadow={!ghost}>
+            <torusGeometry args={[0.1, 0.035, 14, 36]} />
+          </mesh>
+          <mesh position={[1.96, -0.3, 0.18]} material={endMaterial} castShadow={!ghost}>
+            <torusGeometry args={[0.1, 0.035, 14, 36]} />
+          </mesh>
+        </>
     </group>
   )
 }
@@ -242,7 +268,7 @@ export function AnnularCutFace({
   )
 }
 
-/* Sección A–A del buje que se abate 90° y permanece superpuesta en la vista.
+/* Sección A–A del tubo central que se abate 90° y permanece superpuesta en la vista.
    axis 'x' = corte transversal (corona circular).
    axis 'y' = corte longitudinal (dos bandas de pared + hueco del taladro). */
 export function AbatirSection({
@@ -627,7 +653,7 @@ function makeLongitudinalTexture() {
   ctx.clearRect(0, 0, w, h)
 
   // fracción de la altura ocupada por el taladro (centro), resto = paredes
-  const boreFrac = INNER_R / OUTER_R // 0.45 (Ø18 / Ø40)
+  const boreFrac = INNER_R / OUTER_R // 0.80 (Ø24 / Ø30)
   const wall = (h * (1 - boreFrac)) / 2
   const bands = [
     { y0: 0, y1: wall },

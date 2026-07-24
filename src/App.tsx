@@ -28,13 +28,13 @@ export default function App() {
     <>
       <Presentation onOpenFullscreenDemo={() => setMode('demo')} />
       {mode === 'demo' && (
-        <div className="demo-modal-layer" role="dialog" aria-modal="true" aria-label="Exploración 3D del buje">
+        <div className="demo-modal-layer" role="dialog" aria-modal="true" aria-label="Exploración 3D de la varilla de control">
           <div className="app-shell">
             <div className="grain" />
             <div className="chrome chrome-top">
               <div className="badge">
                 <span className="badge-dot" />
-                Demo 3D · Buje (cilindro hueco)
+                Demo 3D · Varilla de control compuesta
               </div>
               <button type="button" className="tool-btn" onClick={() => setMode('presentation')}>
                 ← Volver a presentación (Esc)

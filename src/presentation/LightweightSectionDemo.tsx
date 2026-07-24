@@ -4,18 +4,18 @@ type DemoStep = 1 | 2 | 3
 
 const STEP_COPY: Record<DemoStep, { title: string; body: string; term: string }> = {
   1: {
-    title: 'La abertura no revela todo el interior.',
-    body: 'La pieza mide 100 mm, pero la vista exterior no muestra el espesor donde pasa A–A.',
-    term: 'Plano de corte A–A',
+    title: 'El perfil muestra el terminal, no el tubo central.',
+    body: 'Ojo a la izquierda, horquilla a la derecha: ninguno describe la pared en A–A.',
+    term: 'Vistas conocidas',
   },
   2: {
-    title: 'Separamos la mitad situada frente al plano.',
-    body: 'La sección permanece en su plano: desde esta vista se reduce a una línea.',
+    title: 'A–A aísla solo el perfil transversal.',
+    body: 'De canto, la sección se reduce a una línea en su posición real.',
     term: 'Sección de canto',
   },
   3: {
-    title: 'Giramos solamente la sección 90°.',
-    body: 'La corona aparece de frente: Ø40 exterior, Ø18 interior y pared de 11 mm — el buje del ejercicio.',
+    title: 'El giro convierte la línea en información medible.',
+    body: 'Aparecen Ø30, Ø24 y una pared nominal de 3 mm.',
     term: 'Sección abatida · verdadera magnitud',
   },
 }
@@ -35,10 +35,10 @@ export function LightweightSectionDemo({ onOpen3D }: { onOpen3D: () => void }) {
     <div className={`lite-demo is-step-${step}`}>
       <div className="demo-toolbar lite-demo-toolbar" aria-label="Pasos de la demostración">
         <button type="button" className={`tool-btn ${step === 1 ? 'is-active' : ''}`} onClick={() => setStep(1)}>
-          1 · Ver la pieza
+          1 · Leer las vistas
         </button>
         <button type="button" className={`tool-btn primary ${step === 2 ? 'is-active' : ''}`} onClick={() => setStep(2)}>
-          2 · Cortar y retirar
+          2 · Cortar en A–A
         </button>
         <button type="button" className={`tool-btn primary ${step === 3 ? 'is-active' : ''}`} onClick={() => setStep(3)}>
           3 · Girar la sección 90°
@@ -99,29 +99,38 @@ export function LightweightSectionDemo({ onOpen3D }: { onOpen3D: () => void }) {
           </g>
 
           <g className="lite-spatial" aria-hidden="true">
-            <ellipse className="lite-shadow" cx="485" cy="306" rx="250" ry="24" />
-            <rect x="245" y="140" width="420" height="150" fill={`url(#${metalId})`} />
-            <ellipse cx="245" cy="215" rx="33" ry="75" fill="#657b8e" stroke="#dce8f2" strokeWidth="2" />
-            <ellipse cx="665" cy="215" rx="33" ry="75" fill="#7790a5" stroke="#e7eef5" strokeWidth="3" />
-            <ellipse cx="665" cy="215" rx="14" ry="34" fill="#121b24" stroke="#dce8f2" strokeWidth="2" />
-            <path className="lite-body-highlight" d="M258 153 H650" />
-            <path className="lite-centerline" d="M205 215 H715" />
+            <ellipse className="lite-shadow" cx="505" cy="306" rx="340" ry="24" />
+            <rect x="275" y="175" width="450" height="80" rx="4" fill={`url(#${metalId})`} stroke="#dce8f2" strokeWidth="2" />
+            <path d="M275 190 L242 170 L226 142" fill="none" stroke="#8098ac" strokeWidth="34" strokeLinecap="round" />
+            <circle cx="190" cy="128" r="58" fill={`url(#${metalId})`} stroke="#e7eef5" strokeWidth="3" />
+            <circle cx="190" cy="128" r="26" fill="#121b24" stroke="#dce8f2" strokeWidth="3" />
+            <path d="M725 188 H772 L803 158 H862" fill="none" stroke="#8199ad" strokeWidth="31" strokeLinecap="round" strokeLinejoin="round" />
+            <path d="M725 242 H772 L803 272 H862" fill="none" stroke="#657b8e" strokeWidth="31" strokeLinecap="round" strokeLinejoin="round" />
+            <circle cx="842" cy="158" r="13" fill="#121b24" stroke="#dce8f2" strokeWidth="2.5" />
+            <circle cx="842" cy="272" r="13" fill="#121b24" stroke="#dce8f2" strokeWidth="2.5" />
+            <path className="lite-body-highlight" d="M292 186 H708" />
+            <path className="lite-centerline" d="M110 215 H905" />
             <path className="lite-cut-sheet" d="M500 92 L554 75 V337 L500 354 Z" />
           </g>
 
           <g className="lite-orthographic" aria-hidden="true">
-            <ellipse className="lite-shadow" cx="530" cy="306" rx="300" ry="22" />
+            <ellipse className="lite-shadow" cx="505" cy="306" rx="340" ry="22" />
             <g className="lite-kept-half">
-              <rect x="260" y="145" width="240" height="140" fill={`url(#${metalId})`} stroke="#dbe6f0" strokeWidth="2" />
-              <path className="lite-body-highlight" d="M275 157 H486" />
-              <path className="lite-hidden-line" d="M260 184 H500 M260 247 H500" />
+              <rect x="275" y="175" width="450" height="80" rx="4" fill={`url(#${metalId})`} stroke="#dbe6f0" strokeWidth="2" />
+              <path d="M275 190 L242 170 L226 142" fill="none" stroke="#8098ac" strokeWidth="34" strokeLinecap="round" />
+              <circle cx="190" cy="128" r="58" fill={`url(#${metalId})`} stroke="#e7eef5" strokeWidth="3" />
+              <circle cx="190" cy="128" r="26" fill="#121b24" stroke="#dce8f2" strokeWidth="3" />
+              <path d="M725 188 H772 L803 158 H862" fill="none" stroke="#8199ad" strokeWidth="31" strokeLinecap="round" strokeLinejoin="round" />
+              <path d="M725 242 H772 L803 272 H862" fill="none" stroke="#657b8e" strokeWidth="31" strokeLinecap="round" strokeLinejoin="round" />
+              <circle cx="842" cy="158" r="13" fill="#121b24" stroke="#dce8f2" strokeWidth="2.5" />
+              <circle cx="842" cy="272" r="13" fill="#121b24" stroke="#dce8f2" strokeWidth="2.5" />
+              <path className="lite-body-highlight" d="M292 186 H708" />
+              <path className="lite-hidden-line" d="M275 193 H725 M275 237 H725" />
             </g>
-            <g className="lite-removed-half">
-              <rect x="660" y="145" width="190" height="140" fill={`url(#${ghostId})`} stroke="#7c919e" strokeWidth="2" />
-              <rect x="660" y="184" width="190" height="63" fill="#101820" fillOpacity="0.62" />
-              <path className="lite-hidden-line" d="M660 184 H850 M660 247 H850" />
-              <path d="M660 145 V285" stroke="#a8bac4" strokeWidth="2" />
+            <g className="lite-removed-half" opacity=".14">
+              <rect x="500" y="175" width="225" height="80" fill={`url(#${ghostId})`} />
             </g>
+            <path className="lite-centerline" d="M110 215 H905" />
           </g>
 
           <g className="lite-cut-trace" aria-hidden="true">
@@ -135,80 +144,76 @@ export function LightweightSectionDemo({ onOpen3D }: { onOpen3D: () => void }) {
           </g>
 
           <g className="lite-annulus" aria-hidden="true">
-            <circle cx="500" cy="215" r="72" fill="#173038" stroke="#e7eef5" strokeWidth="3" />
-            <circle cx="500" cy="215" r="70" fill={`url(#${hatchId})`} />
-            <circle cx="500" cy="215" r="32" fill="#0d1016" stroke="#e7eef5" strokeWidth="3" />
+            <circle cx="500" cy="215" r="70" fill="#173038" stroke="#e7eef5" strokeWidth="3" />
+            <circle cx="500" cy="215" r="68" fill={`url(#${hatchId})`} />
+            <circle cx="500" cy="215" r="54.4" fill="#0d1016" stroke="#e7eef5" strokeWidth="3" />
           </g>
 
           <g className="lite-dimensions lite-dimensions-1" aria-hidden="true">
-            <path className="lite-extension-line" d="M245 140 V104 M665 140 V104" />
+            <path className="lite-extension-line" d="M275 175 V112 M725 175 V112" />
             <path
               className="lite-dimension-line"
-              d="M245 104 H665"
+              d="M275 112 H725"
               markerStart={`url(#${dimensionArrowId})`}
               markerEnd={`url(#${dimensionArrowId})`}
             />
-            <text className="lite-dimension-text" x="455" y="94" textAnchor="middle">100</text>
+            <text className="lite-dimension-text" x="500" y="102" textAnchor="middle">120 · CUERPO TUBULAR</text>
           </g>
 
           <g className="lite-dimensions lite-dimensions-3" aria-hidden="true">
             <path className="lite-center-mark" d="M404 215 H596 M500 119 V311" />
-            <path className="lite-extension-line" d="M428 143 H405 M428 287 H405" />
+            <path className="lite-extension-line" d="M430 145 H405 M430 285 H405" />
             <path
               className="lite-dimension-line"
-              d="M405 143 V287"
+              d="M405 145 V285"
               markerStart={`url(#${dimensionArrowId})`}
               markerEnd={`url(#${dimensionArrowId})`}
             />
-            <text className="lite-dimension-text" x="392" y="220" textAnchor="end">Ø40</text>
+            <text className="lite-dimension-text" x="392" y="220" textAnchor="end">Ø30</text>
             <path
               className="lite-dimension-line"
-              d="M468 215 H532"
+              d="M446 215 H554"
               markerStart={`url(#${dimensionArrowId})`}
               markerEnd={`url(#${dimensionArrowId})`}
             />
-            <path className="lite-dimension-leader" d="M532 215 L580 246 H622" />
-            <text className="lite-dimension-text" x="630" y="251">Ø18</text>
+            <path className="lite-dimension-leader" d="M554 215 L592 246 H636" />
+            <text className="lite-dimension-text" x="644" y="251">Ø24</text>
             <path
               className="lite-dimension-leader lite-wall-leader"
-              d="M548 258 L590 292 H638"
+              d="M558 264 L600 296 H652"
               markerStart={`url(#${dimensionArrowId})`}
             />
-            <text className="lite-dimension-text" x="636" y="286" textAnchor="end">11</text>
-            <text className="lite-dimension-note" x="636" y="310" textAnchor="end">ESPESOR</text>
+            <text className="lite-dimension-text" x="650" y="290" textAnchor="end">3</text>
+            <text className="lite-dimension-note" x="650" y="314" textAnchor="end">PARED NOMINAL</text>
           </g>
 
           <g className="lite-callouts lite-callouts-1" aria-hidden="true">
-            <text className="lite-callout-main" x="300" y="130">CORTE POR AQUÍ</text>
-            <path d="M442 134 L495 147" />
-            <text className="lite-callout-main" x="705" y="135">ABERTURA VISIBLE</text>
-            <path d="M702 145 L680 188" />
-            <text className="lite-callout-main" x="618" y="354">MIRAMOS HACIA ACÁ</text>
-            <text className="lite-callout-sub" x="618" y="376">dirección de las flechas</text>
-            <path d="M615 338 L575 328" />
+            <text className="lite-callout-main" x="292" y="145">A–A ESTÁ EN EL TUBO</text>
+            <path d="M440 150 L494 166" />
+            <text className="lite-callout-main" x="80" y="224">PERFIL = OJO</text>
+            <path d="M178 216 L188 178" />
+            <text className="lite-callout-main" x="734" y="332">PERFIL = HORQUILLA</text>
+            <text className="lite-callout-sub" x="734" y="354">ninguno describe el centro</text>
+            <path d="M770 316 L809 278" />
           </g>
 
           <g className="lite-callouts lite-callouts-2" aria-hidden="true">
-            <text className="lite-callout-main" x="286" y="116">MITAD CONSERVADA</text>
-            <path d="M375 122 L390 145" />
-            <text className="lite-callout-main" x="690" y="116">MITAD RETIRADA</text>
-            <text className="lite-callout-sub" x="690" y="136">referencia tenue</text>
-            <path d="M755 140 L755 154" />
-            <text className="lite-callout-main" x="520" y="314">DE CANTO = LÍNEA</text>
-            <path d="M518 304 L502 283" />
-            <text className="lite-callout-main" x="705" y="326">HUECO PASANTE</text>
-            <path d="M704 315 L758 240" />
+            <text className="lite-callout-main" x="286" y="130">SOLO AISLAMOS LA SECCIÓN</text>
+            <path d="M470 136 L496 165" />
+            <text className="lite-callout-main" x="530" y="314">DE CANTO = LÍNEA</text>
+            <path d="M528 304 L502 283" />
+            <text className="lite-callout-main" x="694" y="116">LA PIEZA NO GIRA</text>
+            <text className="lite-callout-sub" x="694" y="136">permanece en su vista</text>
           </g>
 
           <g className="lite-callouts lite-callouts-3" aria-hidden="true">
             <path className="lite-rotation-arc" d="M510 137 A92 92 0 0 1 602 214" markerEnd={`url(#${orangeArrowId})`} />
             <text className="lite-rotation-text" x="566" y="152">90°</text>
-            <text className="lite-callout-main lite-true-size" x="478" y="104" textAnchor="end">FORMA REAL</text>
-            <text className="lite-callout-sub" x="478" y="124" textAnchor="end">verdadera magnitud</text>
+            <text className="lite-callout-main lite-true-size" x="478" y="104" textAnchor="end">PERFIL LOCAL REAL</text>
+            <text className="lite-callout-sub" x="478" y="124" textAnchor="end">pared visible y medible</text>
           </g>
 
           <g className="lite-cad-reference" aria-hidden="true">
-            <text x="700" y="405">COTAS EN mm · BUJE DEL EJERCICIO</text>
             <g className="lite-ucs" transform="translate(920 374)">
               <path d="M0 0 H38 M0 0 V-38" />
               <path d="M38 0 L31 -4 V4 Z M0 -38 L-4 -31 H4 Z" />

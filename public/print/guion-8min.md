@@ -1,45 +1,35 @@
-# Guion de exposición — 8 minutos
+# Guion oral · Corte girado o abatido
 
-Participación equilibrada: cada integrante habla aproximadamente 4 minutos. La presentación tiene **13 láminas** en 4 actos; entre acto y acto aparece un interludio automático de ~1 s (ACTO I–IV) que no consume tiempo de discurso.
+Duración objetivo: **7:35–7:50**. Los segundos restantes son margen de transición.
 
-## Integrante 1 (0:00–3:55) · Problema, concepto y plano A–A
+| Tiempo | Lámina | Persona | Idea oral |
+|---:|---|:---:|---|
+| 0:00 | 01 · Portada | 1 | «Si un extremo es un ojo y el otro una horquilla, ¿qué forma tiene el cuerpo en el centro?» |
+| 0:20 | 02 · El extremo no describe el centro | 1 | Partir de alzado y perfil. Los terminales se ven, pero ninguno revela si A–A es macizo, hueco o reforzado. |
+| 1:00 | 03 · Solo gira la sección | 1 | Definición formal: A–A produce una sección; de canto es línea; al abatirla 90° queda en verdadera magnitud. La pieza no gira. |
+| 1:45 | 04 · Úsala para un perfil local | 1 | Regla de decisión: perfil local, simple y legible sobre la vista. Si tapa el dibujo, desplazar la sección. |
+| 2:25 | 05 · A–A fija lugar y mirada | 1 | Traza mixta, extremos gruesos, letras y flechas. La traza dice dónde; las flechas, desde dónde mirar. |
+| 3:10 | 06 · Material rayado; hueco limpio | 2 | Rayado fino y uniforme a 45°. La pared es material; el interior queda blanco. Contorno fino si se superpone. |
+| 3:50 | 07 · Demo | 2 | Botones 1 → 2 → 3. Terminal ≠ sección central; A–A aísla el perfil; el giro revela Ø30, Ø24 y e = 3. Tope **1:05**. |
+| 4:55 | 08 · Tres respuestas | 2 | Corte total muestra interior; desplazada separa; abatida localiza. No leer las tarjetas. |
+| 5:30 | 09 · La tolerancia vive en A–A | 2 | Explicar consecuencia: con ±0.05, la pared queda entre 2.95 y 3.05 mm. Menos pared reduce sección resistente; más añade masa. |
+| 6:20 | 10 · Ejercicio | 2 | Verificar vista exterior, A–A, flechas, giro, rayado, cotas y rótulo. Leer solo la justificación. |
+| 7:20 | 11 · Cierre | 2 | «Cuando el extremo no basta, A–A responde qué forma tiene la pieza aquí». |
 
-| Tiempo | Lámina | Qué decir |
-|---|---|---|
-| 0:00 | 01 · Portada | Nombres y gancho: “cortar y girar 90° permite ver lo que la pieza oculta”. |
-| 0:20 | 02 · No se ve el interior | Problema: líneas ocultas ambiguas. Objetivo: interior visible y medible. |
-| 0:55 | 03 · Un lenguaje común | Monge → industria → ISO/R 128:1959 → ISO 128-3:2022 → CAD/BIM. La convención resuelve un problema común. |
-| 1:25 | 04 · Cortar y girar 90° | Señalar la secuencia: corta → de canto → gira → verdadera magnitud. |
-| 1:55 | 05 · Corte ≠ sección | La sección gira alrededor de la traza. Buje: corte = corona + fondo; sección = solo corona. Señalar las flechas de observación de la figura. |
-| 2:40 | 06 · Cuándo usarlo | Piezas largas y perfil constante. Superpuesta → fina; la desplazada se define en Diferencias. |
-| 3:10 | 07 · Plano A–A + observación | Traza, extremos, letras y flechas. Observador en la cola; se retira la mitad delantera. |
-| 3:55 | Cambio | “Ya sabemos por dónde mirar; Arantza mostrará qué superficies se rayan”. |
+## Handoff
 
-## Integrante 2 (3:55–7:50) · Rayado, demostración y aplicación
+Persona 1: «Ya fijamos dónde cortar y desde dónde observar. Arantza mostrará cómo distinguir el material del hueco».
 
-| Tiempo | Lámina | Qué decir |
-|---|---|---|
-| 4:00 | 08 · Rayado | Líneas finas, normalmente a 45°; solo material; huecos limpios. |
-| 4:40 | 09 · **Demo** Línea → forma real | Botones 1 → 2 → 3. Señalar la leyenda de colores en pantalla. Cotas del buje del ejercicio: Ø40, Ø18, pared 11 mm. Tope duro **1:00**. El 3D (tecla D) solo si preguntan o sobra tiempo. |
-| 5:40 | 10 · Cortes y secciones | Abatida: gira la sección. Corte por planos concurrentes: gira un plano oblicuo. No son sinónimos. |
-| 6:15 | 11 · Mango ovalado | Segundo caso: línea de canto → giro 90° → óvalo 26 × 38 mm sobre la misma vista. |
-| 6:45 | 12 · Ejercicio: el buje | Mostrar el dibujo físico y leer únicamente la justificación. |
-| 7:30 | 13 · Cierre | “Lo oculto se volvió visible y medible”. Preguntas. |
+Persona 2: «La pared que A–A toca se raya; el vacío queda limpio».
 
-## Frase de justificación
+## Justificación obligatoria
 
-> El buje tiene perfil constante. La sección abatida muestra la corona en verdadera magnitud sobre la propia vista, sin otra proyección. Técnicamente es una sección; se rotula “Corte A–A” para cumplir la consigna.
+> La vista de perfil describe los terminales, no el tubo central. La sección abatida muestra la pared exactamente en A–A, mantiene el perfil ligado a su posición y evita una proyección separada. Técnicamente es una sección; se rotula «Corte A–A» para cumplir la consigna.
 
 ## Respuestas rápidas
 
-- **¿Fina o gruesa?** Superpuesta: fina. Desplazada: gruesa.
-- **¿Qué mitad se elimina?** La que queda entre el observador y el plano.
-- **¿Corte o sección?** Sección = superficie cortada; corte = superficie + fondo.
-- **¿Abatida o concurrente?** Abatida: perfil sobre la vista. Concurrente: alinea un plano oblicuo.
-- **¿Por qué 90°?** Para mostrar el perfil en verdadera magnitud.
-- **¿Medidas del buje?** Longitud 100 · Ø40 exterior · Ø18 agujero · pared 11 mm (idénticas en demo, plantilla y dibujo físico).
-
-## Fuentes técnicas visibles en la presentación
-
-- [Material de la actividad en el aula virtual UNPHU](https://virtual.unphu.edu.do/mod/url/view.php?id=1753645).
-- [ISO 128-3:2022](https://www.iso.org/standard/83356.html), *Technical product documentation — General principles of representation — Part 3: Views, sections and cuts*.
+- **¿Gira la pieza?** No. Gira solo la sección producida por A–A.
+- **¿Por qué no usar el perfil del extremo?** Porque muestra el ojo o la horquilla, no el tubo en la posición A–A.
+- **¿Cuándo no conviene?** Cuando la sección es compleja o superpuesta hace ilegible la vista; entonces se desplaza.
+- **¿Son medidas aeronáuticas reales?** No. Son cotas didácticas para explicar tolerancia, no datos de una pieza certificada.
+- **¿Por qué “Corte A–A” si es sección?** Técnicamente es una sección abatida; se conserva ese rótulo para satisfacer la consigna del curso.

@@ -1,0 +1,113 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1123" height="794" viewBox="0 0 1123 794">
+  <defs>
+    <pattern id="grid" width="20" height="20" patternUnits="userSpaceOnUse">
+      <path d="M20 0H0V20" fill="none" stroke="#dfe5e8" stroke-width=".6"/>
+    </pattern>
+    <pattern id="hatch" width="10" height="10" patternUnits="userSpaceOnUse" patternTransform="rotate(45)">
+      <line x1="0" y1="0" x2="0" y2="10" stroke="#111" stroke-width="1"/>
+    </pattern>
+    <marker id="arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0 0L10 5L0 10Z" fill="#111"/>
+    </marker>
+    <style>
+      .sans{font-family:Arial,Helvetica,sans-serif}.mono{font-family:"Courier New",monospace}
+      .title{font-size:28px;font-weight:700}.sub{font-size:12px;letter-spacing:1.2px}
+      .h{font-size:16px;font-weight:700}.txt{font-size:13px}.small{font-size:11px}
+      .outline{fill:none;stroke:#111;stroke-width:2}.thin{fill:none;stroke:#111;stroke-width:1}
+      .axis{fill:none;stroke:#555;stroke-width:.9;stroke-dasharray:12 4 2 4}
+      .cut{fill:none;stroke:#111;stroke-width:1.6;stroke-dasharray:14 5 2 5}
+      .dim{fill:none;stroke:#111;stroke-width:1;marker-start:url(#arrow);marker-end:url(#arrow)}
+    </style>
+  </defs>
+
+  <rect width="1123" height="794" fill="#fff"/>
+  <rect x="28" y="28" width="1067" height="738" fill="url(#grid)" stroke="#111" stroke-width="1.5"/>
+  <text x="52" y="69" class="sans title">EJERCICIO · SECCIÓN GIRADA O ABATIDA</text>
+  <text x="52" y="92" class="sans sub">VARILLA DE CONTROL COMPUESTA · COTAS DIDÁCTICAS EN mm · NO CERTIFICADAS</text>
+  <line x1="52" y1="108" x2="1070" y2="108" stroke="#111" stroke-width="2"/>
+
+  <rect x="52" y="132" width="700" height="315" fill="#fff" stroke="#111"/>
+  <text x="70" y="160" class="sans h">1 · VISTA EXTERIOR Y PLANO A–A</text>
+  <text x="735" y="160" class="mono small" text-anchor="end">ALZADO · ESCALA GRÁFICA</text>
+  <g transform="translate(83 215)">
+    <line class="axis" x1="0" y1="85" x2="620" y2="85"/>
+    <rect class="outline" x="150" y="55" width="330" height="60"/>
+    <path class="outline" d="M150 68L115 49 97 28" stroke-width="20" stroke-linecap="round"/>
+    <circle class="outline" cx="65" cy="24" r="43" fill="#fff"/>
+    <circle class="outline" cx="65" cy="24" r="19" fill="#fff"/>
+    <path class="outline" d="M480 69H515L544 43H602" stroke-width="19" stroke-linecap="round" stroke-linejoin="round"/>
+    <path class="outline" d="M480 101H515L544 127H602" stroke-width="19" stroke-linecap="round" stroke-linejoin="round"/>
+    <circle class="outline" cx="592" cy="43" r="8" fill="#fff"/>
+    <circle class="outline" cx="592" cy="127" r="8" fill="#fff"/>
+
+    <line class="cut" x1="315" y1="-5" x2="315" y2="175"/>
+    <rect x="309" y="-12" width="12" height="14" fill="#111"/>
+    <rect x="309" y="174" width="12" height="14" fill="#111"/>
+    <text x="291" y="-1" class="mono h">A</text>
+    <text x="291" y="194" class="mono h">A</text>
+    <line class="thin" x1="330" y1="-5" x2="380" y2="-5" marker-end="url(#arrow)"/>
+    <line class="thin" x1="330" y1="181" x2="380" y2="181" marker-end="url(#arrow)"/>
+
+    <circle cx="315" cy="85" r="42" fill="url(#hatch)" stroke="#111" stroke-width="1.5"/>
+    <circle cx="315" cy="85" r="33.6" fill="#fff" stroke="#111" stroke-width="1.5"/>
+    <line class="axis" x1="262" y1="85" x2="368" y2="85"/>
+    <line class="axis" x1="315" y1="32" x2="315" y2="138"/>
+
+    <line class="thin" x1="150" y1="135" x2="150" y2="156"/>
+    <line class="thin" x1="480" y1="135" x2="480" y2="156"/>
+    <line class="dim" x1="150" y1="151" x2="480" y2="151"/>
+    <text x="315" y="170" class="mono txt" text-anchor="middle">120 · CUERPO TUBULAR</text>
+  </g>
+
+  <rect x="772" y="132" width="298" height="315" fill="#fff" stroke="#111"/>
+  <text x="790" y="160" class="sans h">2 · LECTURA DE A–A</text>
+  <g transform="translate(920 282)">
+    <circle r="78" fill="url(#hatch)" stroke="#111" stroke-width="2"/>
+    <circle r="62.4" fill="#fff" stroke="#111" stroke-width="2"/>
+    <line class="axis" x1="-96" y1="0" x2="96" y2="0"/>
+    <line class="axis" x1="0" y1="-96" x2="0" y2="96"/>
+    <line class="dim" x1="-78" y1="-102" x2="78" y2="-102"/>
+    <line class="thin" x1="-78" y1="-82" x2="-78" y2="-110"/>
+    <line class="thin" x1="78" y1="-82" x2="78" y2="-110"/>
+    <text x="0" y="-114" class="mono txt" text-anchor="middle">Ø30 ±0.05</text>
+    <line class="dim" x1="-62.4" y1="0" x2="62.4" y2="0"/>
+    <text x="0" y="22" class="mono txt" text-anchor="middle">Ø24 ±0.05</text>
+    <path class="thin" d="M68 39L104 74H128" marker-start="url(#arrow)"/>
+    <text x="132" y="79" class="mono txt">e = 3</text>
+  </g>
+  <text x="921" y="421" class="mono h" text-anchor="middle">CORTE A–A</text>
+
+  <rect x="52" y="471" width="508" height="216" fill="#fff" stroke="#111"/>
+  <text x="70" y="499" class="sans h">3 · JUSTIFICACIÓN TÉCNICA</text>
+  <text x="70" y="527" class="sans txt">
+    <tspan x="70" dy="0">La vista de perfil describe los terminales, no el tubo central.</tspan>
+    <tspan x="70" dy="22">La sección abatida muestra la pared exactamente en A–A, conserva</tspan>
+    <tspan x="70" dy="22">el perfil ligado a su posición y evita una proyección separada.</tspan>
+  </text>
+  <line x1="70" y1="602" x2="538" y2="602" stroke="#111"/>
+  <text x="70" y="628" class="mono txt">e nominal = (30 − 24) / 2 = 3.00 mm</text>
+  <text x="70" y="652" class="mono txt">intervalo resultante: 2.95 ≤ e ≤ 3.05 mm</text>
+  <text x="70" y="674" class="sans small">Menos pared reduce sección resistente; más pared añade masa.</text>
+
+  <rect x="580" y="471" width="490" height="216" fill="#fff" stroke="#111"/>
+  <text x="598" y="499" class="sans h">4 · LISTA DE VERIFICACIÓN</text>
+  <g class="sans txt">
+    <rect x="600" y="522" width="14" height="14" fill="none" stroke="#111"/><text x="624" y="534">Vista exterior de la pieza compuesta</text>
+    <rect x="600" y="550" width="14" height="14" fill="none" stroke="#111"/><text x="624" y="562">Traza A–A con línea mixta y extremos gruesos</text>
+    <rect x="600" y="578" width="14" height="14" fill="none" stroke="#111"/><text x="624" y="590">Flechas de observación en el mismo sentido</text>
+    <rect x="600" y="606" width="14" height="14" fill="none" stroke="#111"/><text x="624" y="618">Pared rayada a 45° y hueco limpio</text>
+    <rect x="600" y="634" width="14" height="14" fill="none" stroke="#111"/><text x="624" y="646">Cotas Ø30, Ø24, e = 3 y rótulo «Corte A–A»</text>
+  </g>
+
+  <g transform="translate(52 708)">
+    <rect width="1018" height="42" fill="#fff" stroke="#111"/>
+    <line x1="650" y1="0" x2="650" y2="42" stroke="#111"/>
+    <line x1="860" y1="0" x2="860" y2="42" stroke="#111"/>
+    <text x="12" y="17" class="sans small">TEMA</text>
+    <text x="12" y="34" class="sans txt">Corte girado o abatido</text>
+    <text x="662" y="17" class="sans small">INTEGRANTES</text>
+    <text x="662" y="34" class="sans txt">12-0869 · 25-1576</text>
+    <text x="872" y="17" class="sans small">LÁMINA</text>
+    <text x="872" y="34" class="mono txt">EJ-01</text>
+  </g>
+</svg>
